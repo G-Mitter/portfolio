@@ -6,26 +6,26 @@ Site de portfólio com feed de projetos no estilo Instagram. Cada projeto é um 
 
 ## Como rodar no seu computador
 
-Pré-requisitos: [Node.js 22](https://nodejs.org), [pnpm](https://pnpm.io/installation) e [Docker](https://www.docker.com/products/docker-desktop/) (só para o banco).
+Pré-requisitos: [Node.js 22](https://nodejs.org) e [pnpm](https://pnpm.io/installation) (10.16 ou mais novo).
+
+O site precisa de um banco Postgres. Escolha **um** dos dois:
+- **Neon (mais simples, nada para instalar):** crie um projeto grátis em https://neon.tech, clique em **Connect** e copie a connection string.
+- **Docker:** instale o [Docker Desktop](https://www.docker.com/products/docker-desktop/) e rode `docker compose up -d db`. A connection string já vem pronta no `.env.example`.
 
 ```bash
 # 1. Instalar as dependências do projeto
 pnpm install
 
-# 2. Criar o arquivo de configuração local e preencher o PAYLOAD_SECRET
+# 2. Criar o arquivo de configuração local
 cp .env.example .env
+#    Abra o .env e troque DATABASE_URL pela connection string do Neon (se usar Neon)
 
-# 3. Subir o banco Postgres num container
-docker compose up -d db
-
-# 4. (Opcional) Criar os 7 posts de exemplo
+# 3. (Opcional) Criar os 7 posts de exemplo
 pnpm seed
 
-# 5. Rodar o site em modo desenvolvimento
+# 4. Rodar o site em modo desenvolvimento
 pnpm dev
 ```
-
-Abra http://localhost:3000 para ver o feed e http://localhost:3000/admin para criar seu usuário e cadastrar posts.
 
 ## Scripts
 
