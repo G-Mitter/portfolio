@@ -6,6 +6,8 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 import config from '@/payload.config'
+import type { Media } from '@/payload-types'
+import { Gallery } from '@/components/Gallery'
 import { PostCover } from '@/components/PostCover'
 import { STATUS_LABELS } from '@/lib/labels'
 
@@ -58,6 +60,12 @@ export default async function ProjectPage({ params }: Props) {
   // Slug que não existe (ou rascunho) -> página 404.
   if (!project) notFound()
 
+  // Junta a capa e a galeria numa lista só de imagens para o carrossel.
+  // O filtro descarta itens que vieram só como id (número) ou sem url.
+  const images = [project.cover, ...(project.gallery ?? [])].filter(
+    (item): item is Media => typeof item === 'object' && item !== null && Boolean(item.url),
+  )
+
   return (
     <>
       <Link className="back" href="/">
@@ -65,7 +73,7 @@ export default async function ProjectPage({ params }: Props) {
       </Link>
       <article className="detail">
         <div className="carousel">
-          <PostCover project={project} large />
+          {images.length > 0 ? <Gallery images={images} /> : <PostCover project={project} large />}
         </div>
         <div className="side">
           <div className="body">
