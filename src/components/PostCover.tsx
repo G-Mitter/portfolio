@@ -26,6 +26,8 @@ export function PostCover({ project, large = false }: Props) {
         src={cover.url}
         alt={cover.alt}
         fill
+        // Na página do projeto (large) a capa é a maior imagem visível: carregar já.
+        loading={large ? 'eager' : 'lazy'}
         sizes={large ? '(max-width: 640px) 100vw, 520px' : '(max-width: 640px) 50vw, 310px'}
       />
     )
