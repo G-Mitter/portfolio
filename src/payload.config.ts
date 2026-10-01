@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -46,5 +47,23 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    // Onde as imagens enviadas pelo /admin ficam guardadas.
+    // Na Vercel o disco do servidor é apagado a cada deploy, então em produção
+    // os arquivos vão para o Vercel Blob (um "HD na nuvem").
+    // A Vercel cria a variável BLOB_READ_WRITE_TOKEN quando você liga o Blob
+    // no projeto. Sem ela (no seu computador), o plugin fica desligado e as
+    // imagens continuam indo para a pasta media/, como antes.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      collections: { media: true },
+      // Cria as mesmas colunas no banco com o plugin ligado ou desligado,
+      // para o banco do seu computador e o de produção terem o mesmo formato.
+      alwaysInsertFields: true,
+      // O navegador envia a imagem direto para o Blob. Sem isso, imagens
+      // acima de 4,5 MB seriam recusadas pelo limite das funções da Vercel.
+      clientUploads: true,
+    }),
+  ],
 })

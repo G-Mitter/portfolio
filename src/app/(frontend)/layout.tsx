@@ -18,7 +18,21 @@ const body = IBM_Plex_Sans({
 })
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
+/**
+ * Endereço público do site. O Next usa para completar links relativos nos
+ * metadados, como a imagem de prévia (og:image) que o LinkedIn e o WhatsApp
+ * mostram ao compartilhar um projeto: eles precisam do endereço completo.
+ * Ordem: NEXT_PUBLIC_SERVER_URL (domínio próprio, se um dia tiver) →
+ * VERCEL_PROJECT_PRODUCTION_URL (criada pela Vercel) → localhost.
+ */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'http://localhost:3000')
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Guilherme Mitter · Portfólio',
     template: '%s · Guilherme Mitter',
