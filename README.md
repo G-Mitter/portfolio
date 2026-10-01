@@ -1,67 +1,67 @@
-# Payload Blank Template
+# Portfólio · Guilherme Mitter
 
-This template comes configured with the bare minimum to get started on anything you need.
+Site de portfólio com feed de projetos no estilo Instagram. Cada projeto é um "post" cadastrado pelo painel `/admin` do próprio site.
 
-## Quick start
+**Stack:** [Next.js](https://nextjs.org) (site) + [Payload CMS](https://payloadcms.com) (painel admin e API) + PostgreSQL (banco).
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## Como rodar no seu computador
 
-## Quick Start - local setup
+Pré-requisitos: [Node.js 22](https://nodejs.org) e [pnpm](https://pnpm.io/installation) (10.16 ou mais novo).
 
-To spin up this template locally, follow these steps:
+O site precisa de um banco Postgres. Escolha **um** dos dois:
+- **Neon (mais simples, nada para instalar):** crie um projeto grátis em https://neon.tech, clique em **Connect** e copie a connection string.
+- **Docker:** instale o [Docker Desktop](https://www.docker.com/products/docker-desktop/) e rode `docker compose up -d db`. A connection string já vem pronta no `.env.example`.
 
-### Clone
+```bash
+# 1. Instalar as dependências do projeto
+pnpm install
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+# 2. Criar o arquivo de configuração local
+cp .env.example .env
+#    Abra o .env e troque DATABASE_URL pela connection string do Neon (se usar Neon)
 
-### Development
+# 3. (Opcional) Criar os 7 posts de exemplo
+pnpm seed
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+# 4. Rodar o site em modo desenvolvimento
+pnpm dev
+```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+## Scripts
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+| Comando | O que faz |
+|---|---|
+| `pnpm dev` | Roda o site com recarregamento automático |
+| `pnpm seed` | Cria os posts de exemplo (pode rodar várias vezes) |
+| `pnpm lint` | Verifica padrões de código |
+| `pnpm typecheck` | Verifica os tipos do TypeScript |
+| `pnpm test:int` | Roda os testes de integração (precisa do banco) |
+| `pnpm build` | Gera a versão de produção |
+| `pnpm generate:types` | Atualiza `src/payload-types.ts` depois de mudar uma coleção |
 
-#### Docker (Optional)
+## Estrutura
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+```
+src/
+├── app/
+│   ├── (frontend)/            # O site público
+│   │   ├── page.tsx           # Feed (página inicial)
+│   │   ├── projetos/[slug]/   # Página de detalhe de cada projeto
+│   │   └── styles.css         # Visual (tokens de cor, grade, cards)
+│   └── (payload)/             # Painel /admin e API, gerados pelo Payload (não editar)
+├── collections/               # "Tabelas" do banco: Projects, Media, Users
+├── globals/Profile.ts         # Documento único: bio, contadores e links do topo
+├── access/                    # Regras de quem pode ler/editar o quê
+├── components/                # Peças da interface (Feed, PostCover, ProfileHeader)
+├── lib/                       # Funções utilitárias (slugify, textos das labels)
+├── seed/seed.ts               # Script que cria os posts de exemplo
+└── payload.config.ts          # Configuração central do Payload
+```
 
-To do so, follow these steps:
+## Como funciona (resumo)
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
-
-## How it works
-
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
-
-### Collections
-
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/3.x/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+1. Você cadastra um projeto em `/admin`. O Payload salva no Postgres.
+2. A página inicial (`page.tsx`) roda **no servidor**, busca o perfil e os projetos direto do banco pela Local API do Payload e monta o HTML.
+3. O componente `Feed` roda **no navegador** só para os filtros (Automação, Web...).
+4. Clicar num post abre `/projetos/[slug]`, que busca aquele projeto pelo slug.
+5. Rascunhos só aparecem para quem está logado no admin (`src/access/publishedOrLoggedIn.ts`).

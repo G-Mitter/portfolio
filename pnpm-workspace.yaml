@@ -3,3 +3,7 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   workerd: true
+
+# Segurança contra ataques na cadeia de suprimentos: só instala versões de
+# pacotes publicadas há pelo menos 1 dia (1440 minutos). É o padrão do pnpm 12.
+minimumReleaseAge: 1440
