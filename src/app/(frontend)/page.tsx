@@ -1,8 +1,11 @@
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
+import { ContactSection } from '@/components/ContactSection'
 import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
+import { Services } from '@/components/Services'
+import { whatsappUrl } from '@/lib/whatsapp'
 
 /**
  * 'force-dynamic' faz a página buscar os dados a cada visita.
@@ -11,7 +14,14 @@ import { ProfileHeader } from '@/components/ProfileHeader'
  */
 export const dynamic = 'force-dynamic'
 
-export default async function HomePage() {
+type Props = {
+  // ?projeto=slug vem do botão "Quer algo parecido?" da página de um projeto.
+  searchParams: Promise<{ projeto?: string | string[] }>
+}
+
+export default async function HomePage({ searchParams }: Props) {
+  const { projeto } = await searchParams
+
   // getPayload dá acesso direto ao banco pelo "Local API" do Payload.
   // Como esta página roda no servidor, não precisa de fetch nem de URL de API.
   const payload = await getPayload({ config })
@@ -35,6 +45,15 @@ export default async function HomePage() {
     <>
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
+      <Services services={profile.services} />
+      <ContactSection
+        whatsapp={whatsappUrl(
+          profile.links?.whatsapp,
+          `Olá, ${profile.name.split(' ')[0]}! Vi seu portfólio e gostaria de conversar.`,
+        )}
+        email={profile.links?.email}
+        source={typeof projeto === 'string' ? projeto : undefined}
+      />
     </>
   )
 }

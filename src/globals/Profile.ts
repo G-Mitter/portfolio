@@ -22,6 +22,15 @@ export const Profile: GlobalConfig = {
       defaultValue: 'Automação de processos, web e IA. Transformo tarefas manuais em sistemas.',
     },
     { name: 'location', label: 'Cidade', type: 'text', defaultValue: 'Belo Horizonte, MG' },
+    {
+      name: 'available',
+      label: 'Disponível para projetos',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        description: 'Mostra o selo verde ao lado do nome. Desmarque quando estiver sem agenda.',
+      },
+    },
     { name: 'avatar', label: 'Foto', type: 'upload', relationTo: 'media' },
     {
       name: 'stats',
@@ -32,6 +41,20 @@ export const Profile: GlobalConfig = {
       fields: [
         { name: 'value', label: 'Valor', type: 'text', required: true },
         { name: 'label', label: 'Descrição', type: 'text', required: true },
+      ],
+    },
+    {
+      name: 'services',
+      label: 'Como posso ajudar',
+      type: 'array',
+      maxRows: 4,
+      admin: {
+        description:
+          'Os serviços que aparecem antes do formulário de contato. Escreva pensando no cliente: o problema que você resolve, não a tecnologia.',
+      },
+      fields: [
+        { name: 'title', label: 'Título', type: 'text', required: true },
+        { name: 'description', label: 'Descrição', type: 'textarea', required: true },
       ],
     },
     {

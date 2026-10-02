@@ -107,6 +107,13 @@ export default async function ProjectPage({ params }: Props) {
                 ))}
               </div>
             </div>
+            {/* Chamada para quem gostou do projeto: leva ao formulário já sabendo de onde veio. */}
+            <div className="similar">
+              <b>Quer algo parecido na sua empresa?</b>
+              <Link className="btn primary" href={`/?projeto=${project.slug}#contato`}>
+                Vamos conversar
+              </Link>
+            </div>
           </div>
           <div className="links">
             {project.links?.repository ? (

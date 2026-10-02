@@ -10,6 +10,7 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Projects } from './collections/Projects'
+import { Messages } from './collections/Messages'
 import { Profile } from './globals/Profile'
 import { migrations } from './migrations'
 
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Projects, Media, Users],
+  collections: [Projects, Messages, Media, Users],
   globals: [Profile],
   // Painel /admin em português
   i18n: {
