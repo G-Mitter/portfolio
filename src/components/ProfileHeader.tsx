@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { instagramUrl } from '@/lib/instagram'
 import { whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
 
@@ -22,6 +23,7 @@ export function ProfileHeader({ profile, projectCount }: Props) {
   const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
   const resume = typeof profile.links?.resume === 'object' ? profile.links.resume : null
   const email = profile.links?.email
+  const instagram = instagramUrl(profile.links?.instagram)
   const firstName = profile.name.split(' ')[0]
   // A mensagem já vem escrita: quem clica só precisa apertar "enviar".
   const whatsapp = whatsappUrl(
@@ -60,6 +62,11 @@ export function ProfileHeader({ profile, projectCount }: Props) {
               rel="noopener noreferrer"
             >
               LinkedIn
+            </a>
+          )}
+          {instagram && (
+            <a className="btn" href={instagram} target="_blank" rel="noopener noreferrer">
+              Instagram
             </a>
           )}
           {profile.links?.github && (
