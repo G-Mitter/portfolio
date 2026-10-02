@@ -93,3 +93,21 @@ describe('Projetos', () => {
     expect(first.docs[0]?.id).toBe(newer.id)
   })
 })
+
+describe('Mensagens', () => {
+  it('não deixa um visitante criar ou ler mensagens pela API', async () => {
+    const data = { name: 'Robô', contact: 'robo@spam.com', problem: 'Spam pela API pública.' }
+    // overrideAccess: false = como um visitante chamando /api/messages
+    await expect(
+      payload.create({ collection: 'messages', data, overrideAccess: false }),
+    ).rejects.toThrow()
+
+    // Ler também é proibido: as mensagens trazem contato de quem escreveu
+    await expect(payload.find({ collection: 'messages', overrideAccess: false })).rejects.toThrow()
+
+    // O formulário do site salva pela Local API, que ignora essas regras
+    const saved = await payload.create({ collection: 'messages', data })
+    expect(saved.answered).toBe(false)
+    await payload.delete({ collection: 'messages', id: saved.id })
+  })
+})

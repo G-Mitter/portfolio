@@ -88,6 +88,14 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             </li>
           ))}
         </ul>
+        {/* Selo que diz na hora que você aceita trabalho; liga e desliga no /admin.
+            Fica fora da linha dos botões para não empurrar nenhum para baixo. */}
+        {profile.available && (
+          <a className="available" href="#contato">
+            <i aria-hidden="true" />
+            Disponível para projetos
+          </a>
+        )}
         <p className="bio">
           <span className="role">
             {profile.name}

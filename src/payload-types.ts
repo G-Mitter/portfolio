@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     projects: Project;
+    messages: Message;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    messages: MessagesSelect<false> | MessagesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -199,6 +201,25 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Contatos que chegaram pelo formulário do site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages".
+ */
+export interface Message {
+  id: number;
+  name: string;
+  contact: string;
+  problem: string;
+  /**
+   * Preenchido quando a pessoa clicou em "Quer algo parecido?" num projeto.
+   */
+  source?: string | null;
+  answered?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -251,6 +272,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: number | Project;
+      } | null)
+    | ({
+        relationTo: 'messages';
+        value: number | Message;
       } | null)
     | ({
         relationTo: 'media';
@@ -330,6 +355,19 @@ export interface ProjectsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages_select".
+ */
+export interface MessagesSelect<T extends boolean = true> {
+  name?: T;
+  contact?: T;
+  problem?: T;
+  source?: T;
+  answered?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -425,6 +463,10 @@ export interface Profile {
   role?: string | null;
   bio?: string | null;
   location?: string | null;
+  /**
+   * Mostra o selo verde ao lado do nome. Desmarque quando estiver sem agenda.
+   */
+  available?: boolean | null;
   avatar?: (number | null) | Media;
   /**
    * O número de projetos é contado sozinho; aqui entram os outros.
@@ -433,6 +475,16 @@ export interface Profile {
     | {
         value: string;
         label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Os serviços que aparecem antes do formulário de contato. Escreva pensando no cliente: o problema que você resolve, não a tecnologia.
+   */
+  services?:
+    | {
+        title: string;
+        description: string;
         id?: string | null;
       }[]
     | null;
@@ -459,12 +511,20 @@ export interface ProfileSelect<T extends boolean = true> {
   role?: T;
   bio?: T;
   location?: T;
+  available?: T;
   avatar?: T;
   stats?:
     | T
     | {
         value?: T;
         label?: T;
+        id?: T;
+      };
+  services?:
+    | T
+    | {
+        title?: T;
+        description?: T;
         id?: T;
       };
   links?:
