@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { isVisitorId, likesLabel, newVisitorId } from '@/lib/likes'
+import { isVisitorId, likesLabel } from '@/lib/likes'
 
 // Teste de unidade: o texto do contador e o formato do código do visitante.
 describe('likesLabel', () => {
@@ -13,7 +13,7 @@ describe('likesLabel', () => {
 
 describe('isVisitorId', () => {
   it('aceita só o código que o próprio site cria', () => {
-    expect(isVisitorId(newVisitorId())).toBe(true)
+    expect(isVisitorId(crypto.randomUUID())).toBe(true)
     expect(isVisitorId(undefined)).toBe(false)
     expect(isVisitorId("' or 1=1 --")).toBe(false)
   })

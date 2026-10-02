@@ -9,13 +9,7 @@ import { cookies } from 'next/headers'
 import { getPayload, type Where } from 'payload'
 
 import config from '@/payload.config'
-import {
-  isVisitorId,
-  MAX_LIKES_PER_HOUR,
-  newVisitorId,
-  VISITOR_COOKIE,
-  VISITOR_MAX_AGE,
-} from '@/lib/likes'
+import { isVisitorId, VISITOR_COOKIE } from '@/lib/likes'
 
 export type LikeState = { liked: boolean; count: number }
 
@@ -40,42 +34,41 @@ export async function toggleLike(slug: string): Promise<LikeState | null> {
   const cookieStore = await cookies()
   let visitor = cookieStore.get(VISITOR_COOKIE)?.value
   if (!isVisitorId(visitor)) {
-    visitor = newVisitorId()
+    visitor = crypto.randomUUID()
     cookieStore.set(VISITOR_COOKIE, visitor, {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: VISITOR_MAX_AGE,
+      maxAge: 60 * 60 * 24 * 365, // 1 ano: a curtida continua marcada quando a pessoa volta
     })
   }
 
   const mine: Where = {
     and: [{ project: { equals: project.id } }, { visitor: { equals: visitor } }],
   }
-  const existing = await payload.count({ collection: 'likes', where: mine })
+  // Tenta apagar a curtida deste navegador. Se apagou alguma, era um "descurtir".
+  const removed = await payload.delete({ collection: 'likes', where: mine })
+  let liked = false
 
-  if (existing.totalDocs > 0) {
-    // Já tinha curtido: o clique desfaz, como no Instagram.
-    await payload.delete({ collection: 'likes', where: mine })
-  } else {
+  if (removed.docs.length === 0) {
     const lastHour = new Date(Date.now() - 60 * 60 * 1000).toISOString()
     const recent = await payload.count({
       collection: 'likes',
       where: { createdAt: { greater_than: lastHour } },
     })
-    if (recent.totalDocs < MAX_LIKES_PER_HOUR) {
-      try {
-        await payload.create({ collection: 'likes', data: { project: project.id, visitor } })
-      } catch {
-        // Dois cliques ao mesmo tempo: o banco recusa a segunda curtida (índice único).
-        // A primeira já valeu, então seguimos e devolvemos o estado real.
-      }
+    // ponytail: teto global de 300/hora para um robô não encher o banco; trocar por limite por IP se virar problema.
+    if (recent.totalDocs < 300) {
+      // Dois cliques ao mesmo tempo: o índice único recusa o segundo, e a curtida do primeiro vale.
+      await payload
+        .create({ collection: 'likes', data: { project: project.id, visitor } })
+        .catch(() => {})
+      liked = true
     }
   }
 
-  const [count, liked] = await Promise.all([
-    payload.count({ collection: 'likes', where: { project: { equals: project.id } } }),
-    payload.count({ collection: 'likes', where: mine }),
-  ])
-  return { liked: liked.totalDocs > 0, count: count.totalDocs }
+  const { totalDocs: count } = await payload.count({
+    collection: 'likes',
+    where: { project: { equals: project.id } },
+  })
+  return { liked, count }
 }
