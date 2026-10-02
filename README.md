@@ -1,67 +1,89 @@
 # Portfólio · Guilherme Mitter
 
-Site de portfólio com feed de projetos no estilo Instagram. Cada projeto é um "post" cadastrado pelo painel `/admin` do próprio site.
+[![CI](https://github.com/G-Mitter/portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/G-Mitter/portfolio/actions/workflows/ci.yml)
 
-**Stack:** [Next.js](https://nextjs.org) (site) + [Payload CMS](https://payloadcms.com) (painel admin e API) + PostgreSQL (banco).
+**Veja no ar: [guimitter.com.br](https://guimitter.com.br)**
 
-## Como rodar no seu computador
+Meu portfólio de desenvolvedor, construído do zero. Cada projeto aparece como um post de rede social: capa, legenda e uma página com galeria, o problema resolvido e o resultado. Eu publico tudo por um painel, sem mexer no código.
 
-Pré-requisitos: [Node.js 22](https://nodejs.org) e [pnpm](https://pnpm.io/installation) (10.16 ou mais novo).
+![Capa do portfólio](docs/capa.png)
 
-O site precisa de um banco Postgres. Escolha **um** dos dois:
-- **Neon (mais simples, nada para instalar):** crie um projeto grátis em https://neon.tech, clique em **Connect** e copie a connection string.
-- **Docker:** instale o [Docker Desktop](https://www.docker.com/products/docker-desktop/) e rode `docker compose up -d db`. A connection string já vem pronta no `.env.example`.
+## O que o site faz
 
-```bash
-# 1. Instalar as dependências do projeto
-pnpm install
+- **Feed de projetos** com filtros por categoria (Automação, Web, IA, Dados) e posts fixados no topo.
+- **Página de cada projeto** com galeria, resultado, tecnologias e um convite para conversar.
+- **Curtidas sem login.** Quem curte recebe um convite para falar sobre o próprio projeto.
+- **Formulário de contato** que salva a mensagem no painel e me avisa por e-mail, além de botões de WhatsApp e LinkedIn.
+- **Painel em `/admin`** para publicar projetos, editar o perfil, as recomendações e os serviços.
+- **Visualizações no próprio painel:** quantas vezes cada página foi vista e por quantos visitantes, sem ferramenta externa.
+- **Pronto para buscadores:** sitemap, robots, prévia ao compartilhar no LinkedIn e no WhatsApp e página 404 em português.
 
-# 2. Criar o arquivo de configuração local
-cp .env.example .env
-#    Abra o .env e troque DATABASE_URL pela connection string do Neon (se usar Neon)
+| Curtida e convite | Visualizações no painel |
+|---|---|
+| ![Curtida e convite](docs/curtida.png) | ![Visualizações no painel](docs/visualizacoes.png) |
 
-# 3. (Opcional) Criar os 7 posts de exemplo
-pnpm seed
+## Tecnologias
 
-# 4. Rodar o site em modo desenvolvimento
-pnpm dev
+| Parte | Ferramenta |
+|---|---|
+| Site | [Next.js 16](https://nextjs.org) com React 19 e TypeScript |
+| Painel e API | [Payload CMS 3](https://payloadcms.com) |
+| Banco de dados | PostgreSQL no [Neon](https://neon.tech) |
+| Imagens | Vercel Blob |
+| E-mail | Resend |
+| Hospedagem | Vercel |
+| Testes | Vitest (integração) e Playwright (navegador) |
+
+## Como funciona
+
+```mermaid
+flowchart LR
+  V[Visitante] --> S[Vercel<br/>Next.js monta as páginas]
+  S --> P[Payload CMS<br/>painel e regras de acesso]
+  P --> DB[(Neon PostgreSQL<br/>projetos, curtidas, visitas)]
+  P --> B[(Vercel Blob<br/>imagens)]
+  P --> E[Resend<br/>aviso de contato]
 ```
 
-## Scripts
+- As páginas são montadas **no servidor**, buscando os dados direto do banco. O navegador recebe o HTML pronto, o que deixa o site rápido e fácil de achar no Google.
+- Rascunhos só aparecem para quem está logado. Visitantes só veem projetos publicados.
+- Curtidas e visualizações são gravadas por Server Actions, com validação no servidor. As curtidas também têm um limite por hora contra abuso.
 
-| Comando | O que faz |
-|---|---|
-| `pnpm dev` | Roda o site com recarregamento automático |
-| `pnpm seed` | Cria os posts de exemplo (pode rodar várias vezes) |
-| `pnpm lint` | Verifica padrões de código |
-| `pnpm typecheck` | Verifica os tipos do TypeScript |
-| `pnpm test:int` | Roda os testes de integração (precisa do banco) |
-| `pnpm build` | Gera a versão de produção |
-| `pnpm generate:types` | Atualiza `src/payload-types.ts` depois de mudar uma coleção |
+## Qualidade e segurança
 
-## Estrutura
+- Toda mudança entra por **pull request**. A CI roda lint, checagem de tipos, testes de integração e o build antes do merge.
+- As migrações do banco rodam sozinhas no deploy.
+- Cabeçalhos de segurança, validação de links e tipos de arquivo, e nenhuma senha ou chave no código: tudo fica nas variáveis de ambiente da Vercel.
+
+## Estrutura do código
 
 ```
 src/
-├── app/
-│   ├── (frontend)/            # O site público
-│   │   ├── page.tsx           # Feed (página inicial)
-│   │   ├── projetos/[slug]/   # Página de detalhe de cada projeto
-│   │   └── styles.css         # Visual (tokens de cor, grade, cards)
-│   └── (payload)/             # Painel /admin e API, gerados pelo Payload (não editar)
-├── collections/               # "Tabelas" do banco: Projects, Media, Users
-├── globals/Profile.ts         # Documento único: bio, contadores e links do topo
-├── access/                    # Regras de quem pode ler/editar o quê
-├── components/                # Peças da interface (Feed, PostCover, ProfileHeader)
-├── lib/                       # Funções utilitárias (slugify, textos das labels)
-├── seed/seed.ts               # Script que cria os posts de exemplo
-└── payload.config.ts          # Configuração central do Payload
+├── app/(frontend)/   # Site público: feed, página do projeto, sitemap e 404
+├── app/(payload)/    # Painel /admin e API, gerados pelo Payload
+├── collections/      # Tabelas: projetos, imagens, mensagens, curtidas, visualizações
+├── globals/          # Perfil: bio, contadores, serviços, recomendações e links
+├── components/       # Partes da interface (feed, galeria, curtida, contato...)
+└── lib/              # Funções pequenas e testadas (slug, links, e-mail, WhatsApp)
+tests/                # Testes de integração e de navegador
 ```
 
-## Como funciona (resumo)
+<details>
+<summary>Rodar no computador (para desenvolvimento)</summary>
 
-1. Você cadastra um projeto em `/admin`. O Payload salva no Postgres.
-2. A página inicial (`page.tsx`) roda **no servidor**, busca o perfil e os projetos direto do banco pela Local API do Payload e monta o HTML.
-3. O componente `Feed` roda **no navegador** só para os filtros (Automação, Web...).
-4. Clicar num post abre `/projetos/[slug]`, que busca aquele projeto pelo slug.
-5. Rascunhos só aparecem para quem está logado no admin (`src/access/publishedOrLoggedIn.ts`).
+Precisa de Node.js 22, pnpm 10 e um banco PostgreSQL (o Neon tem plano grátis).
+
+```bash
+pnpm install
+cp .env.example .env   # preencha DATABASE_URL e PAYLOAD_SECRET
+pnpm dev               # abre em http://localhost:3000
+```
+
+Outros comandos: `pnpm lint`, `pnpm typecheck`, `pnpm test:int` e `pnpm build`.
+</details>
+
+## Sobre
+
+Desenvolvido por **Guilherme Mitter**, em Belo Horizonte, em par com IA ([Claude Code](https://claude.com/claude-code)), entendendo e revisando cada passo.
+
+[LinkedIn](https://www.linkedin.com/in/guilherme-mitter) · [GitHub](https://github.com/G-Mitter) · [Fale comigo pelo site](https://guimitter.com.br/#contato)
