@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { generateKeyBetween } from 'payload/shared'
 
 import { publishedOrLoggedIn } from '../access/publishedOrLoggedIn'
+import { validateHttpUrl } from '../lib/httpUrl'
 import { slugify } from '../lib/slugify'
 
 /**
@@ -187,8 +188,8 @@ export const Projects: CollectionConfig = {
       label: 'Links',
       type: 'group',
       fields: [
-        { name: 'repository', label: 'Repositório', type: 'text' },
-        { name: 'demo', label: 'Demo', type: 'text' },
+        { name: 'repository', label: 'Repositório', type: 'text', validate: validateHttpUrl },
+        { name: 'demo', label: 'Demo', type: 'text', validate: validateHttpUrl },
       ],
     },
   ],

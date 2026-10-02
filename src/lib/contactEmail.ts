@@ -1,4 +1,4 @@
-import { isValidContact } from './contact'
+import { EMAIL, isValidContact } from './contact'
 
 type NewMessage = {
   id: number
@@ -21,8 +21,6 @@ export function escapeHtml(value: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;')
 }
-
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
  * Monta o e-mail de aviso de uma mensagem nova.

@@ -22,7 +22,7 @@ export const CONTACT_LIMITS = {
   problem: { min: 10, max: 2000 },
 }
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /** O contato vale se for um e-mail ou um telefone com DDD (10 a 13 dígitos). */
 export function isValidContact(value: string): boolean {

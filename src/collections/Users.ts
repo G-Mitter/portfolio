@@ -7,8 +7,6 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
-  fields: [
-    // Email added by default
-    // Add more fields as needed
-  ],
+  // O e-mail e a senha o Payload cria sozinho (auth: true).
+  fields: [],
 }
