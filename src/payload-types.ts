@@ -129,6 +129,7 @@ export interface UserAuthOperations {
  */
 export interface Project {
   id: number;
+  _order?: string | null;
   title: string;
   /**
    * Gerado a partir do título se ficar vazio. Ex.: /projetos/wincorretor
@@ -306,6 +307,7 @@ export interface PayloadMigration {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  _order?: T;
   title?: T;
   slug?: T;
   summary?: T;

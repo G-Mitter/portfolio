@@ -67,4 +67,29 @@ describe('Projetos', () => {
     })
     expect(asAdmin.totalDocs).toBe(1)
   })
+  it('coloca o projeto novo no topo da lista', async () => {
+    const base = {
+      summary: 'Teste de ordem.',
+      stack: ['TypeScript'],
+      category: 'web' as const,
+      progress: 'done' as const,
+      date: '2026-01-01',
+      _status: 'published' as const,
+    }
+    const older = await payload.create({
+      collection: 'projects',
+      data: { ...base, title: 'Ordem antigo' },
+    })
+    const newer = await payload.create({
+      collection: 'projects',
+      data: { ...base, title: 'Ordem novo' },
+    })
+    createdIds.push(older.id, newer.id)
+
+    // `_order` é comparado como texto: o menor aparece primeiro.
+    expect(newer._order! < older._order!).toBe(true)
+
+    const first = await payload.find({ collection: 'projects', sort: '_order', limit: 1 })
+    expect(first.docs[0]?.id).toBe(newer.id)
+  })
 })

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { generateKeyBetween } from 'payload/shared'
 
 import { publishedOrLoggedIn } from '../access/publishedOrLoggedIn'
 import { slugify } from '../lib/slugify'
@@ -25,8 +26,36 @@ export const Projects: CollectionConfig = {
   versions: {
     drafts: true,
   },
-  // Ordem padrão do feed: fixados primeiro, depois os mais recentes.
-  defaultSort: ['-pinned', '-date'],
+  // `orderable: true` liga o "arrastar para reordenar" na lista do /admin.
+  // O Payload cria um campo escondido `_order` e a lista passa a ser ordenada por ele.
+  // O feed usa a mesma ordem (só os projetos fixados ficam sempre acima).
+  orderable: true,
+  hooks: {
+    beforeChange: [
+      // Por padrão o Payload coloca um documento novo no FIM da lista.
+      // Como no Instagram, queremos o post novo no TOPO: geramos um `_order`
+      // menor que o do primeiro da lista.
+      async ({ data, operation, req }) => {
+        if (operation !== 'create' || data._order) return data
+
+        const first = await req.payload.find({
+          collection: 'projects',
+          depth: 0,
+          draft: true,
+          limit: 1,
+          pagination: false,
+          req,
+          select: { _order: true },
+          sort: '_order',
+          where: { _order: { exists: true } },
+        })
+        // `_order` usa "índices fracionários": textos que sempre têm um valor entre dois outros.
+        // generateKeyBetween(null, primeiro) devolve uma chave que vem antes da primeira.
+        data._order = generateKeyBetween(null, first.docs[0]?._order ?? null)
+        return data
+      },
+    ],
+  },
   access: {
     read: publishedOrLoggedIn,
   },
