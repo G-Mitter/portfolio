@@ -17,6 +17,7 @@
   --c-ai: #5a2f45;
   --c-data: #1f4b4a;
   --on-cover: #f3f5fb;
+  --whatsapp: #0f7a3f;
   --display: var(--font-display), 'Segoe UI', system-ui, sans-serif;
   --body: var(--font-body), 'Segoe UI', system-ui, sans-serif;
   --mono: var(--font-mono), ui-monospace, Consolas, monospace;
@@ -37,6 +38,7 @@
     --c-ai: #86435f;
     --c-data: #2b6a67;
     --on-cover: #ffffff;
+    --whatsapp: #0f7a3f;
     color-scheme: light;
   }
 }
@@ -55,6 +57,8 @@ a { color: var(--accent); }
 .handle { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; letter-spacing: -0.01em; }
 .btn { border: 1px solid var(--line); background: var(--surface); padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; color: var(--fg); cursor: pointer; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.btn.whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
+.bio .contact { font-weight: 600; }
 .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 14px 0 12px; padding: 0; list-style: none; }
 .stats b { font-family: var(--display); font-size: 18px; font-variant-numeric: tabular-nums; }
 .stats span { color: var(--muted); }
