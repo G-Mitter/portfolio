@@ -23,7 +23,8 @@ export default async function HomePage() {
       collection: 'projects',
       depth: 1, // traz a imagem de capa completa (url, alt), não só o id
       limit: 100,
-      sort: ['-pinned', '-date'],
+      // Fixados primeiro; o resto segue a ordem que você arrasta no /admin.
+      sort: ['-pinned', '_order'],
       // overrideAccess: false aplica as regras de acesso de um visitante:
       // rascunhos não aparecem no feed público.
       overrideAccess: false,
