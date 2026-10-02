@@ -511,6 +511,21 @@ export interface Profile {
         id?: string | null;
       }[]
     | null;
+  /**
+   * O que clientes e colegas dizem de você. Aparecem antes do formulário de contato, na ordem desta lista. Peça autorização da pessoa antes de publicar.
+   */
+  testimonials?:
+    | {
+        photo?: (number | null) | Media;
+        name: string;
+        /**
+         * Opcional. Ex.: Gerente financeiro, Colega no curso técnico
+         */
+        role?: string | null;
+        quote: string;
+        id?: string | null;
+      }[]
+    | null;
   links?: {
     github?: string | null;
     linkedin?: string | null;
@@ -566,6 +581,15 @@ export interface ProfileSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        id?: T;
+      };
+  testimonials?:
+    | T
+    | {
+        photo?: T;
+        name?: T;
+        role?: T;
+        quote?: T;
         id?: T;
       };
   links?:

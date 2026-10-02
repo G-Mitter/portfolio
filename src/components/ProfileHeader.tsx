@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { initials } from '@/lib/initials'
 import { instagramUrl } from '@/lib/instagram'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
@@ -7,16 +8,6 @@ import type { Profile } from '@/payload-types'
 type Props = {
   profile: Profile
   projectCount: number
-}
-
-/** Iniciais do nome para o avatar quando ainda não há foto. Ex.: "Guilherme Mitter" -> "GM" */
-function initials(name: string): string {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase())
-    .join('')
 }
 
 export function ProfileHeader({ profile, projectCount }: Props) {

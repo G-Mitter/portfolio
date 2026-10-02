@@ -94,6 +94,34 @@ export const Profile: GlobalConfig = {
       ],
     },
     {
+      name: 'testimonials',
+      label: 'Recomendações',
+      type: 'array',
+      maxRows: 6,
+      labels: { singular: 'Recomendação', plural: 'Recomendações' },
+      admin: {
+        description:
+          'O que clientes e colegas dizem de você. Aparecem antes do formulário de contato, na ordem desta lista. Peça autorização da pessoa antes de publicar.',
+      },
+      fields: [
+        { name: 'photo', label: 'Foto', type: 'upload', relationTo: 'media' },
+        { name: 'name', label: 'Nome', type: 'text', required: true },
+        {
+          name: 'role',
+          label: 'Quem é',
+          type: 'text',
+          admin: { description: 'Opcional. Ex.: Gerente financeiro, Colega no curso técnico' },
+        },
+        {
+          name: 'quote',
+          label: 'Comentário',
+          type: 'textarea',
+          required: true,
+          maxLength: 500,
+        },
+      ],
+    },
+    {
       name: 'links',
       label: 'Links',
       type: 'group',

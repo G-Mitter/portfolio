@@ -6,6 +6,7 @@ import * as migration_20261002_141521_formulario_contato from './20261002_141521
 import * as migration_20261002_144740_como_eu_trabalho from './20261002_144740_como_eu_trabalho';
 import * as migration_20261002_150425_instagram from './20261002_150425_instagram';
 import * as migration_20261002_152720_tecnologias from './20261002_152720_tecnologias';
+import * as migration_20261002_154200_recomendacoes from './20261002_154200_recomendacoes';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20261002_152720_tecnologias.up,
     down: migration_20261002_152720_tecnologias.down,
-    name: '20261002_152720_tecnologias'
+    name: '20261002_152720_tecnologias',
+  },
+  {
+    up: migration_20261002_154200_recomendacoes.up,
+    down: migration_20261002_154200_recomendacoes.down,
+    name: '20261002_154200_recomendacoes'
   },
 ];
