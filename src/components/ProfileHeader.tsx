@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { instagramUrl } from '@/lib/instagram'
-import { whatsappUrl } from '@/lib/whatsapp'
+import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
 
 type Props = {
@@ -24,12 +24,16 @@ export function ProfileHeader({ profile, projectCount }: Props) {
   const resume = typeof profile.links?.resume === 'object' ? profile.links.resume : null
   const email = profile.links?.email
   const instagram = instagramUrl(profile.links?.instagram)
-  const firstName = profile.name.split(' ')[0]
-  // A mensagem já vem escrita: quem clica só precisa apertar "enviar".
-  const whatsapp = whatsappUrl(
-    profile.links?.whatsapp,
-    `Olá, ${firstName}! Vi seu portfólio e gostaria de conversar.`,
-  )
+  const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
+
+  // Links secundários (recrutador e redes): ficam numa linha discreta abaixo da bio,
+  // para os dois botões de contato serem o que mais chama atenção no topo.
+  const links = [
+    { label: 'LinkedIn', href: profile.links?.linkedin },
+    { label: 'GitHub', href: profile.links?.github },
+    { label: 'Instagram', href: instagram },
+    { label: 'Currículo (PDF)', href: resume?.url },
+  ].filter((link): link is { label: string; href: string } => Boolean(link.href))
 
   return (
     <header className="profile">
@@ -43,45 +47,13 @@ export function ProfileHeader({ profile, projectCount }: Props) {
       <div className="p-info">
         <div className="p-head">
           <h1 className="handle">{profile.handle ?? profile.name}</h1>
-          {/* O WhatsApp é o botão principal; sem ele, o e-mail assume o destaque. */}
+          {/* Botão principal: leva ao formulário no fim da página. */}
+          <a className="btn primary" href="#contato">
+            Falar sobre meu projeto
+          </a>
           {whatsapp && (
             <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
               WhatsApp
-            </a>
-          )}
-          {email && (
-            <a className={whatsapp ? 'btn' : 'btn primary'} href={`mailto:${email}`}>
-              E-mail
-            </a>
-          )}
-          {profile.links?.linkedin && (
-            <a
-              className="btn"
-              href={profile.links.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          )}
-          {instagram && (
-            <a className="btn" href={instagram} target="_blank" rel="noopener noreferrer">
-              Instagram
-            </a>
-          )}
-          {profile.links?.github && (
-            <a
-              className="btn"
-              href={profile.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          )}
-          {resume?.url && (
-            <a className="btn" href={resume.url} target="_blank" rel="noopener noreferrer">
-              Currículo
             </a>
           )}
         </div>
@@ -103,17 +75,13 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             Disponível para projetos
           </a>
         )}
+        {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
+        {profile.bio && <p className="headline">{profile.bio}</p>}
         <p className="bio">
           <span className="role">
             {profile.name}
             {profile.role && ` · ${profile.role}`}
           </span>
-          {profile.bio && (
-            <>
-              <br />
-              {profile.bio}
-            </>
-          )}
           {profile.location && (
             <>
               <br />
@@ -130,6 +98,15 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             </>
           )}
         </p>
+        {links.length > 0 && (
+          <p className="p-links">
+            {links.map((link) => (
+              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.label}
+              </a>
+            ))}
+          </p>
+        )}
       </div>
     </header>
   )

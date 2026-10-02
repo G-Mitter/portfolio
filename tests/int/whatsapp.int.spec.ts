@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { whatsappUrl } from '@/lib/whatsapp'
+import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
 // Teste de unidade: garante que qualquer jeito de digitar o número gera o mesmo link.
 describe('whatsappUrl', () => {
@@ -21,5 +21,9 @@ describe('whatsappUrl', () => {
   it('devolve null para número vazio ou incompleto', () => {
     expect(whatsappUrl('')).toBeNull()
     expect(whatsappUrl('99999')).toBeNull()
+  })
+
+  it('monta a mensagem pronta com o primeiro nome', () => {
+    expect(contactMessage('Guilherme Mitter')).toMatch(/^Olá, Guilherme! Acessei seu site/)
   })
 })

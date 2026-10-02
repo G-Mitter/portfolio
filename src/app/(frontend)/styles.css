@@ -59,6 +59,12 @@ a { color: var(--accent); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .btn.whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: #fff; }
 .bio .contact { font-weight: 600; }
+/* A bio em destaque: é a promessa para quem chega no site */
+.headline { margin: 0 0 10px; max-width: 34ch; font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2.4vw, 24px); line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
+/* Links secundários (LinkedIn, GitHub, Instagram, Currículo) numa linha discreta */
+.p-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 0; font-size: 14px; font-weight: 600; }
+.p-links a { text-decoration: none; }
+.p-links a:hover { text-decoration: underline; }
 .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 14px 0 12px; padding: 0; list-style: none; }
 .stats b { font-family: var(--display); font-size: 18px; font-variant-numeric: tabular-nums; }
 .stats span { color: var(--muted); }
@@ -96,8 +102,10 @@ a { color: var(--accent); }
 .dot-in-progress { background: var(--wip); }
 .dot-done { background: var(--done); }
 .pin { position: absolute; bottom: 12px; right: 14px; font-family: var(--mono); font-size: 11px; opacity: 0.85; }
-.hover { position: absolute; inset: 0; background: rgba(8, 12, 22, 0.72); display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 6px; padding: 16px; opacity: 0; transition: opacity 0.18s; }
-.hover span { font-family: var(--mono); font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 99px; padding: 3px 10px; color: #fff; }
+.hover { position: absolute; inset: 0; background: rgba(8, 12, 22, 0.78); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; text-align: center; opacity: 0; transition: opacity 0.18s; }
+.hover-result { font-family: var(--display); font-size: clamp(14px, 2vw, 20px); line-height: 1.2; color: #fff; text-wrap: balance; }
+.hover-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.hover-stack span { font-family: var(--mono); font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 99px; padding: 3px 10px; color: #fff; }
 .post:hover .hover, .post:focus-visible .hover { opacity: 1; }
 .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0; }
 
@@ -193,7 +201,9 @@ a { color: var(--accent); }
   .stats { grid-column: 1 / -1; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 4px; }
   .stats li { display: flex; flex-direction: column; }
   .stats span { font-size: 12px; }
-  .bio, .available { grid-column: 1 / -1; }
+  .bio, .available, .headline, .p-links { grid-column: 1 / -1; }
+  .headline { margin: 0; }
+  .p-links { margin: 0; }
   .available { justify-self: start; margin: 0; }
   .cover { padding: 10px; }
   .cover .glyph, .cover .res, .pin { display: none; }
