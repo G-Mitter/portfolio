@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
+import { validateHttpUrl } from '../lib/httpUrl'
 import { instagramUrl } from '../lib/instagram'
 
 /**
@@ -131,12 +132,14 @@ export const Profile: GlobalConfig = {
           label: 'GitHub',
           type: 'text',
           defaultValue: 'https://github.com/G-Mitter',
+          validate: validateHttpUrl,
         },
         {
           name: 'linkedin',
           label: 'LinkedIn',
           type: 'text',
           defaultValue: 'https://www.linkedin.com/in/guilherme-mitter',
+          validate: validateHttpUrl,
         },
         {
           name: 'instagram',

@@ -1,9 +1,12 @@
+import { randomBytes } from 'crypto'
 import { getPayload } from 'payload'
 import config from '../../src/payload.config.js'
 
 export const testUser = {
   email: 'dev@payloadcms.com',
-  password: 'test',
+  // Senha aleatória a cada execução: se o teste rodar num banco errado,
+  // não fica um admin com senha fácil de adivinhar.
+  password: randomBytes(16).toString('hex'),
 }
 
 /**

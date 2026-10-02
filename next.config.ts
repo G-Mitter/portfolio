@@ -23,6 +23,24 @@ const nextConfig: NextConfig = {
 
     return webpackConfig
   },
+  // Cabeçalhos de segurança enviados em todas as páginas:
+  // - nosniff: o navegador não "adivinha" o tipo de um arquivo (ex.: tratar uma imagem como script);
+  // - SAMEORIGIN: outro site não consegue abrir o seu dentro de um iframe (golpe de clique falso);
+  // - Referrer-Policy: ao clicar num link externo, só o domínio é enviado, não a página inteira;
+  // - Permissions-Policy: o site não pede câmera, microfone nem localização.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+    ]
+  },
   turbopack: {
     root: path.resolve(dirname),
   },

@@ -14,5 +14,16 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    // Só imagens e PDF (o currículo). Bloqueia, por exemplo, um .html ou .svg
+    // com código escondido que rodaria ao ser aberto pelo endereço do site.
+    mimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/gif',
+      'image/avif',
+      'application/pdf',
+    ],
+  },
 }
