@@ -6,6 +6,7 @@ import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
 import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
+import { Skills } from '@/components/Skills'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
 /**
@@ -46,6 +47,7 @@ export default async function HomePage({ searchParams }: Props) {
     <>
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
+      <Skills skills={profile.skills} />
       <Services services={profile.services} />
       <Process steps={profile.process} />
       <ContactSection

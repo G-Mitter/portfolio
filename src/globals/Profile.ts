@@ -46,6 +46,26 @@ export const Profile: GlobalConfig = {
       ],
     },
     {
+      name: 'skills',
+      label: 'Tecnologias',
+      type: 'array',
+      maxRows: 8,
+      admin: {
+        description:
+          'A lista que aparece logo depois do feed, para recrutadores. Cada grupo tem um nome e as tecnologias separadas por vírgula.',
+      },
+      fields: [
+        { name: 'group', label: 'Grupo', type: 'text', required: true },
+        {
+          name: 'items',
+          label: 'Tecnologias',
+          type: 'text',
+          required: true,
+          admin: { description: 'Separe por vírgula. Ex.: JavaScript, TypeScript, Python' },
+        },
+      ],
+    },
+    {
       name: 'services',
       label: 'Como posso ajudar',
       type: 'array',
