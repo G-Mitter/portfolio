@@ -3,6 +3,7 @@ import * as migration_20261001_161241_imagens_vercel_blob from './20261001_16124
 import * as migration_20261002_134058_contato_whatsapp from './20261002_134058_contato_whatsapp';
 import * as migration_20261002_140150_ordem_feed from './20261002_140150_ordem_feed';
 import * as migration_20261002_141521_formulario_contato from './20261002_141521_formulario_contato';
+import * as migration_20261002_144740_como_eu_trabalho from './20261002_144740_como_eu_trabalho';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20261002_141521_formulario_contato.up,
     down: migration_20261002_141521_formulario_contato.down,
-    name: '20261002_141521_formulario_contato'
+    name: '20261002_141521_formulario_contato',
+  },
+  {
+    up: migration_20261002_144740_como_eu_trabalho.up,
+    down: migration_20261002_144740_como_eu_trabalho.down,
+    name: '20261002_144740_como_eu_trabalho'
   },
 ];

@@ -58,6 +58,20 @@ export const Profile: GlobalConfig = {
       ],
     },
     {
+      name: 'process',
+      label: 'Como eu trabalho',
+      type: 'array',
+      maxRows: 6,
+      admin: {
+        description:
+          'As etapas de um projeto, do primeiro contato à entrega. Aparecem numeradas, na ordem desta lista (arraste para reordenar).',
+      },
+      fields: [
+        { name: 'title', label: 'Etapa', type: 'text', required: true },
+        { name: 'description', label: 'O que acontece', type: 'textarea', required: true },
+      ],
+    },
+    {
       name: 'links',
       label: 'Links',
       type: 'group',

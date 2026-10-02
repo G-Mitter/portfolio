@@ -147,7 +147,17 @@ a { color: var(--accent); }
 .services li { padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .services h3 { font-family: var(--display); font-size: 18px; margin: 0 0 6px; line-height: 1.2; }
 .services p { margin: 0; color: var(--muted); font-size: 14px; }
-.services + .contact-cta { margin-top: 16px; }
+
+/* Como eu trabalho: etapas numeradas */
+.process { margin-top: 40px; }
+.process h2 { font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0 0 6px; }
+.process > p { margin: 0 0 16px; color: var(--muted); }
+.process ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: etapa; }
+.process li { counter-increment: etapa; padding: 16px; border-top: 3px solid var(--accent); background: var(--surface); border-radius: 0 0 10px 10px; }
+.process li::before { content: counter(etapa, decimal-leading-zero); display: block; font-family: var(--mono); font-size: 13px; color: var(--accent); margin-bottom: 6px; }
+.process h3 { font-family: var(--display); font-size: 17px; margin: 0 0 6px; line-height: 1.2; }
+.process li p { margin: 0; color: var(--muted); font-size: 14px; }
+:is(.services, .process) + .contact-cta { margin-top: 16px; }
 
 /* Chamada "Quer algo parecido?" na página do projeto */
 .similar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px 14px; border: 1px dashed var(--line); border-radius: 8px; }
@@ -174,6 +184,8 @@ a { color: var(--accent); }
 @media (max-width: 640px) {
   .contact-cta { grid-template-columns: 1fr; padding: 18px; }
   .contact-form { grid-template-columns: 1fr; }
+  /* No celular as etapas viram uma linha do tempo vertical, uma embaixo da outra */
+  .process ol { grid-template-columns: 1fr; gap: 8px; }
   .profile { gap: 14px 18px; }
   .avatar { width: 80px; height: 80px; font-size: 28px; }
   .handle { font-size: 20px; }

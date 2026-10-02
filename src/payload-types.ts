@@ -488,6 +488,16 @@ export interface Profile {
         id?: string | null;
       }[]
     | null;
+  /**
+   * As etapas de um projeto, do primeiro contato à entrega. Aparecem numeradas, na ordem desta lista (arraste para reordenar).
+   */
+  process?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
   links?: {
     github?: string | null;
     linkedin?: string | null;
@@ -521,6 +531,13 @@ export interface ProfileSelect<T extends boolean = true> {
         id?: T;
       };
   services?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  process?:
     | T
     | {
         title?: T;
