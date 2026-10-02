@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     projects: Project;
     messages: Message;
+    'page-views': PageView;
     likes: Like;
     media: Media;
     users: User;
@@ -81,6 +82,7 @@ export interface Config {
   collectionsSelect: {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     messages: MessagesSelect<false> | MessagesSelect<true>;
+    'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -222,6 +224,20 @@ export interface Message {
   createdAt: string;
 }
 /**
+ * Quantas vezes cada página foi vista ("/" é a página inicial). Visitas suas, logado no /admin, não contam.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-views".
+ */
+export interface PageView {
+  id: number;
+  path: string;
+  views?: number | null;
+  visitors?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -291,6 +307,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'messages';
         value: number | Message;
+      } | null)
+    | ({
+        relationTo: 'page-views';
+        value: number | PageView;
       } | null)
     | ({
         relationTo: 'likes';
@@ -385,6 +405,17 @@ export interface MessagesSelect<T extends boolean = true> {
   problem?: T;
   source?: T;
   answered?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-views_select".
+ */
+export interface PageViewsSelect<T extends boolean = true> {
+  path?: T;
+  views?: T;
+  visitors?: T;
   updatedAt?: T;
   createdAt?: T;
 }
