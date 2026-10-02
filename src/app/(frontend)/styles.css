@@ -50,10 +50,11 @@ a { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* Perfil */
-.profile { display: grid; grid-template-columns: auto 1fr; gap: 20px 40px; align-items: center; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.profile { display: grid; grid-template-columns: auto 1fr; gap: 20px 40px; align-items: start; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
 .avatar { position: relative; overflow: hidden; width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 44px; color: var(--on-cover); background: var(--c-automation); box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
 .avatar img { object-fit: cover; }
 .p-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.p-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .handle { font-family: var(--display); font-weight: 700; font-size: 26px; margin: 0; letter-spacing: -0.01em; }
 .btn { border: 1px solid var(--line); background: var(--surface); padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; color: var(--fg); cursor: pointer; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
@@ -107,6 +108,13 @@ a { color: var(--accent); }
 .hover-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
 .hover-stack span { font-family: var(--mono); font-size: 12px; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 99px; padding: 3px 10px; color: #fff; }
 .post:hover .hover, .post:focus-visible .hover { opacity: 1; }
+/* No máximo 3 linhas de resultado, para não estourar a capa */
+.hover-result { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* Em telas de toque não existe "passar o mouse": o toque abre o projeto.
+   Sem isso, o celular deixa o hover "preso" na capa depois de voltar. */
+@media (hover: none) {
+  .hover { display: none; }
+}
 .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0; }
 
 /* Página do projeto */
@@ -205,10 +213,15 @@ a { color: var(--accent); }
   .skills dl > div + div dt { margin-top: 10px; }
   /* No celular as etapas viram uma linha do tempo vertical, uma embaixo da outra */
   .process ol { grid-template-columns: 1fr; gap: 8px; }
-  .profile { gap: 14px 18px; }
+  /* Celular: foto e nome lado a lado; o resto ocupa a largura toda embaixo */
+  .profile { gap: 14px 16px; align-items: center; }
   .avatar { width: 80px; height: 80px; font-size: 28px; }
-  .handle { font-size: 20px; }
-  .p-info { display: contents; }
+  .handle { font-size: 22px; overflow-wrap: anywhere; }
+  .p-info, .p-head { display: contents; }
+  .p-actions { grid-column: 1 / -1; flex-wrap: nowrap; gap: 8px; }
+  /* Os botões dividem a linha; o mais longo ganha mais espaço */
+  .p-actions .btn { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; text-align: center; padding: 9px 8px; white-space: nowrap; }
+  .hover { display: none; }
   .stats { grid-column: 1 / -1; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 4px; }
   .stats li { display: flex; flex-direction: column; }
   .stats span { font-size: 12px; }

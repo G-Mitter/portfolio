@@ -47,15 +47,18 @@ export function ProfileHeader({ profile, projectCount }: Props) {
       <div className="p-info">
         <div className="p-head">
           <h1 className="handle">{profile.handle ?? profile.name}</h1>
-          {/* Botão principal: leva ao formulário no fim da página. */}
-          <a className="btn primary" href="#contato">
-            Falar sobre meu projeto
-          </a>
-          {whatsapp && (
-            <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
-              WhatsApp
+          {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
+          <div className="p-actions">
+            {/* Botão principal: leva ao formulário no fim da página. */}
+            <a className="btn primary" href="#contato">
+              Falar sobre meu projeto
             </a>
-          )}
+            {whatsapp && (
+              <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            )}
+          </div>
         </div>
         <ul className="stats">
           <li>
