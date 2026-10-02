@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
 
 type Props = {
@@ -20,7 +21,13 @@ function initials(name: string): string {
 export function ProfileHeader({ profile, projectCount }: Props) {
   const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
   const resume = typeof profile.links?.resume === 'object' ? profile.links.resume : null
-  const contact = profile.links?.email ? `mailto:${profile.links.email}` : profile.links?.linkedin
+  const email = profile.links?.email
+  const firstName = profile.name.split(' ')[0]
+  // A mensagem já vem escrita: quem clica só precisa apertar "enviar".
+  const whatsapp = whatsappUrl(
+    profile.links?.whatsapp,
+    `Olá, ${firstName}! Vi seu portfólio e gostaria de conversar.`,
+  )
 
   return (
     <header className="profile">
@@ -34,9 +41,25 @@ export function ProfileHeader({ profile, projectCount }: Props) {
       <div className="p-info">
         <div className="p-head">
           <h1 className="handle">{profile.handle ?? profile.name}</h1>
-          {contact && (
-            <a className="btn primary" href={contact} target="_blank" rel="noopener noreferrer">
-              Fale comigo
+          {/* O WhatsApp é o botão principal; sem ele, o e-mail assume o destaque. */}
+          {whatsapp && (
+            <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
+              WhatsApp
+            </a>
+          )}
+          {email && (
+            <a className={whatsapp ? 'btn' : 'btn primary'} href={`mailto:${email}`}>
+              E-mail
+            </a>
+          )}
+          {profile.links?.linkedin && (
+            <a
+              className="btn"
+              href={profile.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
             </a>
           )}
           {profile.links?.github && (
@@ -80,6 +103,15 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             <>
               <br />
               <span className="loc">{profile.location}</span>
+            </>
+          )}
+          {/* O e-mail aparece escrito por extenso para quem quiser copiar. */}
+          {email && (
+            <>
+              <br />
+              <a className="contact" href={`mailto:${email}`}>
+                {email}
+              </a>
             </>
           )}
         </p>

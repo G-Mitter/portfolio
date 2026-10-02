@@ -52,6 +52,20 @@ export const Profile: GlobalConfig = {
           defaultValue: 'https://www.linkedin.com/in/guilherme-mitter',
         },
         { name: 'email', label: 'E-mail de contato', type: 'email' },
+        {
+          name: 'whatsapp',
+          label: 'WhatsApp',
+          type: 'text',
+          admin: {
+            description: 'Número com DDD, do jeito que preferir. Ex.: (31) 99999-0000',
+          },
+          // Recusa números incompletos para o botão não levar a uma conversa errada.
+          validate: (value: string | null | undefined) => {
+            if (!value) return true
+            const digits = value.replace(/\D/g, '')
+            return [10, 11, 12, 13].includes(digits.length) || 'Digite o número com DDD.'
+          },
+        },
         { name: 'resume', label: 'Currículo (PDF)', type: 'upload', relationTo: 'media' },
       ],
     },

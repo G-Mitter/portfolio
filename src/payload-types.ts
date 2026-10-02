@@ -438,6 +438,10 @@ export interface Profile {
     github?: string | null;
     linkedin?: string | null;
     email?: string | null;
+    /**
+     * Número com DDD, do jeito que preferir. Ex.: (31) 99999-0000
+     */
+    whatsapp?: string | null;
     resume?: (number | null) | Media;
   };
   updatedAt?: string | null;
@@ -467,6 +471,7 @@ export interface ProfileSelect<T extends boolean = true> {
         github?: T;
         linkedin?: T;
         email?: T;
+        whatsapp?: T;
         resume?: T;
       };
   updatedAt?: T;
