@@ -1,5 +1,6 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
@@ -8,8 +9,10 @@ import { cache } from 'react'
 import config from '@/payload.config'
 import type { Media } from '@/payload-types'
 import { Gallery } from '@/components/Gallery'
+import { LikeButton } from '@/components/LikeButton'
 import { PostCover } from '@/components/PostCover'
 import { STATUS_LABELS } from '@/lib/labels'
+import { isVisitorId, VISITOR_COOKIE } from '@/lib/likes'
 
 export const dynamic = 'force-dynamic'
 
@@ -35,6 +38,25 @@ const getProject = cache(async (slug: string) => {
   return result.docs[0] ?? null
 })
 
+/**
+ * Quantas curtidas o projeto tem e se este navegador já curtiu.
+ * O cookie só é lido aqui; quem cria o cookie é a Server Action, no primeiro clique.
+ */
+async function getLikes(projectId: number) {
+  const payload = await getPayload({ config })
+  const visitor = (await cookies()).get(VISITOR_COOKIE)?.value
+  const [count, mine] = await Promise.all([
+    payload.count({ collection: 'likes', where: { project: { equals: projectId } } }),
+    isVisitorId(visitor)
+      ? payload.count({
+          collection: 'likes',
+          where: { and: [{ project: { equals: projectId } }, { visitor: { equals: visitor } }] },
+        })
+      : null,
+  ])
+  return { count: count.totalDocs, liked: Boolean(mine?.totalDocs) }
+}
+
 // Título e prévia do link quando alguém compartilha no LinkedIn/WhatsApp (Open Graph).
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
@@ -59,6 +81,7 @@ export default async function ProjectPage({ params }: Props) {
 
   // Slug que não existe (ou rascunho) -> página 404.
   if (!project) notFound()
+  const likes = await getLikes(project.id)
 
   // Junta a capa e a galeria numa lista só de imagens para o carrossel.
   // O filtro descarta itens que vieram só como id (número) ou sem url.
@@ -77,6 +100,11 @@ export default async function ProjectPage({ params }: Props) {
         </div>
         <div className="side">
           <div className="body">
+            <LikeButton
+              slug={project.slug ?? ''}
+              initialLiked={likes.liked}
+              initialCount={likes.count}
+            />
             <h2>{project.title}</h2>
             <span className="status">
               <i className={`dot-${project.progress}`} />

@@ -145,3 +145,45 @@ describe('Mensagens', () => {
     })
   })
 })
+
+describe('Curtidas', () => {
+  it('não deixa curtir duas vezes e apaga as curtidas junto com o projeto', async () => {
+    const project = await payload.create({
+      collection: 'projects',
+      data: {
+        title: 'Projeto curtido',
+        summary: 'Projeto criado pelo teste de curtidas.',
+        stack: ['TypeScript'],
+        category: 'web',
+        progress: 'done',
+        date: '2026-01-01',
+        _status: 'published',
+      },
+    })
+    const visitor = crypto.randomUUID()
+    await payload.create({ collection: 'likes', data: { project: project.id, visitor } })
+
+    // O índice único do banco recusa a mesma dupla projeto + visitante.
+    await expect(
+      payload.create({ collection: 'likes', data: { project: project.id, visitor } }),
+    ).rejects.toThrow()
+
+    // Visitante sem login não lê nem cria curtidas pela API.
+    await expect(payload.find({ collection: 'likes', overrideAccess: false })).rejects.toThrow()
+    await expect(
+      payload.create({
+        collection: 'likes',
+        data: { project: project.id, visitor: crypto.randomUUID() },
+        overrideAccess: false,
+      }),
+    ).rejects.toThrow()
+
+    // Apagar o projeto leva as curtidas junto (senão o banco recusaria apagar).
+    await payload.delete({ collection: 'projects', id: project.id })
+    const left = await payload.count({
+      collection: 'likes',
+      where: { project: { equals: project.id } },
+    })
+    expect(left.totalDocs).toBe(0)
+  })
+})

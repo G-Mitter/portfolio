@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     projects: Project;
     messages: Message;
+    likes: Like;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -80,6 +81,7 @@ export interface Config {
   collectionsSelect: {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     messages: MessagesSelect<false> | MessagesSelect<true>;
+    likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -220,6 +222,19 @@ export interface Message {
   createdAt: string;
 }
 /**
+ * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likes".
+ */
+export interface Like {
+  id: number;
+  project: number | Project;
+  visitor: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -276,6 +291,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'messages';
         value: number | Message;
+      } | null)
+    | ({
+        relationTo: 'likes';
+        value: number | Like;
       } | null)
     | ({
         relationTo: 'media';
@@ -366,6 +385,16 @@ export interface MessagesSelect<T extends boolean = true> {
   problem?: T;
   source?: T;
   answered?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "likes_select".
+ */
+export interface LikesSelect<T extends boolean = true> {
+  project?: T;
+  visitor?: T;
   updatedAt?: T;
   createdAt?: T;
 }
