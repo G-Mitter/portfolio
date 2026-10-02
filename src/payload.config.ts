@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
@@ -47,6 +48,18 @@ export default buildConfig({
     // Mudou uma coleção? Rode `pnpm payload migrate:create nome-da-mudanca`.
     prodMigrations: migrations,
   }),
+  // Envio de e-mail (aviso de mensagem nova do formulário) pelo Resend.
+  // Sem a variável RESEND_API_KEY (no seu computador), o Payload só escreve
+  // o e-mail no terminal em vez de enviar.
+  // EMAIL_FROM: remetente. O padrão onboarding@resend.dev funciona sem domínio
+  // próprio, mas só entrega no e-mail da sua conta do Resend.
+  email: process.env.RESEND_API_KEY
+    ? resendAdapter({
+        apiKey: process.env.RESEND_API_KEY,
+        defaultFromAddress: process.env.EMAIL_FROM || 'onboarding@resend.dev',
+        defaultFromName: 'Portfólio',
+      })
+    : undefined,
   sharp,
   plugins: [
     // Onde as imagens enviadas pelo /admin ficam guardadas.

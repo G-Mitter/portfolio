@@ -1,7 +1,7 @@
 import { getPayload, Payload } from 'payload'
 import config from '@/payload.config'
 
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 
 let payload: Payload
 const createdIds: number[] = []
@@ -109,5 +109,39 @@ describe('Mensagens', () => {
     const saved = await payload.create({ collection: 'messages', data })
     expect(saved.answered).toBe(false)
     await payload.delete({ collection: 'messages', id: saved.id })
+  })
+
+  it('avisa por e-mail quando chega mensagem nova', async () => {
+    const profile = await payload.findGlobal({ slug: 'profile' })
+    const previousEmail = profile.links?.email ?? null
+    await payload.updateGlobal({
+      slug: 'profile',
+      data: { links: { ...profile.links, email: 'eu@exemplo.com' } },
+    })
+    // Troca o envio de verdade por um "espião" que só anota o que foi pedido
+    const send = vi.spyOn(payload, 'sendEmail').mockResolvedValue({})
+
+    const saved = await payload.create({
+      collection: 'messages',
+      data: { name: 'Maria', contact: 'maria@empresa.com', problem: 'Planilhas demais.' },
+    })
+    expect(send).toHaveBeenCalledWith(
+      expect.objectContaining({ to: 'eu@exemplo.com', replyTo: 'maria@empresa.com' }),
+    )
+
+    // Um erro no envio não impede a mensagem de ser salva
+    send.mockRejectedValueOnce(new Error('Resend fora do ar'))
+    const second = await payload.create({
+      collection: 'messages',
+      data: { name: 'João', contact: '(31) 99999-0000', problem: 'Relatório manual.' },
+    })
+    expect(second.id).toBeGreaterThan(saved.id)
+
+    send.mockRestore()
+    await payload.delete({ collection: 'messages', where: { id: { in: [saved.id, second.id] } } })
+    await payload.updateGlobal({
+      slug: 'profile',
+      data: { links: { ...profile.links, email: previousEmail } },
+    })
   })
 })
