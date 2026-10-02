@@ -2,6 +2,8 @@ import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono } from 'next/font/go
 import type { Metadata } from 'next'
 import React from 'react'
 
+import { siteUrl } from '@/lib/siteUrl'
+
 import './styles.css'
 
 /**
@@ -18,19 +20,8 @@ const body = IBM_Plex_Sans({
 })
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 
-/**
- * Endereço público do site. O Next usa para completar links relativos nos
- * metadados, como a imagem de prévia (og:image) que o LinkedIn e o WhatsApp
- * mostram ao compartilhar um projeto: eles precisam do endereço completo.
- * Ordem: NEXT_PUBLIC_SERVER_URL (domínio próprio, se um dia tiver) →
- * VERCEL_PROJECT_PRODUCTION_URL (criada pela Vercel) → localhost.
- */
-const siteUrl =
-  process.env.NEXT_PUBLIC_SERVER_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : 'http://localhost:3000')
-
+// O Next usa o endereço completo para links relativos nos metadados, como a
+// imagem de prévia (og:image) que o LinkedIn e o WhatsApp mostram ao compartilhar.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
