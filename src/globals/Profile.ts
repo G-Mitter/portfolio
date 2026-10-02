@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { instagramUrl } from '../lib/instagram'
+
 /**
  * "Global" é um documento único (não uma lista). Serve para o topo do site:
  * nome, bio, contadores e links. Você edita em /admin > Perfil,
@@ -87,6 +89,15 @@ export const Profile: GlobalConfig = {
           label: 'LinkedIn',
           type: 'text',
           defaultValue: 'https://www.linkedin.com/in/guilherme-mitter',
+        },
+        {
+          name: 'instagram',
+          label: 'Instagram',
+          type: 'text',
+          admin: { description: 'Seu usuário (@seuperfil) ou o link do perfil.' },
+          // Recusa textos que não viram um link de perfil, para o botão não levar a lugar errado.
+          validate: (value: string | null | undefined) =>
+            !value || instagramUrl(value) !== null || 'Digite o usuário, por exemplo @seuperfil.',
         },
         { name: 'email', label: 'E-mail de contato', type: 'email' },
         {

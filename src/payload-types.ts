@@ -501,6 +501,10 @@ export interface Profile {
   links?: {
     github?: string | null;
     linkedin?: string | null;
+    /**
+     * Seu usuário (@seuperfil) ou o link do perfil.
+     */
+    instagram?: string | null;
     email?: string | null;
     /**
      * Número com DDD, do jeito que preferir. Ex.: (31) 99999-0000
@@ -549,6 +553,7 @@ export interface ProfileSelect<T extends boolean = true> {
     | {
         github?: T;
         linkedin?: T;
+        instagram?: T;
         email?: T;
         whatsapp?: T;
         resume?: T;
