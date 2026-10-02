@@ -7,6 +7,7 @@ import * as migration_20261002_144740_como_eu_trabalho from './20261002_144740_c
 import * as migration_20261002_150425_instagram from './20261002_150425_instagram';
 import * as migration_20261002_152720_tecnologias from './20261002_152720_tecnologias';
 import * as migration_20261002_154200_recomendacoes from './20261002_154200_recomendacoes';
+import * as migration_20261002_162615_curtidas from './20261002_162615_curtidas';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261002_154200_recomendacoes.up,
     down: migration_20261002_154200_recomendacoes.down,
-    name: '20261002_154200_recomendacoes'
+    name: '20261002_154200_recomendacoes',
+  },
+  {
+    up: migration_20261002_162615_curtidas.up,
+    down: migration_20261002_162615_curtidas.down,
+    name: '20261002_162615_curtidas'
   },
 ];

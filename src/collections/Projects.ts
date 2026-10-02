@@ -32,6 +32,13 @@ export const Projects: CollectionConfig = {
   // O feed usa a mesma ordem (só os projetos fixados ficam sempre acima).
   orderable: true,
   hooks: {
+    // Ao apagar um projeto, apagamos antes as curtidas dele.
+    // Sem isso o banco recusaria apagar o projeto, porque cada curtida aponta para ele.
+    beforeDelete: [
+      async ({ id, req }) => {
+        await req.payload.delete({ collection: 'likes', where: { project: { equals: id } }, req })
+      },
+    ],
     beforeChange: [
       // Por padrão o Payload coloca um documento novo no FIM da lista.
       // Como no Instagram, queremos o post novo no TOPO: geramos um `_order`

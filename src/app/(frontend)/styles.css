@@ -144,6 +144,21 @@ a { color: var(--accent); }
 .body { padding: 18px; display: grid; gap: 16px; }
 .body h2 { font-family: var(--display); font-size: 26px; margin: 0; letter-spacing: -0.01em; line-height: 1.1; }
 .body p { margin: 0; }
+.like { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+.like-btn { display: grid; place-items: center; width: 40px; height: 40px; margin: -8px 0 -8px -8px; padding: 0; border: 0; background: none; color: var(--fg); cursor: pointer; }
+.like-btn svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; transition: transform 0.15s ease; }
+.like-btn[aria-pressed='true'] { color: #ed4956; }
+.like-btn[aria-pressed='true'] svg { fill: currentColor; animation: like-pop 0.3s ease; }
+.like-btn:disabled { cursor: progress; }
+@keyframes like-pop { 50% { transform: scale(1.25); } }
+/* Convite que aparece depois da primeira curtida */
+.invite { width: min(420px, calc(100vw - 32px)); padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--fg); }
+.invite::backdrop { background: rgb(0 0 0 / 0.55); }
+.invite h2 { font-family: var(--display); font-size: 22px; margin: 0 0 8px; }
+.invite p { margin: 0 0 18px; color: var(--muted); }
+.invite-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.invite-actions .btn { padding: 10px 16px; }
+.invite-close { position: absolute; top: 8px; right: 10px; border: 0; background: none; color: var(--muted); font-size: 24px; line-height: 1; cursor: pointer; }
 .richtext p + p { margin-top: 0.8em; }
 .label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
 .result { border-left: 3px solid var(--accent); padding: 6px 0 6px 12px; font-weight: 600; }
@@ -248,4 +263,5 @@ a { color: var(--accent); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hover { transition: none; }
+  .like-btn svg { transition: none; animation: none !important; }
 }
