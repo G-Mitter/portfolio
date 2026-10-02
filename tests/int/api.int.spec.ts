@@ -187,3 +187,22 @@ describe('Curtidas', () => {
     expect(left.totalDocs).toBe(0)
   })
 })
+
+describe('Visualizações', () => {
+  it('soma visualizações e visitantes na mesma linha da página', async () => {
+    const { addView } = await import('@/lib/views')
+    const path = `/projetos/teste-${Date.now()}`
+    await addView(payload, path, true)
+    await addView(payload, path, false)
+    await Promise.all([addView(payload, path, false), addView(payload, path, true)])
+
+    const { docs } = await payload.find({
+      collection: 'page-views',
+      where: { path: { equals: path } },
+    })
+    expect(docs).toHaveLength(1)
+    expect(Number(docs[0].views)).toBe(4)
+    expect(Number(docs[0].visitors)).toBe(2)
+    await payload.delete({ collection: 'page-views', id: docs[0].id })
+  })
+})

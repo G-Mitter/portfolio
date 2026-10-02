@@ -1,8 +1,8 @@
-import { Analytics } from '@vercel/analytics/next'
 import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono } from 'next/font/google'
 import type { Metadata } from 'next'
 import React from 'react'
 
+import { ViewCounter } from '@/components/ViewCounter'
 import { siteUrl } from '@/lib/siteUrl'
 
 import './styles.css'
@@ -38,9 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <main className="wrap">{children}</main>
-        {/* Conta visitas e páginas vistas (Vercel > projeto > Analytics). Sem cookies e sem
-            guardar quem é a pessoa. Só fica no site público, o /admin não é contado. */}
-        <Analytics />
+        {/* Conta as visualizações de cada página para mostrar em /admin > Visualizações. */}
+        <ViewCounter />
       </body>
     </html>
   )
