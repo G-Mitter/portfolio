@@ -4,6 +4,7 @@ import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
 import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
+import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
 import { whatsappUrl } from '@/lib/whatsapp'
 
@@ -46,6 +47,7 @@ export default async function HomePage({ searchParams }: Props) {
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
       <Services services={profile.services} />
+      <Process steps={profile.process} />
       <ContactSection
         whatsapp={whatsappUrl(
           profile.links?.whatsapp,
