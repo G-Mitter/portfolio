@@ -6,7 +6,7 @@ import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
 import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
-import { whatsappUrl } from '@/lib/whatsapp'
+import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
 /**
  * 'force-dynamic' faz a página buscar os dados a cada visita.
@@ -49,10 +49,7 @@ export default async function HomePage({ searchParams }: Props) {
       <Services services={profile.services} />
       <Process steps={profile.process} />
       <ContactSection
-        whatsapp={whatsappUrl(
-          profile.links?.whatsapp,
-          `Olá, ${profile.name.split(' ')[0]}! Vi seu portfólio e gostaria de conversar.`,
-        )}
+        whatsapp={whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))}
         email={profile.links?.email}
         source={typeof projeto === 'string' ? projeto : undefined}
       />

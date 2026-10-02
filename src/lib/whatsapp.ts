@@ -19,3 +19,13 @@ export function whatsappUrl(phone: string | null | undefined, message?: string):
   const text = message ? `?text=${encodeURIComponent(message)}` : ''
   return `https://wa.me/${digits}${text}`
 }
+
+/**
+ * Mensagem que já vem escrita quando o visitante abre o WhatsApp pelo site.
+ * Fala do problema do cliente (um processo manual), não só "vi seu portfólio",
+ * para a conversa já começar pelo que importa.
+ */
+export function contactMessage(name: string): string {
+  const firstName = name.split(' ')[0]
+  return `Olá, ${firstName}! Acessei seu site e tenho um processo manual na minha empresa que gostaria de automatizar. Podemos conversar?`
+}
