@@ -479,6 +479,19 @@ export interface Profile {
       }[]
     | null;
   /**
+   * A lista que aparece logo depois do feed, para recrutadores. Cada grupo tem um nome e as tecnologias separadas por vírgula.
+   */
+  skills?:
+    | {
+        group: string;
+        /**
+         * Separe por vírgula. Ex.: JavaScript, TypeScript, Python
+         */
+        items: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Os serviços que aparecem antes do formulário de contato. Escreva pensando no cliente: o problema que você resolve, não a tecnologia.
    */
   services?:
@@ -532,6 +545,13 @@ export interface ProfileSelect<T extends boolean = true> {
     | {
         value?: T;
         label?: T;
+        id?: T;
+      };
+  skills?:
+    | T
+    | {
+        group?: T;
+        items?: T;
         id?: T;
       };
   services?:

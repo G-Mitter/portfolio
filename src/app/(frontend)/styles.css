@@ -148,6 +148,15 @@ a { color: var(--accent); }
 .available { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--done); text-decoration: none; border: 1px solid currentColor; border-radius: 99px; padding: 3px 11px; }
 .available i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
 
+/* Tecnologias (para recrutadores), logo depois do feed */
+.skills { margin-top: 48px; }
+.skills h2 { font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0 0 6px; }
+.skills > p { margin: 0 0 16px; color: var(--muted); }
+.skills dl { display: grid; grid-template-columns: max-content 1fr; gap: 12px 20px; margin: 0; align-items: baseline; }
+.skills dt { font-size: 14px; font-weight: 600; color: var(--muted); }
+.skills dl > div { display: contents; }
+.skills dd { margin: 0; }
+
 /* Como posso ajudar */
 .services { margin-top: 48px; }
 .services h2 { font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0 0 16px; }
@@ -192,6 +201,8 @@ a { color: var(--accent); }
 @media (max-width: 640px) {
   .contact-cta { grid-template-columns: 1fr; padding: 18px; }
   .contact-form { grid-template-columns: 1fr; }
+  .skills dl { grid-template-columns: 1fr; gap: 4px; }
+  .skills dl > div + div dt { margin-top: 10px; }
   /* No celular as etapas viram uma linha do tempo vertical, uma embaixo da outra */
   .process ol { grid-template-columns: 1fr; gap: 8px; }
   .profile { gap: 14px 18px; }
