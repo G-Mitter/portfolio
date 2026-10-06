@@ -7,7 +7,7 @@ import type { Profile } from '@/payload-types'
 
 /**
  * Topo da página inicial: quem você é, o que resolve e para onde ir.
- * O botão principal leva ao portfólio; os outros, direto ao contato.
+ * O botão principal leva ao contato; o outro, ao portfólio.
  */
 export function Intro({ profile }: { profile: Profile }) {
   const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
@@ -34,18 +34,21 @@ export function Intro({ profile }: { profile: Profile }) {
           Disponível para projetos
         </a>
       )}
+      {/* O botão de destaque leva ao contato (WhatsApp, ou o formulário se não houver número):
+          é a ação que a página quer. Ver os projetos fica como segunda opção. */}
       <div className="p-actions">
-        <Link className="btn primary" href="/portfolio">
-          Ver meus projetos
-        </Link>
-        <a className="btn" href="#contato">
-          Falar sobre meu projeto
-        </a>
-        {whatsapp && (
-          <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
-            WhatsApp
+        {whatsapp ? (
+          <a className="btn primary whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
+            Conversar no WhatsApp
+          </a>
+        ) : (
+          <a className="btn primary" href="#contato">
+            Falar sobre meu projeto
           </a>
         )}
+        <Link className="btn" href="/portfolio">
+          Ver meus projetos
+        </Link>
       </div>
     </header>
   )
