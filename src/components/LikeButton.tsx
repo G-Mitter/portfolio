@@ -82,7 +82,7 @@ export function LikeButton({ slug, initialLiked, initialCount }: Props) {
           <Link className="btn primary" href={`/?projeto=${slug}#contato`}>
             Falar sobre meu projeto
           </Link>
-          <Link className="btn" href="/">
+          <Link className="btn" href="/portfolio">
             Ver mais projetos
           </Link>
         </div>

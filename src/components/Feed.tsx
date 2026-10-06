@@ -6,12 +6,11 @@
  * A página que busca os dados no banco continua rodando no servidor
  * e só entrega a lista de projetos pronta para cá.
  */
-import Link from 'next/link'
 import { useState } from 'react'
 
 import type { Project } from '@/payload-types'
-import { CATEGORY_ICONS, CATEGORY_LABELS, STATUS_LABELS } from '@/lib/labels'
-import { PostCover } from './PostCover'
+import { CATEGORY_ICONS, CATEGORY_LABELS } from '@/lib/labels'
+import { PostTile } from './PostTile'
 
 type Filter = 'all' | 'in-progress' | Project['category']
 
@@ -59,29 +58,7 @@ export function Feed({ projects }: { projects: Project[] }) {
       <div className="grid">
         {visible.length === 0 && <p className="empty">Nenhum projeto nesta categoria ainda.</p>}
         {visible.map((project) => (
-          <Link
-            key={project.id}
-            href={`/projetos/${project.slug}`}
-            className="post"
-            aria-label={`${project.title}, ${STATUS_LABELS[project.progress]}`}
-          >
-            <PostCover project={project} />
-            {project.pinned && <span className="pin">📌 fixado</span>}
-            <span className="badge">
-              <i className={`dot-${project.progress}`} />
-              {STATUS_LABELS[project.progress]}
-            </span>
-            {/* No hover, o resultado vem primeiro (o que o cliente quer saber)
-                e as tecnologias depois (o que o recrutador quer saber). */}
-            <span className="hover">
-              {project.result && <b className="hover-result">{project.result}</b>}
-              <span className="hover-stack">
-                {project.stack.map((tech) => (
-                  <span key={tech}>{tech}</span>
-                ))}
-              </span>
-            </span>
-          </Link>
+          <PostTile key={project.id} project={project} />
         ))}
       </div>
     </>
