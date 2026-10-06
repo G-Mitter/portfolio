@@ -40,7 +40,7 @@ export default async function HomePage({ searchParams }: Props) {
 
   return (
     <>
-      <Intro profile={profile} />
+      <Intro profile={profile} projectCount={projects.totalDocs} />
       {projects.docs.length > 0 && (
         <section className="featured" aria-labelledby="destaques-titulo">
           <h2 id="destaques-titulo">Projetos em destaque</h2>

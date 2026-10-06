@@ -172,11 +172,15 @@ a { color: var(--accent); }
 .available i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
 
 /* Página inicial: apresentação centralizada e três projetos em destaque */
-.intro { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 24px 0 36px; border-bottom: 1px solid var(--line); }
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); align-items: center; gap: 40px; padding: 24px 0 40px; border-bottom: 1px solid var(--line); }
+.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+/* Foto em retrato (4:5) com cantos arredondados e um bloco na cor de destaque atrás, deslocado. */
+.intro-photo { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 24px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 72px; color: var(--on-cover); background: var(--c-automation); box-shadow: 14px 14px 0 color-mix(in srgb, var(--accent) 35%, transparent); }
+.intro-photo img { object-fit: cover; object-position: center 20%; }
+.intro .stats { margin: 4px 0 0; }
 .intro h1 { margin: 0; max-width: 22ch; font-family: var(--display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
 .intro .available { margin: 0; }
-.intro .p-actions { justify-content: center; }
 .intro .btn { padding: 10px 18px; font-size: 15px; }
 .featured { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .featured h2 { align-self: stretch; font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0; }
@@ -247,7 +251,9 @@ a { color: var(--accent); }
 
 @media (max-width: 640px) {
   /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
-  .intro .p-actions { flex-wrap: wrap; }
+  .intro { grid-template-columns: 1fr; gap: 24px; padding-top: 8px; }
+  .intro-photo { order: -1; aspect-ratio: 4 / 3; margin-right: 10px; box-shadow: 10px 10px 0 color-mix(in srgb, var(--accent) 35%, transparent); }
+  .intro .p-actions { flex-wrap: wrap; align-self: stretch; }
   .intro .p-actions .btn.primary { flex-basis: 100%; }
   .intro .loc { display: block; }
   .contact-cta { grid-template-columns: 1fr; padding: 18px; }
