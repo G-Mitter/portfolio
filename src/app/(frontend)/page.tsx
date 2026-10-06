@@ -45,8 +45,12 @@ export default async function HomePage({ searchParams }: Props) {
         <section className="featured" aria-labelledby="destaques-titulo">
           <h2 id="destaques-titulo">Projetos em destaque</h2>
           <div className="grid">
+            {/* O resultado fica escrito embaixo da capa: no celular não existe hover. */}
             {projects.docs.map((project) => (
-              <PostTile key={project.id} project={project} />
+              <div key={project.id}>
+                <PostTile project={project} />
+                {project.result && <p className="featured-result">{project.result}</p>}
+              </div>
             ))}
           </div>
           <Link className="btn" href="/portfolio">
