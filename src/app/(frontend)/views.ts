@@ -11,8 +11,8 @@ import { addView } from '@/lib/views'
  * deste navegador nesta página (para contar visitantes diferentes).
  */
 export async function countView(path: string, firstVisit: boolean): Promise<void> {
-  // Só a página inicial e páginas de projeto, para ninguém criar linhas com endereço inventado.
-  const match = /^\/(?:projetos\/([a-z0-9-]{1,100}))?$/.exec(String(path))
+  // Só a página inicial, o portfólio e páginas de projeto, para ninguém criar linhas com endereço inventado.
+  const match = /^\/(?:portfolio|projetos\/([a-z0-9-]{1,100}))?$/.exec(String(path))
   if (!match) return
   // Você logado no /admin não conta (o Payload guarda o login neste cookie).
   if ((await cookies()).has('payload-token')) return

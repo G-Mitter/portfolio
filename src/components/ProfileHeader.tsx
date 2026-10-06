@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { initials } from '@/lib/initials'
 import { instagramUrl } from '@/lib/instagram'
@@ -40,10 +41,10 @@ export function ProfileHeader({ profile, projectCount }: Props) {
           <h1 className="handle">{profile.handle ?? profile.name}</h1>
           {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
           <div className="p-actions">
-            {/* Botão principal: leva ao formulário no fim da página. */}
-            <a className="btn primary" href="#contato">
+            {/* Botão principal: leva ao formulário da página inicial. */}
+            <Link className="btn primary" href="/#contato">
               Falar sobre meu projeto
-            </a>
+            </Link>
             {whatsapp && (
               <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
                 WhatsApp
@@ -64,10 +65,10 @@ export function ProfileHeader({ profile, projectCount }: Props) {
         {/* Selo que diz na hora que você aceita trabalho; liga e desliga no /admin.
             Fica fora da linha dos botões para não empurrar nenhum para baixo. */}
         {profile.available && (
-          <a className="available" href="#contato">
+          <Link className="available" href="/#contato">
             <i aria-hidden="true" />
             Disponível para projetos
-          </a>
+          </Link>
         )}
         {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
         {profile.bio && <p className="headline">{profile.bio}</p>}

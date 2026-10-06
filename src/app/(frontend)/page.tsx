@@ -1,20 +1,16 @@
+import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
-import { Feed } from '@/components/Feed'
-import { ProfileHeader } from '@/components/ProfileHeader'
+import { Intro } from '@/components/Intro'
+import { PostTile } from '@/components/PostTile'
 import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
-import { Skills } from '@/components/Skills'
 import { Testimonials } from '@/components/Testimonials'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
-/**
- * 'force-dynamic' faz a página buscar os dados a cada visita.
- * Assim, um post publicado no /admin aparece na hora.
- * Na Sprint 7 (performance) trocamos por cache com revalidação.
- */
+// Busca os dados a cada visita: o que você muda no /admin aparece na hora.
 export const dynamic = 'force-dynamic'
 
 type Props = {
@@ -22,33 +18,42 @@ type Props = {
   searchParams: Promise<{ projeto?: string | string[] }>
 }
 
+/**
+ * Página inicial (guimitter.com.br): apresentação para clientes.
+ * Mostra quem você é, três projetos em destaque e o que você oferece,
+ * e termina no formulário de contato. O feed completo fica em /portfolio.
+ */
 export default async function HomePage({ searchParams }: Props) {
   const { projeto } = await searchParams
-
-  // getPayload dá acesso direto ao banco pelo "Local API" do Payload.
-  // Como esta página roda no servidor, não precisa de fetch nem de URL de API.
   const payload = await getPayload({ config })
 
-  // Promise.all dispara as duas consultas ao mesmo tempo em vez de uma depois da outra.
   const [profile, projects] = await Promise.all([
     payload.findGlobal({ slug: 'profile', depth: 1 }),
     payload.find({
       collection: 'projects',
-      depth: 1, // traz a imagem de capa completa (url, alt), não só o id
-      limit: 100,
-      // Fixados primeiro; o resto segue a ordem que você arrasta no /admin.
+      depth: 1,
+      limit: 3, // os três primeiros do feed: fixados e depois a ordem do /admin
       sort: ['-pinned', '_order'],
-      // overrideAccess: false aplica as regras de acesso de um visitante:
-      // rascunhos não aparecem no feed público.
       overrideAccess: false,
     }),
   ])
 
   return (
     <>
-      <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
-      <Feed projects={projects.docs} />
-      <Skills skills={profile.skills} />
+      <Intro profile={profile} />
+      {projects.docs.length > 0 && (
+        <section className="featured" aria-labelledby="destaques-titulo">
+          <h2 id="destaques-titulo">Projetos em destaque</h2>
+          <div className="grid">
+            {projects.docs.map((project) => (
+              <PostTile key={project.id} project={project} />
+            ))}
+          </div>
+          <Link className="btn" href="/portfolio">
+            Ver todos os {projects.totalDocs} projetos →
+          </Link>
+        </section>
+      )}
       <Services services={profile.services} />
       <Process steps={profile.process} />
       <Testimonials testimonials={profile.testimonials} />

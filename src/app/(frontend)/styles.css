@@ -171,6 +171,17 @@ a { color: var(--accent); }
 .available { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 8px; font-size: 13px; font-weight: 600; color: var(--done); text-decoration: none; border: 1px solid currentColor; border-radius: 99px; padding: 3px 11px; }
 .available i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
 
+/* Página inicial: apresentação centralizada e três projetos em destaque */
+.intro { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: 24px 0 36px; border-bottom: 1px solid var(--line); }
+.intro h1 { margin: 0; max-width: 22ch; font-family: var(--display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+.intro-name { margin: 0; color: var(--muted); font-size: 15px; }
+.intro .available { margin: 0; }
+.intro .p-actions { justify-content: center; }
+.intro .btn { padding: 10px 18px; font-size: 15px; }
+.featured { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.featured h2 { align-self: stretch; font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0; }
+.featured .grid { align-self: stretch; }
+
 /* Tecnologias (para recrutadores), logo depois do feed */
 .skills { margin-top: 48px; }
 .skills h2 { font-family: var(--display); font-size: 26px; letter-spacing: -0.01em; margin: 0 0 6px; }
@@ -234,6 +245,10 @@ a { color: var(--accent); }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 @media (max-width: 640px) {
+  /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
+  .intro .p-actions { flex-wrap: wrap; }
+  .intro .p-actions .btn.primary { flex-basis: 100%; }
+  .intro .loc { display: block; }
   .contact-cta { grid-template-columns: 1fr; padding: 18px; }
   .contact-form { grid-template-columns: 1fr; }
   .skills dl { grid-template-columns: 1fr; gap: 4px; }

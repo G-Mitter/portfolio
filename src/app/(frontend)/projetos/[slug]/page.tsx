@@ -91,8 +91,8 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <Link className="back" href="/">
-        ← voltar ao feed
+      <Link className="back" href="/portfolio">
+        ← voltar ao portfólio
       </Link>
       <article className="detail">
         <div className="carousel">

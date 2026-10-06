@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
   // - SAMEORIGIN: outro site não consegue abrir o seu dentro de um iframe (golpe de clique falso);
   // - Referrer-Policy: ao clicar num link externo, só o domínio é enviado, não a página inteira;
   // - Permissions-Policy: o site não pede câmera, microfone nem localização.
+  // Aceita também o endereço com a grafia "portifolio" e leva para o certo.
+  async redirects() {
+    return [{ source: '/portifolio', destination: '/portfolio', permanent: true }]
+  },
   async headers() {
     return [
       {
