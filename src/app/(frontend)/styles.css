@@ -142,7 +142,7 @@ a { color: var(--accent); }
 }
 .side { display: flex; flex-direction: column; min-width: 0; }
 .body { padding: 18px; display: grid; gap: 16px; }
-.body h2 { font-family: var(--display); font-size: 26px; margin: 0; letter-spacing: -0.01em; line-height: 1.1; }
+.body h1, .body h2 { font-family: var(--display); font-size: 26px; margin: 0; letter-spacing: -0.01em; line-height: 1.1; }
 .body p { margin: 0; }
 .like { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
 .like-btn { display: grid; place-items: center; width: 40px; height: 40px; margin: -8px 0 -8px -8px; padding: 0; border: 0; background: none; color: var(--fg); cursor: pointer; }

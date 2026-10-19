@@ -67,6 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: project.title,
     description: project.summary,
+    alternates: { canonical: `/projetos/${slug}` },
     openGraph: {
       title: project.title,
       description: project.summary,
@@ -105,7 +106,7 @@ export default async function ProjectPage({ params }: Props) {
               initialLiked={likes.liked}
               initialCount={likes.count}
             />
-            <h2>{project.title}</h2>
+            <h1>{project.title}</h1>
             <span className="status">
               <i className={`dot-${project.progress}`} />
               {STATUS_LABELS[project.progress]}

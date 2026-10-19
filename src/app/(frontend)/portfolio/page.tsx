@@ -9,7 +9,7 @@ import { Skills } from '@/components/Skills'
 // Busca os dados a cada visita: um post publicado no /admin aparece na hora.
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = { title: 'Portfólio' }
+export const metadata: Metadata = { title: 'Portfólio', alternates: { canonical: '/portfolio' } }
 
 /** /portfolio: o perfil no estilo rede social e o feed com todos os projetos. */
 export default async function PortfolioPage() {
