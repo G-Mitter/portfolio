@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 
@@ -8,10 +9,15 @@ import { PostTile } from '@/components/PostTile'
 import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
+import { instagramUrl } from '@/lib/instagram'
+import { siteUrl } from '@/lib/siteUrl'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
 // Busca os dados a cada visita: o que você muda no /admin aparece na hora.
 export const dynamic = 'force-dynamic'
+
+// Endereço oficial da página: evita o Google tratar /?projeto=... como outra página.
+export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 type Props = {
   // ?projeto=slug vem do botão "Quer algo parecido?" da página de um projeto.
@@ -38,8 +44,30 @@ export default async function HomePage({ searchParams }: Props) {
     }),
   ])
 
+  const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
+
+  // Dados estruturados (schema.org): a "ficha" que o Google lê para saber quem você é e onde atende.
+  const person = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    alternateName: ['guimitter', profile.handle].filter(Boolean),
+    jobTitle: profile.role,
+    url: siteUrl,
+    image: avatar?.url ? new URL(avatar.url, siteUrl).toString() : undefined,
+    address: { '@type': 'PostalAddress', addressLocality: 'Belo Horizonte', addressRegion: 'MG', addressCountry: 'BR' },
+    areaServed: ['Santa Luzia', 'Belo Horizonte'].map((name) => ({ '@type': 'City', name })),
+    knowsAbout: ['Automação de processos', 'RPA', 'Python', 'Desenvolvimento web', 'Inteligência artificial'],
+    sameAs: [profile.links?.github, profile.links?.linkedin, instagramUrl(profile.links?.instagram)].filter(Boolean),
+  }
+
   return (
     <>
+      {/* O "<" é trocado para que nenhum texto do /admin consiga fechar a tag <script>. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, '\\u003c') }}
+      />
       <Intro profile={profile} projectCount={projects.totalDocs} />
       {projects.docs.length > 0 && (
         <section className="featured" aria-labelledby="destaques-titulo">

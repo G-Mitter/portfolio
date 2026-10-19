@@ -26,11 +26,13 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' })
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Guilherme Mitter · Portfólio',
+    default: 'Guilherme Mitter (guimitter) · Automações em Belo Horizonte e Santa Luzia',
     template: '%s · Guilherme Mitter',
   },
   description:
-    'Projetos de automação, web e IA de Guilherme Mitter, desenvolvedor em Belo Horizonte.',
+    'Guilherme Mitter (guimitter), desenvolvedor de automações, sites e IA em Santa Luzia e Belo Horizonte. Veja os projetos e peça um orçamento.',
+  // Prévia ao compartilhar o link (LinkedIn, WhatsApp). O Next completa url e imagem de cada página.
+  openGraph: { type: 'website', locale: 'pt_BR', siteName: 'Guilherme Mitter' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
