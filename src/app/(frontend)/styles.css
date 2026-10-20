@@ -287,3 +287,7 @@ a { color: var(--accent); }
   .hover { transition: none; }
   .like-btn svg { transition: none; animation: none !important; }
 }
+
+/* Rodapé com a logo */
+.foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; max-width: 935px; margin: 0 auto; padding: 24px 16px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+.foot p { margin: 0; }

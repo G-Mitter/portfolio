@@ -40,6 +40,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <main className="wrap">{children}</main>
+        <footer className="foot">
+          {/* <picture> troca a logo conforme o tema do visitante (mesmo critério do styles.css). */}
+          <picture>
+            <source srcSet="/marca/logo-claro.png" media="(prefers-color-scheme: light)" />
+            <img src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} />
+          </picture>
+          <p>Automações em Belo Horizonte e região</p>
+        </footer>
         {/* Conta as visualizações de cada página para mostrar em /admin > Visualizações. */}
         <ViewCounter />
       </body>
