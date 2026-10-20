@@ -9,6 +9,7 @@ import * as migration_20261002_152720_tecnologias from './20261002_152720_tecnol
 import * as migration_20261002_154200_recomendacoes from './20261002_154200_recomendacoes';
 import * as migration_20261002_162615_curtidas from './20261002_162615_curtidas';
 import * as migration_20261002_165054_visualizacoes from './20261002_165054_visualizacoes';
+import * as migration_20261020_013314_dashboard_visualizacoes_por_dia from './20261020_013314_dashboard_visualizacoes_por_dia';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20261002_165054_visualizacoes.up,
     down: migration_20261002_165054_visualizacoes.down,
-    name: '20261002_165054_visualizacoes'
+    name: '20261002_165054_visualizacoes',
+  },
+  {
+    up: migration_20261020_013314_dashboard_visualizacoes_por_dia.up,
+    down: migration_20261020_013314_dashboard_visualizacoes_por_dia.down,
+    name: '20261020_013314_dashboard_visualizacoes_por_dia'
   },
 ];

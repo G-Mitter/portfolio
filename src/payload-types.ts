@@ -70,6 +70,7 @@ export interface Config {
     projects: Project;
     messages: Message;
     'page-views': PageView;
+    'page-view-days': PageViewDay;
     likes: Like;
     media: Media;
     users: User;
@@ -83,6 +84,7 @@ export interface Config {
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
     messages: MessagesSelect<false> | MessagesSelect<true>;
     'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
+    'page-view-days': PageViewDaysSelect<false> | PageViewDaysSelect<true>;
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -238,6 +240,19 @@ export interface PageView {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-days".
+ */
+export interface PageViewDay {
+  id: number;
+  path: string;
+  day: string;
+  views?: number | null;
+  visitors?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -311,6 +326,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'page-views';
         value: number | PageView;
+      } | null)
+    | ({
+        relationTo: 'page-view-days';
+        value: number | PageViewDay;
       } | null)
     | ({
         relationTo: 'likes';
@@ -414,6 +433,18 @@ export interface MessagesSelect<T extends boolean = true> {
  */
 export interface PageViewsSelect<T extends boolean = true> {
   path?: T;
+  views?: T;
+  visitors?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-days_select".
+ */
+export interface PageViewDaysSelect<T extends boolean = true> {
+  path?: T;
+  day?: T;
   views?: T;
   visitors?: T;
   updatedAt?: T;
