@@ -291,3 +291,27 @@ a { color: var(--accent); }
 /* Rodapé com a logo */
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; max-width: 935px; margin: 0 auto; padding: 24px 16px 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .foot p { margin: 0; }
+
+/* Dashboard (/dashboard) */
+.dash-head h1 { font-family: var(--display); margin: 24px 0 4px; }
+.dash-head p { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
+.dash-head a { color: var(--accent); }
+.dash-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.dash-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+.dash-card b { font-family: var(--display); font-size: 32px; line-height: 1.1; }
+.dash-card span { font-weight: 600; }
+.dash-card small { color: var(--muted); font-size: 12px; }
+.dash-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; overflow-x: auto; }
+.dash-box h2 { font-family: var(--display); margin: 0 0 4px; font-size: 18px; }
+.dash-help { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+.chart { width: 100%; height: auto; display: block; }
+.chart-grid { stroke: var(--line); }
+.chart-text { fill: var(--muted); font-size: 11px; }
+.chart-line { stroke: var(--accent); stroke-width: 2; }
+.chart-dot { fill: var(--accent); }
+.dash-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.dash-table th, .dash-table td { text-align: left; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--line); position: relative; white-space: nowrap; }
+.dash-table th { color: var(--muted); font-weight: 500; font-size: 12px; }
+.dash-bar { display: block; height: 4px; border-radius: 2px; background: var(--accent); margin-bottom: 4px; min-width: 2px; }
+.foot-dash { color: var(--muted); opacity: 0.5; display: inline-flex; padding: 6px; }
+.foot-dash:hover, .foot-dash:focus-visible { opacity: 1; color: var(--accent); }

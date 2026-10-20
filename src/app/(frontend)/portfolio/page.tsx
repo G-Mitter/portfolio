@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
@@ -35,6 +36,14 @@ export default async function PortfolioPage() {
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
       <Skills skills={profile.skills} />
+      {/* Atalho discreto para o dashboard (que pede login do /admin). */}
+      <p style={{ textAlign: 'right', margin: 0 }}>
+        <Link href="/dashboard" className="foot-dash" aria-label="Dashboard" title="Dashboard">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <rect x="1" y="9" width="3" height="6" rx="1" /><rect x="6.5" y="4" width="3" height="11" rx="1" /><rect x="12" y="1" width="3" height="14" rx="1" />
+          </svg>
+        </Link>
+      </p>
     </>
   )
 }
