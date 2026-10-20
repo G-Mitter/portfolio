@@ -71,6 +71,7 @@ export interface Config {
     messages: Message;
     'page-views': PageView;
     'page-view-days': PageViewDay;
+    'page-view-sources': PageViewSource;
     likes: Like;
     media: Media;
     users: User;
@@ -85,6 +86,7 @@ export interface Config {
     messages: MessagesSelect<false> | MessagesSelect<true>;
     'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
     'page-view-days': PageViewDaysSelect<false> | PageViewDaysSelect<true>;
+    'page-view-sources': PageViewSourcesSelect<false> | PageViewSourcesSelect<true>;
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -253,6 +255,18 @@ export interface PageViewDay {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-sources".
+ */
+export interface PageViewSource {
+  id: number;
+  day: string;
+  source: 'linkedin' | 'google' | 'instagram' | 'whatsapp' | 'direto' | 'outros';
+  visits?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -330,6 +344,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'page-view-days';
         value: number | PageViewDay;
+      } | null)
+    | ({
+        relationTo: 'page-view-sources';
+        value: number | PageViewSource;
       } | null)
     | ({
         relationTo: 'likes';
@@ -447,6 +465,17 @@ export interface PageViewDaysSelect<T extends boolean = true> {
   day?: T;
   views?: T;
   visitors?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-sources_select".
+ */
+export interface PageViewSourcesSelect<T extends boolean = true> {
+  day?: T;
+  source?: T;
+  visits?: T;
   updatedAt?: T;
   createdAt?: T;
 }
