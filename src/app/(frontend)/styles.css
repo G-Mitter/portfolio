@@ -259,7 +259,8 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 @media (max-width: 640px) {
   /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
   .intro { grid-template-columns: 1fr; width: 100vw; padding-top: 64px; }
-  .intro .available { top: 16px; }
+  /* Celular: o selo vai para a esquerda, na mesma margem do texto, menor. */
+  .intro .available { top: 18px; left: 16px; right: auto; padding: 2px 10px; font-size: 12.5px; }
   .intro-photo { grid-row: 1; width: min(78vw, 320px); margin-inline: auto; }
   .intro-big { grid-row: 2; font-size: 21vw; white-space: normal; text-align: center; margin-top: -0.5em; line-height: 0.88; }
   .intro-text { grid-row: 3; padding: 28px 0 40px; }
@@ -270,6 +271,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .contact-form { grid-template-columns: 1fr; }
   .skills dl { grid-template-columns: 1fr; gap: 4px; }
   .skills dl > div + div dt { margin-top: 10px; }
+  /* Destaques: uma fileira que desliza para o lado, com o próximo cartão aparecendo na ponta. */
+  .featured .grid { display: flex; gap: 12px; margin-inline: -16px; padding-inline: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; scrollbar-width: none; }
+  .featured .grid::-webkit-scrollbar { display: none; }
+  .featured .grid > div { flex: 0 0 78%; scroll-snap-align: start; }
+  .featured-result { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 15px; }
   .services li { grid-template-columns: 1fr; padding: 22px 0; }
   .process li { grid-template-columns: 64px minmax(0, 1fr); column-gap: 16px; padding: 22px 0; }
   .process li::before { font-size: 44px; }
@@ -422,3 +428,6 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .foot-nav a { transition: transform 0.2s ease, color 0.2s ease; }
   .foot-nav a:hover, .foot-nav a:focus-visible { transform: translateX(8px); }
 }
+
+/* No celular os destaques rolam na horizontal: a entrada pela rolagem vertical não se aplica a eles. */
+@media (max-width: 640px) { .featured .grid > div { animation: none; } }
