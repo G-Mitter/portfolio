@@ -40,7 +40,18 @@ export function ProfileHeader({ profile, projectCount }: Props) {
       </div>
       <div className="p-info">
         <div className="p-head">
-          <h1 className="handle">{profile.handle ?? profile.name}</h1>
+          {/* Nome e selo "Disponível" juntos; o selo liga e desliga no /admin. */}
+          <div className="p-id">
+            <h1 className="handle">{profile.handle ?? profile.name}</h1>
+            {profile.available && (
+              <Badge asChild variant="available" className="available">
+                <Link href="/#contato">
+                  <i aria-hidden="true" />
+                  Disponível para projetos
+                </Link>
+              </Badge>
+            )}
+          </div>
           {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
           <div className="p-actions">
             {/* Botão principal: leva ao formulário da página inicial. */}
@@ -66,16 +77,6 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             </li>
           ))}
         </ul>
-        {/* Selo que diz na hora que você aceita trabalho; liga e desliga no /admin.
-            Fica fora da linha dos botões para não empurrar nenhum para baixo. */}
-        {profile.available && (
-          <Badge asChild variant="available" className="available">
-            <Link href="/#contato">
-              <i aria-hidden="true" />
-              Disponível para projetos
-            </Link>
-          </Badge>
-        )}
         {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
         {profile.bio && <p className="headline">{profile.bio}</p>}
         <p className="bio">

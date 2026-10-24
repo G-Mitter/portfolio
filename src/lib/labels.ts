@@ -12,12 +12,6 @@ export const CATEGORY_LABELS: Record<Project['category'], string> = {
   data: 'Dados',
 }
 
-export const CATEGORY_ICONS: Record<Project['category'], string> = {
-  automation: '⚙',
-  web: '</>',
-  ai: '✦',
-  data: '▤',
-}
 
 export const STATUS_LABELS: Record<Project['progress'], string> = {
   'in-progress': 'Em andamento',
