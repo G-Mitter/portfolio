@@ -18,6 +18,10 @@ export function ContactSection({ whatsapp, email, source }: Props) {
   return (
     <Card asChild>
       <section id="contato" className="contact-cta band band-dark" aria-labelledby="contato-titulo">
+      {/* Fechamento em letras enormes; o título de verdade (h2) vem logo abaixo. */}
+      <p className="contact-big" aria-hidden="true">
+        Vamos conversar
+      </p>
       <div className="contact-intro">
         <h2 id="contato-titulo">Tem um processo manual tomando tempo da sua equipe?</h2>
         <p>
