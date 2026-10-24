@@ -6,6 +6,8 @@ import config from '@/payload.config'
 import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
 import { Skills } from '@/components/Skills'
+import { WhatsAppFloat } from '@/components/WhatsAppFloat'
+import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
 // Busca os dados a cada visita: um post publicado no /admin aparece na hora.
 export const dynamic = 'force-dynamic'
@@ -31,11 +33,14 @@ export default async function PortfolioPage() {
     }),
   ])
 
+  const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
+
   return (
     <>
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
       <Skills skills={profile.skills} />
+      {whatsapp && <WhatsAppFloat href={whatsapp} />}
       {/* Atalho discreto para o dashboard (que pede login do /admin). */}
       <p style={{ textAlign: 'right', margin: 0 }}>
         <Link href="/dashboard" className="foot-dash" aria-label="Dashboard" title="Dashboard">

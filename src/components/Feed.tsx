@@ -57,7 +57,14 @@ export function Feed({ projects }: { projects: Project[] }) {
       <div className={swapped ? 'grid swap' : 'grid'} key={filter}>
         {visible.length === 0 && <p className="empty">Nenhum projeto nesta categoria ainda.</p>}
         {visible.map((project) => (
-          <PostTile key={project.id} project={project} />
+          <div key={project.id}>
+            <PostTile project={project} />
+            {/* Categoria e tecnologias à vista (no celular o toque abre o projeto, então some). */}
+            <p className="tile-meta">
+              <b>{CATEGORY_LABELS[project.category]}</b>
+              {project.stack.length > 0 && ` · ${project.stack.slice(0, 3).join(', ')}`}
+            </p>
+          </div>
         ))}
       </div>
     </>
