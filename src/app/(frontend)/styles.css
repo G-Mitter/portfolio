@@ -177,7 +177,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 }
 .intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 8vw; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
-.intro h1 { margin: 0; max-width: 16ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(36px, 5.6vw, 68px); line-height: 1; letter-spacing: 0.01em; text-wrap: balance; }
+.intro h1 { margin: 0; max-width: 24ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
 /* Foto recortada sobre um disco azul: o disco é só um círculo de degradê atrás da imagem. */
 .intro-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; }
 .intro-photo::before { content: ''; position: absolute; inset: 0 0 auto; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
