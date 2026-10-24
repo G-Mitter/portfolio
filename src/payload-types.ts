@@ -72,6 +72,7 @@ export interface Config {
     'page-views': PageView;
     'page-view-days': PageViewDay;
     'page-view-sources': PageViewSource;
+    'page-view-places': PageViewPlace;
     likes: Like;
     media: Media;
     users: User;
@@ -87,6 +88,7 @@ export interface Config {
     'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
     'page-view-days': PageViewDaysSelect<false> | PageViewDaysSelect<true>;
     'page-view-sources': PageViewSourcesSelect<false> | PageViewSourcesSelect<true>;
+    'page-view-places': PageViewPlacesSelect<false> | PageViewPlacesSelect<true>;
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -267,6 +269,21 @@ export interface PageViewSource {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-places".
+ */
+export interface PageViewPlace {
+  id: number;
+  day: string;
+  country: string;
+  city?: string | null;
+  lat?: number | null;
+  lon?: number | null;
+  visits?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -348,6 +365,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'page-view-sources';
         value: number | PageViewSource;
+      } | null)
+    | ({
+        relationTo: 'page-view-places';
+        value: number | PageViewPlace;
       } | null)
     | ({
         relationTo: 'likes';
@@ -475,6 +496,20 @@ export interface PageViewDaysSelect<T extends boolean = true> {
 export interface PageViewSourcesSelect<T extends boolean = true> {
   day?: T;
   source?: T;
+  visits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-places_select".
+ */
+export interface PageViewPlacesSelect<T extends boolean = true> {
+  day?: T;
+  country?: T;
+  city?: T;
+  lat?: T;
+  lon?: T;
   visits?: T;
   updatedAt?: T;
   createdAt?: T;

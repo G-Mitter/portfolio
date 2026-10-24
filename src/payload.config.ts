@@ -15,6 +15,7 @@ import { Likes } from './collections/Likes'
 import { Messages } from './collections/Messages'
 import { PageViews } from './collections/PageViews'
 import { PageViewDays } from './collections/PageViewDays'
+import { PageViewPlaces } from './collections/PageViewPlaces'
 import { PageViewSources } from './collections/PageViewSources'
 import { Profile } from './globals/Profile'
 import { migrations } from './migrations'
@@ -29,7 +30,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, Likes, Media, Users],
+  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, PageViewPlaces, Likes, Media, Users],
   globals: [Profile],
   // Painel /admin em português
   i18n: {

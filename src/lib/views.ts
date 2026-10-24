@@ -1,6 +1,7 @@
 import { sql, type PostgresAdapter } from '@payloadcms/db-postgres'
 import type { Payload } from 'payload'
 
+import type { Place } from '@/lib/place'
 import type { Source } from '@/lib/source'
 
 /**
@@ -32,5 +33,15 @@ export async function addSource(payload: Payload, source: Source) {
     values (to_char(now() at time zone 'America/Sao_Paulo', 'YYYY-MM-DD'), ${source}, 1)
     on conflict (day, source) do update set
       visits = page_view_sources.visits + 1,
+      updated_at = now()`)
+}
+
+/** Soma 1 visita no lugar de hoje (mesmo comando único; coordenadas ficam as da primeira visita do dia). */
+export async function addPlace(payload: Payload, place: Place) {
+  await (payload.db as unknown as PostgresAdapter).drizzle.execute(sql`
+    insert into page_view_places (day, country, city, lat, lon, visits)
+    values (to_char(now() at time zone 'America/Sao_Paulo', 'YYYY-MM-DD'), ${place.country}, ${place.city}, ${place.lat}, ${place.lon}, 1)
+    on conflict (day, country, city) do update set
+      visits = page_view_places.visits + 1,
       updated_at = now()`)
 }

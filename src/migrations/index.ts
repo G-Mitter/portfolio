@@ -11,6 +11,7 @@ import * as migration_20261002_162615_curtidas from './20261002_162615_curtidas'
 import * as migration_20261002_165054_visualizacoes from './20261002_165054_visualizacoes';
 import * as migration_20261020_013314_dashboard_visualizacoes_por_dia from './20261020_013314_dashboard_visualizacoes_por_dia';
 import * as migration_20261020_015111_dashboard_origem_das_visitas from './20261020_015111_dashboard_origem_das_visitas';
+import * as migration_20261024_151913_dashboard_mapa_das_visitas from './20261024_151913_dashboard_mapa_das_visitas';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20261020_015111_dashboard_origem_das_visitas.up,
     down: migration_20261020_015111_dashboard_origem_das_visitas.down,
-    name: '20261020_015111_dashboard_origem_das_visitas'
+    name: '20261020_015111_dashboard_origem_das_visitas',
+  },
+  {
+    up: migration_20261024_151913_dashboard_mapa_das_visitas.up,
+    down: migration_20261024_151913_dashboard_mapa_das_visitas.down,
+    name: '20261024_151913_dashboard_mapa_das_visitas'
   },
 ];
