@@ -9,19 +9,18 @@
 import { useState } from 'react'
 
 import type { Project } from '@/payload-types'
-import { CATEGORY_ICONS, CATEGORY_LABELS } from '@/lib/labels'
+import { CATEGORY_LABELS } from '@/lib/labels'
 import { PostTile } from './PostTile'
 
 type Filter = 'all' | 'in-progress' | Project['category']
 
-const FILTERS: { value: Filter; label: string; icon: string }[] = [
-  { value: 'all', label: 'Tudo', icon: '∗' },
+const FILTERS: { value: Filter; label: string }[] = [
+  { value: 'all', label: 'Tudo' },
   ...(Object.keys(CATEGORY_LABELS) as Project['category'][]).map((category) => ({
     value: category,
     label: CATEGORY_LABELS[category],
-    icon: CATEGORY_ICONS[category],
   })),
-  { value: 'in-progress', label: 'Em andamento', icon: '…' },
+  { value: 'in-progress', label: 'Em andamento' },
 ]
 
 export function Feed({ projects }: { projects: Project[] }) {
@@ -50,15 +49,10 @@ export function Feed({ projects }: { projects: Project[] }) {
               setSwapped(true)
             }}
           >
-            <span className="ring">{item.icon}</span>
-            <small>{item.label}</small>
+            {item.label}
           </button>
         ))}
       </nav>
-
-      <div className="tabs">
-        <span className="on">▦ Projetos</span>
-      </div>
 
       <div className={swapped ? 'grid swap' : 'grid'} key={filter}>
         {visible.length === 0 && <p className="empty">Nenhum projeto nesta categoria ainda.</p>}
