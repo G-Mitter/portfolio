@@ -315,3 +315,9 @@ a { color: var(--accent); }
 .dash-bar { display: block; height: 4px; border-radius: 2px; background: var(--accent); margin-bottom: 4px; min-width: 2px; }
 .foot-dash { color: var(--muted); opacity: 0.5; display: inline-flex; padding: 6px; }
 .foot-dash:hover, .foot-dash:focus-visible { opacity: 1; color: var(--accent); }
+.dash-periods { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
+.dash-periods a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--muted); text-decoration: none; }
+.dash-periods a.on { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+.dash-sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.dash-sources li { display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 10px; font-size: 14px; }
+.dash-sources .dash-bar { margin: 0; height: 8px; }

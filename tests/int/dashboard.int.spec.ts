@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { dayKey, formatPercent, formatRatio, lastDays, ratio, shortDay } from '@/lib/dashboard'
+import { dayKey, formatPercent, formatRatio, lastDays, parsePeriod, periodDays, ratio, shortDay } from '@/lib/dashboard'
 
 describe('lastDays', () => {
   it('devolve os dias em ordem, com 0 onde não houve visita', () => {
@@ -31,4 +31,15 @@ describe('ratio', () => {
 
 describe('shortDay', () => {
   it('troca para dia/mês', () => expect(shortDay('2026-10-20')).toBe('20/10'))
+})
+
+describe('parsePeriod', () => {
+  it('aceita só valores da lista', () => {
+    expect(parsePeriod('7')).toBe('7')
+    expect(parsePeriod('tudo')).toBe('tudo')
+    expect(parsePeriod('9999')).toBe('30')
+    expect(parsePeriod(undefined)).toBe('30')
+    expect(periodDays('tudo')).toEqual({ chart: 90, limit: null })
+    expect(periodDays('7')).toEqual({ chart: 7, limit: 7 })
+  })
 })

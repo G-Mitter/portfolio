@@ -45,3 +45,17 @@ export function shortDay(day: string): string {
   const [, month, date] = day.split('-')
   return `${date}/${month}`
 }
+
+/** Períodos do filtro. "tudo" usa os totais antigos; os gráficos mostram até 90 dias. */
+export const PERIODS = ['7', '30', '90', 'tudo'] as const
+export type Period = (typeof PERIODS)[number]
+
+/** Lê `?dias=` e só aceita um valor da lista (o resto vira 30). */
+export function parsePeriod(value: string | undefined): Period {
+  return (PERIODS as readonly string[]).includes(value ?? '') ? (value as Period) : '30'
+}
+
+/** Quantos dias o gráfico mostra e a partir de quando contar (null = sem limite). */
+export function periodDays(period: Period): { chart: number; limit: number | null } {
+  return period === 'tudo' ? { chart: 90, limit: null } : { chart: Number(period), limit: Number(period) }
+}
