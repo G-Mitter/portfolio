@@ -209,20 +209,22 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .skills dd { margin: 0; }
 
 /* Como posso ajudar */
-.services h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0 0 16px; }
-.services ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px 36px; margin: 0; padding: 0; list-style: none; }
-.services li { max-width: 34ch; }
-.services h3 { font-family: var(--display); font-size: 18px; margin: 0 0 6px; line-height: 1.2; }
-.services p { margin: 0; color: var(--muted); font-size: 14px; }
+.services h2, .process h2 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: 0; margin: 0 0 32px; }
+/* Serviços: linhas de largura total, título grande à esquerda e explicação à direita. */
+.services ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.services li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 48px; align-items: baseline; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.services h3 { margin: 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(28px, 4vw, 46px); line-height: 1.02; }
+.services h3::after { content: ' \2192'; color: var(--accent); opacity: 0; }
+.services p { margin: 0; max-width: 46ch; color: var(--muted); font-size: 17px; line-height: 1.5; }
+@media (hover: hover) { .services li:hover h3::after { opacity: 1; } }
 
-/* Como eu trabalho: etapas numeradas */
-.process h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0 0 6px; }
-.process > p { margin: 0 0 16px; color: var(--muted); }
-.process ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: etapa; }
-.process li { counter-increment: etapa; padding: 14px 0 0; border-top: 2px solid var(--accent); }
-.process li::before { content: counter(etapa, decimal-leading-zero); display: block; font-family: var(--mono); font-size: 13px; color: var(--accent); margin-bottom: 6px; }
-.process h3 { font-family: var(--display); font-size: 17px; margin: 0 0 6px; line-height: 1.2; }
-.process li p { margin: 0; color: var(--muted); font-size: 14px; }
+/* Como eu trabalho: etapas em linhas, com o número grande só em contorno. */
+.process > p { margin: -16px 0 28px; color: var(--muted); font-size: 17px; }
+.process ol { margin: 0; padding: 0; list-style: none; counter-reset: etapa; border-top: 1px solid var(--line); }
+.process li { counter-increment: etapa; display: grid; grid-template-columns: minmax(110px, 0.3fr) minmax(0, 1fr); column-gap: 24px; align-items: start; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.process li::before { content: counter(etapa, decimal-leading-zero); grid-row: 1 / span 2; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(56px, 8vw, 104px); line-height: 0.85; color: transparent; -webkit-text-stroke: 1.5px var(--accent); }
+.process h3 { margin: 0 0 8px; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(24px, 3vw, 34px); line-height: 1.05; }
+.process li p { margin: 0; max-width: 56ch; color: var(--muted); font-size: 16px; line-height: 1.5; }
 /* Recomendações: cartões com a citação em cima e a pessoa embaixo */
 .testimonials h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0 0 16px; }
 .testimonials ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 36px; margin: 0; padding: 0; list-style: none; }
@@ -268,8 +270,9 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .contact-form { grid-template-columns: 1fr; }
   .skills dl { grid-template-columns: 1fr; gap: 4px; }
   .skills dl > div + div dt { margin-top: 10px; }
-  /* No celular as etapas viram uma linha do tempo vertical, uma embaixo da outra */
-  .process ol { grid-template-columns: 1fr; gap: 8px; }
+  .services li { grid-template-columns: 1fr; padding: 22px 0; }
+  .process li { grid-template-columns: 64px minmax(0, 1fr); column-gap: 16px; padding: 22px 0; }
+  .process li::before { font-size: 44px; }
   /* Celular: foto e nome lado a lado; o resto ocupa a largura toda embaixo */
   .profile { gap: 14px 16px; align-items: center; }
   .avatar { width: 80px; height: 80px; font-size: 28px; }
@@ -403,6 +406,9 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
     .services li:nth-child(2), .process li:nth-child(2), .testimonials li:nth-child(2), .featured .grid > div:nth-child(2) { animation-range: entry 6% entry 46%; }
     .services li:nth-child(3), .process li:nth-child(3), .testimonials li:nth-child(3), .featured .grid > div:nth-child(3) { animation-range: entry 12% entry 52%; }
     .process li:nth-child(4) { animation-range: entry 18% entry 58%; }
+    /* O contorno do número se preenche de azul quando a etapa chega ao meio da tela. */
+    .process li::before { animation: step-fill linear both; animation-timeline: view(); animation-range: cover 25% cover 50%; }
+    @keyframes step-fill { to { color: var(--accent); } }
   }
 
   .wa-float { transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s; }
@@ -410,6 +416,9 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 
   .cover-img, .post .cover { transition: transform 0.4s ease; }
   @media (hover: hover) { .post:hover .cover-img, .post:hover .cover { transform: scale(1.04); } }
+  .services h3 { transition: transform 0.25s ease; }
+  .services h3::after { transition: opacity 0.25s ease; }
+  @media (hover: hover) { .services li:hover h3 { transform: translateX(10px); } }
   .foot-nav a { transition: transform 0.2s ease, color 0.2s ease; }
   .foot-nav a:hover, .foot-nav a:focus-visible { transform: translateX(8px); }
 }
