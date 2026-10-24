@@ -31,7 +31,9 @@ export function Gallery({ images }: Props) {
     const track = trackRef.current
     if (!track) return
     // Cada slide tem a largura da faixa, então o slide N começa em N × largura.
-    track.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' })
+    // Quem pediu "reduzir movimento" no aparelho recebe o salto direto, sem deslizar.
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    track.scrollTo({ left: index * track.clientWidth, behavior: calm ? 'auto' : 'smooth' })
   }
 
   function handleScroll() {
@@ -51,6 +53,7 @@ export function Gallery({ images }: Props) {
         onScroll={handleScroll}
         // tabIndex permite focar a faixa com Tab e rolar com as setas do teclado
         tabIndex={0}
+        role="region"
         aria-label="Galeria de imagens do projeto"
       >
         {images.map((image, index) => (
