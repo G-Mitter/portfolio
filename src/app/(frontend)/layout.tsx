@@ -14,7 +14,12 @@ import './styles.css'
  * e a página não "pisca" trocando de fonte.
  * Cada fonte vira uma variável CSS (--font-display etc.) usada no styles.css.
  */
-const display = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-display' })
+// wdth libera o modo condensado (font-stretch) usado nos títulos grandes do topo.
+const display = Bricolage_Grotesque({
+  subsets: ['latin'],
+  axes: ['wdth'],
+  variable: '--font-display',
+})
 const body = Schibsted_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
