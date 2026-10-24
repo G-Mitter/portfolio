@@ -24,6 +24,12 @@ export const Profile: GlobalConfig = {
       type: 'textarea',
       defaultValue: 'Automação de processos, web e IA. Transformo tarefas manuais em sistemas.',
     },
+    {
+      name: 'support',
+      label: 'Texto de apoio',
+      type: 'textarea',
+      admin: { description: 'Linha menor abaixo da frase principal, na abertura da página inicial. Vazio = não aparece.' },
+    },
     { name: 'location', label: 'Cidade', type: 'text', defaultValue: 'Belo Horizonte, MG' },
     {
       name: 'available',

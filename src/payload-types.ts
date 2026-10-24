@@ -650,6 +650,10 @@ export interface Profile {
   handle?: string | null;
   role?: string | null;
   bio?: string | null;
+  /**
+   * Linha menor abaixo da frase principal, na abertura da página inicial. Vazio = não aparece.
+   */
+  support?: string | null;
   location?: string | null;
   /**
    * Mostra o selo verde ao lado do nome. Desmarque quando estiver sem agenda.
@@ -740,6 +744,7 @@ export interface ProfileSelect<T extends boolean = true> {
   handle?: T;
   role?: T;
   bio?: T;
+  support?: T;
   location?: T;
   available?: T;
   avatar?: T;
