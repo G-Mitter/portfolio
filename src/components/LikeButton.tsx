@@ -14,6 +14,7 @@
 import Link from 'next/link'
 import { useRef, useState, useTransition } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { toggleLike } from '@/app/(frontend)/likes'
 import { likesLabel } from '@/lib/likes'
 
@@ -79,12 +80,12 @@ export function LikeButton({ slug, initialLiked, initialCount }: Props) {
           no seu processo?
         </p>
         <div className="invite-actions">
-          <Link className="btn primary" href={`/?projeto=${slug}#contato`}>
-            Falar sobre meu projeto
-          </Link>
-          <Link className="btn" href="/portfolio">
-            Ver mais projetos
-          </Link>
+          <Button asChild variant="default" size="lg">
+            <Link href={`/?projeto=${slug}#contato`}>Falar sobre meu projeto</Link>
+          </Button>
+          <Button asChild size="lg">
+            <Link href="/portfolio">Ver mais projetos</Link>
+          </Button>
         </div>
         <form method="dialog">
           <button className="invite-close" aria-label="Fechar">

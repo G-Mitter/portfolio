@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { AutoRefresh } from '@/components/AutoRefresh'
 import { LineChart } from '@/components/LineChart'
+import { Card } from '@/components/ui/card'
 import { WorldMap } from '@/components/WorldMap'
 import { dayKey, daysAgo, formatPercent, formatRatio, lastDays, parsePeriod, periodDays, PERIODS, ratio } from '@/lib/dashboard'
 import { likesLabel } from '@/lib/likes'
@@ -151,26 +152,26 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       </header>
 
       <section className="dash-cards" aria-label="Totais">
-        <div className="dash-card"><b>{totalViews.toLocaleString('pt-BR')}</b><span>Visualizações</span><small>Quantas vezes uma página foi aberta, contando repetições.</small></div>
-        <div className="dash-card"><b>{totalVisitors.toLocaleString('pt-BR')}</b><span>{limit ? 'Visitantes por dia (soma)' : 'Visitantes'}</span><small>{limit ? 'Cada navegador conta uma vez por dia e por página; quem volta em outro dia conta de novo.' : 'Quantos navegadores diferentes abriram cada página.'}</small></div>
-        <div className="dash-card"><b>{formatRatio(ratio(totalViews, totalVisitors))}</b><span>Visualizações por visitante</span><small>Perto de 1: a pessoa viu e foi embora. Mais alto: ela volta.</small></div>
-        <div className="dash-card"><b>{formatDuration(averageSeconds)}</b><span>Tempo médio na página</span><small>Só conta com a aba visível. Poucas visitas longas puxam a média: veja as faixas abaixo.</small></div>
-        <div className="dash-card"><b>{totalLikes.toLocaleString('pt-BR')}</b><span>Curtidas</span><small>Quantas pessoas gostaram de um projeto no período.</small></div>
+        <Card className="dash-card"><b>{totalViews.toLocaleString('pt-BR')}</b><span>Visualizações</span><small>Quantas vezes uma página foi aberta, contando repetições.</small></Card>
+        <Card className="dash-card"><b>{totalVisitors.toLocaleString('pt-BR')}</b><span>{limit ? 'Visitantes por dia (soma)' : 'Visitantes'}</span><small>{limit ? 'Cada navegador conta uma vez por dia e por página; quem volta em outro dia conta de novo.' : 'Quantos navegadores diferentes abriram cada página.'}</small></Card>
+        <Card className="dash-card"><b>{formatRatio(ratio(totalViews, totalVisitors))}</b><span>Visualizações por visitante</span><small>Perto de 1: a pessoa viu e foi embora. Mais alto: ela volta.</small></Card>
+        <Card className="dash-card"><b>{formatDuration(averageSeconds)}</b><span>Tempo médio na página</span><small>Só conta com a aba visível. Poucas visitas longas puxam a média: veja as faixas abaixo.</small></Card>
+        <Card className="dash-card"><b>{totalLikes.toLocaleString('pt-BR')}</b><span>Curtidas</span><small>Quantas pessoas gostaram de um projeto no período.</small></Card>
       </section>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>Visualizações por dia</h2>
         <p className="dash-help">Últimos {DAYS} dias{limit ? '' : ' (no filtro Tudo, o gráfico mostra só os 90 mais recentes)'}. Mostra a tendência: um pico depois de um post no LinkedIn indica que o post trouxe gente. O histórico por dia começa na data em que este painel entrou no ar.</p>
         <LineChart data={viewsSeries} label="Visualizações por dia" />
-      </section>
+      </Card>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>Curtidas por dia</h2>
         <p className="dash-help">Compare com o gráfico de cima: se as visitas sobem e as curtidas não, o projeto chama atenção mas não convence.</p>
         <LineChart data={likesSeries} label="Curtidas por dia" />
-      </section>
+      </Card>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>De onde vêm as visitas</h2>
         <p className="dash-help">Conta uma vez por visita (a primeira página aberta na aba). Vale a etiqueta do link (<code>?utm_source=linkedin</code>) e, sem ela, o site de onde a pessoa veio. Quem abre pelo app, digita o endereço ou tem a origem escondida aparece em Direto. O histórico começa no deploy deste painel.</p>
         {totalSourceVisits === 0 ? (
@@ -189,9 +190,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             })}
           </ul>
         )}
-      </section>
+      </Card>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>Tempo na página</h2>
         <p className="dash-help">Quantas visitas ficaram cada faixa de tempo. Muita gente em &quot;menos de 10 s&quot; indica que a página não prendeu a atenção; visitas de mais de 1 minuto mostram interesse de verdade. O tempo só é enviado quando a pessoa sai da página, então saídas abruptas no celular podem faltar. O histórico começa no deploy deste painel.</p>
         {totalTimedVisits === 0 ? (
@@ -210,9 +211,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             })}
           </ul>
         )}
-      </section>
+      </Card>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>Mapa das visitas</h2>
         <p className="dash-help">Uma bolha por cidade; quanto maior, mais visitas. A cidade vem do provedor de internet da pessoa e é aproximada (pode apontar para a cidade do provedor). Guardamos só a contagem, nunca o IP. O histórico começa no deploy deste painel.</p>
         {placeRows.length === 0 ? (
@@ -254,9 +255,9 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             </div>
           </>
         )}
-      </section>
+      </Card>
 
-      <section className="dash-box">
+      <Card className="dash-box">
         <h2>Projetos</h2>
         <p className="dash-help">A barra mostra as visualizações. A taxa de curtida é curtidas ÷ visitantes: como divide pelo público de cada projeto, compara projetos de forma justa, mesmo com audiências diferentes.</p>
         <table className="dash-table">
@@ -274,7 +275,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
             ))}
           </tbody>
         </table>
-      </section>
+      </Card>
     </>
   )
 }

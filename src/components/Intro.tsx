@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { initials } from '@/lib/initials'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
@@ -25,26 +27,30 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
         </p>
         {profile.bio && <h1>{profile.bio}</h1>}
         {profile.available && (
-          <a className="available" href="#contato">
-            <i aria-hidden="true" />
-            Disponível para projetos
-          </a>
+          <Badge asChild variant="available" className="available">
+            <a href="#contato">
+              <i aria-hidden="true" />
+              Disponível para projetos
+            </a>
+          </Badge>
         )}
         {/* O botão de destaque leva ao contato (WhatsApp, ou o formulário se não houver número):
             é a ação que a página quer. Ver os projetos fica como segunda opção. */}
         <div className="p-actions">
           {whatsapp ? (
-            <a className="btn primary whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
-              Conversar no WhatsApp
-            </a>
+            <Button asChild size="lg" variant="whatsapp">
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer">
+                Conversar no WhatsApp
+              </a>
+            </Button>
           ) : (
-            <a className="btn primary" href="#contato">
-              Falar sobre meu projeto
-            </a>
+            <Button asChild size="lg" variant="default">
+              <a href="#contato">Falar sobre meu projeto</a>
+            </Button>
           )}
-          <Link className="btn" href="/portfolio">
-            Ver meus projetos
-          </Link>
+          <Button asChild size="lg">
+            <Link href="/portfolio">Ver meus projetos</Link>
+          </Button>
         </div>
         {/* Números que provam o trabalho, os mesmos do topo do portfólio. */}
         <ul className="stats">

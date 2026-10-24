@@ -1,3 +1,4 @@
+import { Badge } from '@/components/ui/badge'
 import { splitItems } from '@/lib/skills'
 import type { Profile } from '@/payload-types'
 
@@ -20,9 +21,7 @@ export function Skills({ skills }: { skills: Profile['skills'] }) {
             <dt>{skill.group}</dt>
             <dd className="chips">
               {splitItems(skill.items).map((item) => (
-                <span className="chip" key={item}>
-                  {item}
-                </span>
+                <Badge key={item}>{item}</Badge>
               ))}
             </dd>
           </div>

@@ -12,6 +12,7 @@
 import { useActionState } from 'react'
 
 import { type ContactState, sendMessage } from '@/app/(frontend)/actions'
+import { Button } from '@/components/ui/button'
 import { CONTACT_LIMITS } from '@/lib/contact'
 
 const initialState: ContactState = { status: 'idle' }
@@ -84,9 +85,9 @@ export function ContactForm({ source }: { source?: string }) {
       </label>
 
       <div className="full form-foot">
-        <button className="btn primary" type="submit" disabled={pending}>
+        <Button variant="default" size="lg" type="submit" disabled={pending}>
           {pending ? 'Enviando…' : 'Enviar mensagem'}
-        </button>
+        </Button>
         {state.message && (
           <span className="form-msg" role="alert">
             {state.message}

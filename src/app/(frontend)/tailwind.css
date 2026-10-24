@@ -1,0 +1,25 @@
+/*
+ * Tailwind sem o "reset" (preflight): só as variáveis e os utilitários.
+ * O site já tem o seu CSS em styles.css; o reset do Tailwind mexeria em margens
+ * e fontes que já estão ajustadas. A ordem das camadas diz quem ganha: utilitários por último.
+ */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/*
+ * Liga os nomes do shadcn (primary, card, border...) às variáveis do styles.css.
+ * "inline" faz o Tailwind usar var(--accent) direto, então o tema claro/escuro
+ * continua trocando só as variáveis, como antes.
+ */
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--surface);
+  --color-border: var(--line);
+  --color-muted-foreground: var(--muted);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--bg);
+  --color-whatsapp: var(--whatsapp);
+  --color-success: var(--done);
+}

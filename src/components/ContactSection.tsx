@@ -1,3 +1,4 @@
+import { Card } from '@/components/ui/card'
 import { ContactForm } from './ContactForm'
 
 type Props = {
@@ -15,7 +16,8 @@ type Props = {
  */
 export function ContactSection({ whatsapp, email, source }: Props) {
   return (
-    <section id="contato" className="contact-cta" aria-labelledby="contato-titulo">
+    <Card asChild>
+      <section id="contato" className="contact-cta" aria-labelledby="contato-titulo">
       <div className="contact-intro">
         <h2 id="contato-titulo">Tem um processo manual tomando tempo da sua equipe?</h2>
         <p>
@@ -36,6 +38,7 @@ export function ContactSection({ whatsapp, email, source }: Props) {
         )}
       </div>
       <ContactForm source={source} />
-    </section>
+      </section>
+    </Card>
   )
 }
