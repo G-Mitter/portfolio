@@ -1,4 +1,4 @@
-import { Bricolage_Grotesque, IBM_Plex_Sans, JetBrains_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, JetBrains_Mono, Schibsted_Grotesk } from 'next/font/google'
 import type { Metadata } from 'next'
 import React from 'react'
 
@@ -15,7 +15,7 @@ import './styles.css'
  * Cada fonte vira uma variável CSS (--font-display etc.) usada no styles.css.
  */
 const display = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-display' })
-const body = IBM_Plex_Sans({
+const body = Schibsted_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-body',
