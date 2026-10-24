@@ -26,6 +26,8 @@ const FILTERS: { value: Filter; label: string; icon: string }[] = [
 
 export function Feed({ projects }: { projects: Project[] }) {
   const [filter, setFilter] = useState<Filter>('all')
+  // As capas só ganham o fade depois do primeiro clique em um filtro (não na abertura da página).
+  const [swapped, setSwapped] = useState(false)
 
   // Filtrar aqui no navegador é instantâneo e evita ir ao servidor a cada clique.
   // Com poucas dezenas de posts isso é o mais simples; com milhares,
@@ -43,7 +45,10 @@ export function Feed({ projects }: { projects: Project[] }) {
             className="hl"
             type="button"
             aria-pressed={filter === item.value}
-            onClick={() => setFilter(item.value)}
+            onClick={() => {
+              setFilter(item.value)
+              setSwapped(true)
+            }}
           >
             <span className="ring">{item.icon}</span>
             <small>{item.label}</small>
@@ -55,7 +60,7 @@ export function Feed({ projects }: { projects: Project[] }) {
         <span className="on">▦ Projetos</span>
       </div>
 
-      <div className="grid">
+      <div className={swapped ? 'grid swap' : 'grid'} key={filter}>
         {visible.length === 0 && <p className="empty">Nenhum projeto nesta categoria ainda.</p>}
         {visible.map((project) => (
           <PostTile key={project.id} project={project} />
