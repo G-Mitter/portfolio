@@ -5,6 +5,7 @@ import React from 'react'
 import { ViewCounter } from '@/components/ViewCounter'
 import { siteUrl } from '@/lib/siteUrl'
 
+import './tailwind.css'
 import './styles.css'
 
 /**

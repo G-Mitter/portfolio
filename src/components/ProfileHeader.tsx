@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import { initials } from '@/lib/initials'
 import { instagramUrl } from '@/lib/instagram'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
@@ -42,13 +44,15 @@ export function ProfileHeader({ profile, projectCount }: Props) {
           {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
           <div className="p-actions">
             {/* Botão principal: leva ao formulário da página inicial. */}
-            <Link className="btn primary" href="/#contato">
-              Falar sobre meu projeto
-            </Link>
+            <Button asChild variant="default">
+              <Link href="/#contato">Falar sobre meu projeto</Link>
+            </Button>
             {whatsapp && (
-              <a className="btn whatsapp" href={whatsapp} target="_blank" rel="noopener noreferrer">
-                WhatsApp
-              </a>
+              <Button asChild variant="whatsapp">
+                <a href={whatsapp} target="_blank" rel="noopener noreferrer">
+                  WhatsApp
+                </a>
+              </Button>
             )}
           </div>
         </div>
@@ -65,10 +69,12 @@ export function ProfileHeader({ profile, projectCount }: Props) {
         {/* Selo que diz na hora que você aceita trabalho; liga e desliga no /admin.
             Fica fora da linha dos botões para não empurrar nenhum para baixo. */}
         {profile.available && (
-          <Link className="available" href="/#contato">
-            <i aria-hidden="true" />
-            Disponível para projetos
-          </Link>
+          <Badge asChild variant="available" className="available">
+            <Link href="/#contato">
+              <i aria-hidden="true" />
+              Disponível para projetos
+            </Link>
+          </Badge>
         )}
         {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
         {profile.bio && <p className="headline">{profile.bio}</p>}

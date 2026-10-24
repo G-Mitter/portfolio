@@ -11,6 +11,8 @@ import type { Media } from '@/payload-types'
 import { Gallery } from '@/components/Gallery'
 import { LikeButton } from '@/components/LikeButton'
 import { PostCover } from '@/components/PostCover'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { STATUS_LABELS } from '@/lib/labels'
 import { isVisitorId, VISITOR_COOKIE } from '@/lib/likes'
 
@@ -107,10 +109,10 @@ export default async function ProjectPage({ params }: Props) {
               initialCount={likes.count}
             />
             <h1>{project.title}</h1>
-            <span className="status">
+            <Badge variant="status">
               <i className={`dot-${project.progress}`} />
               {STATUS_LABELS[project.progress]}
-            </span>
+            </Badge>
             <p>{project.summary}</p>
             {project.result && (
               <div>
@@ -130,42 +132,34 @@ export default async function ProjectPage({ params }: Props) {
               <div className="label">Tecnologias</div>
               <div className="chips">
                 {project.stack.map((tech) => (
-                  <span className="chip" key={tech}>
-                    {tech}
-                  </span>
+                  <Badge key={tech}>{tech}</Badge>
                 ))}
               </div>
             </div>
             {/* Chamada para quem gostou do projeto: leva ao formulário já sabendo de onde veio. */}
             <div className="similar">
               <b>Quer algo parecido na sua empresa?</b>
-              <Link className="btn primary" href={`/?projeto=${project.slug}#contato`}>
-                Vamos conversar
-              </Link>
+              <Button asChild variant="default">
+                <Link href={`/?projeto=${project.slug}#contato`}>Vamos conversar</Link>
+              </Button>
             </div>
           </div>
           <div className="links">
             {project.links?.repository ? (
-              <a
-                className="btn"
-                href={project.links.repository}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ver código
-              </a>
+              <Button asChild>
+                <a href={project.links.repository} target="_blank" rel="noopener noreferrer">
+                  Ver código
+                </a>
+              </Button>
             ) : (
-              <span className="chip">Projeto interno</span>
+              <Badge>Projeto interno</Badge>
             )}
             {project.links?.demo && (
-              <a
-                className="btn primary"
-                href={project.links.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Ver demo
-              </a>
+              <Button asChild variant="default">
+                <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
+                  Ver demo
+                </a>
+              </Button>
             )}
           </div>
         </div>

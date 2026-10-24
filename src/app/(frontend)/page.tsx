@@ -9,6 +9,7 @@ import { PostTile } from '@/components/PostTile'
 import { Process } from '@/components/Process'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
+import { Button } from '@/components/ui/button'
 import { instagramUrl } from '@/lib/instagram'
 import { siteUrl } from '@/lib/siteUrl'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
@@ -81,9 +82,9 @@ export default async function HomePage({ searchParams }: Props) {
               </div>
             ))}
           </div>
-          <Link className="btn" href="/portfolio">
-            Ver todos os {projects.totalDocs} projetos →
-          </Link>
+          <Button asChild>
+            <Link href="/portfolio">Ver todos os {projects.totalDocs} projetos →</Link>
+          </Button>
         </section>
       )}
       <Services services={profile.services} />
