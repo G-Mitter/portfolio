@@ -318,3 +318,22 @@ body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--bo
 .dash-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .dash-sub-country { color: var(--muted); font-size: 12px; text-align: right; }
 .dash-cols .dash-sources li:has(.dash-sub-country) { grid-template-columns: 1fr auto auto; }
+
+/* Movimento: a faixa de planilha da abertura e as respostas a cliques. Tudo desliga em "reduzir movimento". */
+.sheet { display: grid; grid-template-columns: 1.4fr 1fr 40px; width: min(100%, 360px); margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 13px; }
+.sheet > span { padding: 6px 10px; border-top: 1px solid var(--line); }
+.sheet > .sheet-head { border-top: 0; background: var(--surface); color: var(--muted); }
+.sheet-cell { animation: cell-in 0.4s ease both; animation-delay: calc(0.35s + var(--i) * 0.3s); }
+.sheet-ok { color: var(--done); text-align: center; animation-delay: calc(0.6s + var(--i) * 0.3s); }
+@keyframes cell-in { from { opacity: 0; background: color-mix(in srgb, var(--accent) 22%, transparent); } }
+.swap > * { animation: fade-in 0.25s ease both; }
+@keyframes fade-in { from { opacity: 0; } }
+.form-done { animation: invite-in 0.35s ease both; }
+.form-done::before { content: '✓ '; color: var(--done); }
+.invite[open] { animation: invite-in 0.25s ease both; }
+.invite[open]::backdrop { animation: fade-in 0.25s ease both; }
+@keyframes invite-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
+@media (max-width: 640px) { .sheet { width: 100%; } }
+@media (prefers-reduced-motion: reduce) {
+  .sheet-cell, .swap > *, .form-done, .invite[open], .invite[open]::backdrop { animation: none; }
+}

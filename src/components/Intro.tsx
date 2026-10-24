@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import type React from 'react'
 import Link from 'next/link'
 
 import { Badge } from '@/components/ui/badge'
@@ -6,6 +7,13 @@ import { Button } from '@/components/ui/button'
 import { initials } from '@/lib/initials'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
+
+// Linhas da faixa decorativa: o que uma planilha manual vira quando alguém automatiza.
+const SHEET_ROWS = [
+  ['extrato.pdf', 'lido'],
+  ['notas.xlsx', 'conferido'],
+  ['metas.csv', 'enviado'],
+]
 
 /**
  * Topo da página inicial: quem você é, o que resolve e para onde ir.
@@ -63,10 +71,35 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
             </li>
           ))}
         </ul>
+        {/* Faixa decorativa: as linhas se preenchem uma a uma ao abrir a página (só CSS). */}
+        <div className="sheet" aria-hidden="true">
+          {['A', 'B', ''].map((head, i) => (
+            <span className="sheet-head" key={i}>
+              {head}
+            </span>
+          ))}
+          {SHEET_ROWS.map(([file, state], row) =>
+            [file, state, '✓'].map((cell, col) => (
+              <span
+                className={col === 2 ? 'sheet-cell sheet-ok' : 'sheet-cell'}
+                style={{ '--i': row } as React.CSSProperties}
+                key={`${row}-${col}`}
+              >
+                {cell}
+              </span>
+            )),
+          )}
+        </div>
       </div>
       <div className="intro-photo">
         {avatar?.url ? (
-          <Image src={avatar.url} alt={avatar.alt} fill sizes="(max-width: 640px) 100vw, 340px" priority />
+          <Image
+            src={avatar.url}
+            alt={avatar.alt}
+            fill
+            sizes="(max-width: 640px) 100vw, 340px"
+            priority
+          />
         ) : (
           <span aria-hidden="true">{initials(profile.name)}</span>
         )}
