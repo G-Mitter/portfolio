@@ -13,6 +13,8 @@ import { useActionState } from 'react'
 
 import { type ContactState, sendMessage } from '@/app/(frontend)/actions'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { CONTACT_LIMITS } from '@/lib/contact'
 
 const initialState: ContactState = { status: 'idle' }
@@ -44,7 +46,7 @@ export function ContactForm({ source }: { source?: string }) {
 
       <label>
         <span>Seu nome</span>
-        <input
+        <Input
           name="name"
           defaultValue={values.name}
           required
@@ -58,7 +60,7 @@ export function ContactForm({ source }: { source?: string }) {
 
       <label>
         <span>E-mail ou WhatsApp</span>
-        <input
+        <Input
           name="contact"
           defaultValue={values.contact}
           required
@@ -71,7 +73,7 @@ export function ContactForm({ source }: { source?: string }) {
 
       <label className="full">
         <span>Qual problema você quer resolver?</span>
-        <textarea
+        <Textarea
           name="problem"
           defaultValue={values.problem}
           required

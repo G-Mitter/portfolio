@@ -22,4 +22,5 @@
   --color-primary-foreground: var(--bg);
   --color-whatsapp: var(--whatsapp);
   --color-success: var(--done);
+  --color-destructive: #e5484d;
 }
