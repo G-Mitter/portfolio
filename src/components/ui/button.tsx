@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
  * (cor) e um tamanho. Trocar o visual de todos os botões = mexer só aqui.
  */
 const buttonVariants = cva(
-  'inline-block cursor-pointer rounded-lg border font-semibold no-underline disabled:cursor-wait disabled:opacity-60',
+  'inline-block cursor-pointer rounded-lg border font-semibold no-underline disabled:cursor-wait disabled:opacity-60 motion-safe:transition motion-safe:duration-150 motion-safe:hover:brightness-110 motion-safe:active:scale-[0.97]',
   {
     variants: {
       variant: {

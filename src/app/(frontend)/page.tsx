@@ -10,6 +10,7 @@ import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
+import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { Button } from '@/components/ui/button'
 import { instagramUrl } from '@/lib/instagram'
 import { siteUrl } from '@/lib/siteUrl'
@@ -46,6 +47,7 @@ export default async function HomePage({ searchParams }: Props) {
     }),
   ])
 
+  const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
   const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
 
   // Dados estruturados (schema.org): a "ficha" que o Google lê para saber quem você é e onde atende.
@@ -93,10 +95,11 @@ export default async function HomePage({ searchParams }: Props) {
       <Process steps={profile.process} />
       <Testimonials testimonials={profile.testimonials} />
       <ContactSection
-        whatsapp={whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))}
+        whatsapp={whatsapp}
         email={profile.links?.email}
         source={typeof projeto === 'string' ? projeto : undefined}
       />
+      {whatsapp && <WhatsAppFloat href={whatsapp} />}
     </>
   )
 }

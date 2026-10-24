@@ -54,8 +54,13 @@ export function ContactForm({ source }: { source?: string }) {
           maxLength={CONTACT_LIMITS.name.max}
           autoComplete="name"
           aria-invalid={Boolean(errors.name)}
+          aria-describedby={errors.name ? 'erro-name' : undefined}
         />
-        {errors.name && <small className="field-error">{errors.name}</small>}
+        {errors.name && (
+          <small className="field-error" id="erro-name">
+            {errors.name}
+          </small>
+        )}
       </label>
 
       <label>
@@ -65,10 +70,16 @@ export function ContactForm({ source }: { source?: string }) {
           defaultValue={values.contact}
           required
           maxLength={CONTACT_LIMITS.contact.max}
+          spellCheck={false}
           placeholder="voce@empresa.com ou (31) 99999-0000"
           aria-invalid={Boolean(errors.contact)}
+          aria-describedby={errors.contact ? 'erro-contact' : undefined}
         />
-        {errors.contact && <small className="field-error">{errors.contact}</small>}
+        {errors.contact && (
+          <small className="field-error" id="erro-contact">
+            {errors.contact}
+          </small>
+        )}
       </label>
 
       <label className="full">
@@ -82,8 +93,13 @@ export function ContactForm({ source }: { source?: string }) {
           maxLength={CONTACT_LIMITS.problem.max}
           placeholder="Ex.: toda semana alguém passa horas copiando dados de uma planilha para o sistema."
           aria-invalid={Boolean(errors.problem)}
+          aria-describedby={errors.problem ? 'erro-problem' : undefined}
         />
-        {errors.problem && <small className="field-error">{errors.problem}</small>}
+        {errors.problem && (
+          <small className="field-error" id="erro-problem">
+            {errors.problem}
+          </small>
+        )}
       </label>
 
       <div className="full form-foot">

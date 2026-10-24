@@ -63,7 +63,7 @@ export function LikeButton({ slug, initialLiked, initialCount }: Props) {
         type="button"
         className="like-btn"
         aria-pressed={liked}
-        aria-label={liked ? 'Descurtir' : 'Curtir'}
+        aria-label="Curtir este projeto"
         onClick={handleClick}
         disabled={pending}
       >

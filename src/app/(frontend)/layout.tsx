@@ -1,5 +1,6 @@
 import { Bricolage_Grotesque, JetBrains_Mono, Schibsted_Grotesk } from 'next/font/google'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -42,11 +43,18 @@ export const metadata: Metadata = {
   openGraph: { type: 'website', locale: 'pt_BR', siteName: 'Guilherme Mitter' },
 }
 
+// Cor da barra do navegador no celular, igual ao fundo escuro da abertura.
+export const viewport: Viewport = { themeColor: '#141a28' }
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
-        <main className="wrap">{children}</main>
+        {/* Quem navega pelo teclado pula direto para o conteúdo (o link só aparece ao receber foco). */}
+        <a className="skip" href="#conteudo">
+          Pular para o conteúdo
+        </a>
+        <main className="wrap" id="conteudo">{children}</main>
         {/* Rodapé sempre escuro (como o topo e o contato), por isso a logo é a versão para fundo escuro. */}
         <footer className="foot band-dark">
           <nav className="foot-nav" aria-label="Rodapé">
@@ -55,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/#contato">Contato</Link>
           </nav>
           <div className="foot-base">
-            <img src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} />
+            <Image src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} unoptimized />
             <p>Automações em Belo Horizonte e região</p>
           </div>
         </footer>
