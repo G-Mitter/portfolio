@@ -9,7 +9,7 @@ export function Services({ services }: { services: Profile['services'] }) {
   if (!services?.length) return null
 
   return (
-    <section className="services" aria-labelledby="servicos-titulo">
+    <section className="services band band-light" aria-labelledby="servicos-titulo">
       <h2 id="servicos-titulo">Como posso ajudar</h2>
       <ul>
         {services.map((service) => (

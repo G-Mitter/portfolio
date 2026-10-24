@@ -7,6 +7,7 @@ import { ContactSection } from '@/components/ContactSection'
 import { Intro } from '@/components/Intro'
 import { PostTile } from '@/components/PostTile'
 import { Process } from '@/components/Process'
+import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
 import { Button } from '@/components/ui/button'
@@ -70,8 +71,9 @@ export default async function HomePage({ searchParams }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, '\\u003c') }}
       />
       <Intro profile={profile} projectCount={projects.totalDocs} />
+      <Statement />
       {projects.docs.length > 0 && (
-        <section className="featured" aria-labelledby="destaques-titulo">
+        <section className="featured band band-dark" aria-labelledby="destaques-titulo">
           <h2 id="destaques-titulo">Projetos em destaque</h2>
           <div className="grid">
             {/* O resultado fica escrito embaixo da capa: no celular não existe hover. */}

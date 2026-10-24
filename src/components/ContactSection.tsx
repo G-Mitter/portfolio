@@ -17,7 +17,7 @@ type Props = {
 export function ContactSection({ whatsapp, email, source }: Props) {
   return (
     <Card asChild>
-      <section id="contato" className="contact-cta" aria-labelledby="contato-titulo">
+      <section id="contato" className="contact-cta band band-dark" aria-labelledby="contato-titulo">
       <div className="contact-intro">
         <h2 id="contato-titulo">Tem um processo manual tomando tempo da sua equipe?</h2>
         <p>

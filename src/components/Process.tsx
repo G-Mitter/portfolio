@@ -10,7 +10,7 @@ export function Process({ steps }: { steps: Profile['process'] }) {
   if (!steps?.length) return null
 
   return (
-    <section className="process" aria-labelledby="processo-titulo">
+    <section className="process band band-dark" aria-labelledby="processo-titulo">
       <h2 id="processo-titulo">Como eu trabalho</h2>
       <p>O que acontece depois que você entra em contato.</p>
       <ol>
