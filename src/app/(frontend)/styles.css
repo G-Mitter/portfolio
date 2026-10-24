@@ -319,5 +319,12 @@ a { color: var(--accent); }
 .dash-periods a { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; color: var(--muted); text-decoration: none; }
 .dash-periods a.on { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
 .dash-sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.dash-sources li { display: grid; grid-template-columns: 90px 1fr auto; align-items: center; gap: 10px; font-size: 14px; }
+.dash-sources li { display: grid; grid-template-columns: 120px 1fr auto; align-items: center; gap: 10px; font-size: 14px; }
 .dash-sources .dash-bar { margin: 0; height: 8px; }
+.map { width: 100%; height: auto; display: block; background: color-mix(in srgb, var(--accent) 6%, transparent); border-radius: 8px; }
+.map-land { fill: var(--line); stroke: var(--muted); stroke-width: 0.5; }
+.map-dot { fill: var(--accent); fill-opacity: 0.55; stroke: var(--accent); stroke-width: 0.15; }
+.dash-sub { font-family: var(--display); font-size: 15px; margin: 16px 0 8px; }
+.dash-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.dash-sub-country { color: var(--muted); font-size: 12px; text-align: right; }
+.dash-cols .dash-sources li:has(.dash-sub-country) { grid-template-columns: 1fr auto auto; }

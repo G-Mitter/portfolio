@@ -1,11 +1,12 @@
 'use server'
 
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
+import { parsePlace } from '@/lib/place'
 import { classifySource } from '@/lib/source'
-import { addSource, addView } from '@/lib/views'
+import { addPlace, addSource, addView } from '@/lib/views'
 
 /**
  * Soma uma visualização na página. `firstVisit` diz se é a primeira vez
@@ -35,5 +36,16 @@ export async function countView(
   }
 
   await addView(payload, path, firstVisit)
-  if (origin) await addSource(payload, classifySource(origin.utm, origin.referrer))
+  if (origin) {
+    await addSource(payload, classifySource(origin.utm, origin.referrer))
+    // Lugar: a Vercel informa país, cidade e coordenadas nestes cabeçalhos (no seu computador não existem).
+    const h = await headers()
+    const place = parsePlace({
+      country: h.get('x-vercel-ip-country'),
+      city: h.get('x-vercel-ip-city'),
+      lat: h.get('x-vercel-ip-latitude'),
+      lon: h.get('x-vercel-ip-longitude'),
+    })
+    if (place) await addPlace(payload, place)
+  }
 }

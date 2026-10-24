@@ -7,8 +7,10 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { AutoRefresh } from '@/components/AutoRefresh'
 import { LineChart } from '@/components/LineChart'
+import { WorldMap } from '@/components/WorldMap'
 import { dayKey, daysAgo, formatPercent, formatRatio, lastDays, parsePeriod, periodDays, PERIODS, ratio } from '@/lib/dashboard'
 import { likesLabel } from '@/lib/likes'
+import { countryName, sumByCity, topCountries } from '@/lib/place'
 import { SOURCE_LABELS, SOURCES } from '@/lib/source'
 
 // Dados novos a cada abertura; nada de cache.
@@ -29,12 +31,19 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   // O gráfico mostra DAYS dias; os cartões usam o período inteiro ("tudo" = totais antigos, sem data).
   const since = daysAgo(DAYS - 1)
-  const [pages, perDay, sources, likes, projects] = await Promise.all([
+  const [pages, perDay, places, sources, likes, projects] = await Promise.all([
     payload.find({ collection: 'page-views', limit: 1000, depth: 0, pagination: false }),
     payload.find({
       collection: 'page-view-days',
       where: { day: { greater_than_equal: since } },
       limit: 5000,
+      depth: 0,
+      pagination: false,
+    }),
+    payload.find({
+      collection: 'page-view-places',
+      where: limit ? { day: { greater_than_equal: since } } : {},
+      limit: 10000,
       depth: 0,
       pagination: false,
     }),
@@ -95,6 +104,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   // 4) Origem: soma as visitas de cada origem no período.
   const visitsBySource = new Map<string, number>()
   for (const row of sources.docs) visitsBySource.set(row.source, (visitsBySource.get(row.source) ?? 0) + (row.visits ?? 0))
+  // 5) Lugares: soma os dias de cada cidade; o mapa usa as cidades, o ranking usa os países.
+  const placeRows = sumByCity(
+    places.docs.map((p) => ({ country: p.country, city: p.city ?? '', lat: p.lat ?? null, lon: p.lon ?? null, visits: p.visits ?? 0 })),
+  )
+  const countries = topCountries(placeRows)
+  const maxCountry = Math.max(1, ...countries.map((c) => c.visits))
+  const brazilPlaces = placeRows.filter((p) => p.country === 'BR')
   const totalSourceVisits = [...visitsBySource.values()].reduce((a, b) => a + b, 0)
 
   return (
@@ -149,6 +165,50 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
               )
             })}
           </ul>
+        )}
+      </section>
+
+      <section className="dash-box">
+        <h2>Mapa das visitas</h2>
+        <p className="dash-help">Uma bolha por cidade; quanto maior, mais visitas. A cidade vem do provedor de internet da pessoa e é aproximada (pode apontar para a cidade do provedor). Guardamos só a contagem, nunca o IP. O histórico começa no deploy deste painel.</p>
+        {placeRows.length === 0 ? (
+          <p className="dash-help">Ainda sem visitas com lugar neste período.</p>
+        ) : (
+          <>
+            <WorldMap places={placeRows} box="0 0 360 180" maxRadius={4} label="Mapa-múndi com as cidades das visitas" />
+            {brazilPlaces.length > 0 && (
+              <>
+                <h3 className="dash-sub">Brasil</h3>
+                <WorldMap places={brazilPlaces} box="104 83 46 46" maxRadius={1.6} label="Mapa do Brasil com as cidades das visitas" />
+              </>
+            )}
+            <div className="dash-cols">
+              <div>
+                <h3 className="dash-sub">Países</h3>
+                <ul className="dash-sources">
+                  {countries.map((c) => (
+                    <li key={c.label}>
+                      <span>{c.label}</span>
+                      <span className="dash-bar" style={{ width: `${(c.visits / maxCountry) * 100}%` }} />
+                      <b>{c.visits}</b>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="dash-sub">Cidades</h3>
+                <ul className="dash-sources">
+                  {placeRows.slice(0, 8).map((p) => (
+                    <li key={`${p.country}|${p.city}`}>
+                      <span>{p.city || 'Sem cidade'}</span>
+                      <span className="dash-sub-country">{countryName(p.country)}</span>
+                      <b>{p.visits}</b>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </>
         )}
       </section>
 
