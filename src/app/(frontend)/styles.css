@@ -171,21 +171,22 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Topo da home: faixa escura de ponta a ponta (cores fixas da marca, não seguem o tema do sistema). */
 .intro {
   --bg: #141a28; --surface: #1c2438; --line: #2a3550; --fg: #f4f6fb; --muted: #9aa5bd; --accent: #6d9bff; --done: #4fcf9a;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); column-gap: 40px; align-items: end;
-  width: 100vw; margin: -28px 0 0 calc(50% - 50vw); padding: 56px max(16px, calc(50vw - 467px)) 14px; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); column-gap: 40px; align-items: end; position: relative;
+  width: 100vw; margin: -28px 0 0 calc(50% - 50vw); padding: 72px max(16px, calc(50vw - 640px)) 14px; overflow: hidden;
   background: var(--bg); color: var(--fg);
 }
 .intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 8vw; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
-.intro h1 { margin: 0; max-width: 24ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(28px, 3.6vw, 44px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
+.intro h1 { margin: 0; max-width: 24ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(30px, 3.8vw, 52px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
+.intro .support { margin: 0; max-width: 44ch; color: var(--muted); font-size: 18px; line-height: 1.4; }
 /* Foto recortada sobre um disco azul: o disco é só um círculo de degradê atrás da imagem. */
 .intro-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; }
 .intro-photo::before { content: ''; position: absolute; inset: 0 0 auto; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
 .intro-photo img { position: absolute; bottom: 0; left: 6%; width: 88%; height: auto; }
 /* Nome enorme cruzando a base da foto (fica na frente dela). */
-.intro-big { position: relative; z-index: 2; grid-column: 1 / -1; margin: -0.62em 0 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: min(calc((100vw - 32px) / 6.2), 152px); line-height: 0.9; letter-spacing: 0; text-transform: uppercase; white-space: nowrap; }
+.intro-big { position: relative; z-index: 2; grid-column: 1 / -1; margin: -0.62em 0 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: min(calc((100vw - 32px) / 8.6), 148px); line-height: 0.9; letter-spacing: 0; text-transform: uppercase; white-space: nowrap; text-align: center; }
 .intro .stats { margin: 4px 0 0; }
-.intro .available { margin-bottom: 8px; }
+.intro .available { position: absolute; top: 24px; right: max(16px, calc(50vw - 640px)); z-index: 3; }
 .featured { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .featured h2 { align-self: stretch; font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0; }
 .featured .grid { align-self: stretch; gap: 12px; }
@@ -248,7 +249,8 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 
 @media (max-width: 640px) {
   /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
-  .intro { grid-template-columns: 1fr; width: 100vw; padding-top: 28px; }
+  .intro { grid-template-columns: 1fr; width: 100vw; padding-top: 64px; }
+  .intro .available { top: 16px; }
   .intro-photo { grid-row: 1; width: min(78vw, 320px); margin-inline: auto; }
   .intro-big { grid-row: 2; font-size: 21vw; white-space: normal; text-align: center; margin-top: -0.5em; line-height: 0.88; }
   .intro-text { grid-row: 3; padding: 28px 0 40px; }
@@ -333,13 +335,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .dash-sub-country { color: var(--muted); font-size: 12px; text-align: right; }
 .dash-cols .dash-sources li:has(.dash-sub-country) { grid-template-columns: 1fr auto auto; }
 
-/* Movimento: a faixa de planilha da abertura e as respostas a cliques. Tudo desliga em "reduzir movimento". */
-.sheet { display: grid; grid-template-columns: 1.4fr 1fr 40px; width: min(100%, 360px); margin-top: 6px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; font-family: var(--mono); font-size: 13px; }
-.sheet > span { padding: 6px 10px; border-top: 1px solid var(--line); }
-.sheet > .sheet-head { border-top: 0; background: var(--surface); color: var(--muted); }
-.sheet-cell { animation: cell-in 0.4s ease both; animation-delay: calc(0.35s + var(--i) * 0.3s); }
-.sheet-ok { color: var(--done); text-align: center; animation-delay: calc(0.6s + var(--i) * 0.3s); }
-@keyframes cell-in { from { opacity: 0; background: color-mix(in srgb, var(--accent) 22%, transparent); } }
+/* Movimento: as respostas a cliques. Tudo desliga em "reduzir movimento". */
 .swap > * { animation: fade-in 0.25s ease both; }
 @keyframes fade-in { from { opacity: 0; } }
 .form-done { animation: invite-in 0.35s ease both; }
@@ -347,9 +343,8 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .invite[open] { animation: invite-in 0.25s ease both; }
 .invite[open]::backdrop { animation: fade-in 0.25s ease both; }
 @keyframes invite-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
-@media (max-width: 640px) { .sheet { width: 100%; } }
 @media (prefers-reduced-motion: reduce) {
-  .sheet-cell, .swap > *, .form-done, .invite[open], .invite[open]::backdrop { animation: none; }
+  .swap > *, .form-done, .invite[open], .invite[open]::backdrop { animation: none; }
 }
 
 /* Faixas da home: ponta a ponta, alternando escuro e claro. As cores são redefinidas dentro de cada
