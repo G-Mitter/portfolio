@@ -1,6 +1,5 @@
 import Image from 'next/image'
 
-import { Card } from '@/components/ui/card'
 import { initials } from '@/lib/initials'
 import type { Profile } from '@/payload-types'
 
@@ -21,8 +20,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
           const photo = typeof item.photo === 'object' ? item.photo : null
           return (
             <li key={item.id ?? item.name}>
-              <Card asChild>
-                <figure>
+              <figure>
                 <blockquote>{item.quote}</blockquote>
                 <figcaption>
                   <span className="t-photo">
@@ -37,8 +35,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
                     {item.role && <small>{item.role}</small>}
                   </span>
                 </figcaption>
-                </figure>
-              </Card>
+              </figure>
             </li>
           )
         })}

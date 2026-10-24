@@ -1,4 +1,3 @@
-import { Card } from '@/components/ui/card'
 import type { Profile } from '@/payload-types'
 
 /**
@@ -14,12 +13,10 @@ export function Services({ services }: { services: Profile['services'] }) {
       <h2 id="servicos-titulo">Como posso ajudar</h2>
       <ul>
         {services.map((service) => (
-          <Card asChild key={service.id ?? service.title}>
-            <li>
-              <h3>{service.title}</h3>
-              <p>{service.description}</p>
-            </li>
-          </Card>
+          <li key={service.id ?? service.title}>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </li>
         ))}
       </ul>
     </section>
