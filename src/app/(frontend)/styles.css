@@ -65,6 +65,12 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 }
 .p-photo { width: 300px; }
 .profile .p-info { padding-bottom: 48px; }
+/* Computador: dados à esquerda, foto à direita (no celular segue a ordem do HTML). */
+@media (min-width: 641px) {
+  .profile { grid-template-columns: minmax(0, 1fr) auto; }
+  .profile .p-info { grid-column: 1; grid-row: 1; }
+  .profile .p-photo { grid-column: 2; grid-row: 1; }
+}
 .p-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .p-id { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .p-id .available { margin: 0; }
