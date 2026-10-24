@@ -1,9 +1,9 @@
 'use client'
 
 /**
- * Botão flutuante do WhatsApp, só no celular (o CSS esconde em telas maiores).
+ * Botão flutuante do WhatsApp (home e portfólio).
  *
- * Quando aparece: depois que a abertura sai da tela (quem acabou de chegar já vê o botão grande dela).
+ * Quando aparece: depois que o topo (.intro na home, .profile no portfólio) sai da tela (quem acabou de chegar já vê o botão grande dela).
  * Quando some: com o formulário de contato à vista, para não cobrir os campos.
  * O IntersectionObserver avisa quando cada pedaço entra ou sai da tela, sem ouvir a rolagem inteira.
  */
@@ -14,7 +14,7 @@ export function WhatsAppFloat({ href }: { href: string }) {
   const [inContact, setInContact] = useState(false)
 
   useEffect(() => {
-    const intro = document.querySelector('.intro')
+    const intro = document.querySelector('.intro, .profile')
     const contact = document.querySelector('#contato')
     const watch = (el: Element | null, set: (visible: boolean) => void, invert = false) => {
       if (!el) return undefined

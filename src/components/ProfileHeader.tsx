@@ -33,7 +33,7 @@ export function ProfileHeader({ profile, projectCount }: Props) {
     <header className="profile">
       <div className="avatar">
         {avatar?.url ? (
-          <Image src={avatar.url} alt={avatar.alt} fill sizes="132px" />
+          <Image src={avatar.url} alt={avatar.alt} fill sizes="(max-width: 640px) 80px, 200px" />
         ) : (
           <span aria-hidden="true">{initials(profile.name)}</span>
         )}
