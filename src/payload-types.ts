@@ -73,6 +73,7 @@ export interface Config {
     'page-view-days': PageViewDay;
     'page-view-sources': PageViewSource;
     'page-view-places': PageViewPlace;
+    'page-view-times': PageViewTime;
     likes: Like;
     media: Media;
     users: User;
@@ -89,6 +90,7 @@ export interface Config {
     'page-view-days': PageViewDaysSelect<false> | PageViewDaysSelect<true>;
     'page-view-sources': PageViewSourcesSelect<false> | PageViewSourcesSelect<true>;
     'page-view-places': PageViewPlacesSelect<false> | PageViewPlacesSelect<true>;
+    'page-view-times': PageViewTimesSelect<false> | PageViewTimesSelect<true>;
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -284,6 +286,20 @@ export interface PageViewPlace {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-times".
+ */
+export interface PageViewTime {
+  id: number;
+  day: string;
+  path: string;
+  bucket: 'ate10' | 'ate30' | 'ate60' | 'ate180' | 'mais180';
+  visits?: number | null;
+  seconds?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Curtidas dos posts. São criadas pelo coração na página de cada projeto.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -369,6 +385,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'page-view-places';
         value: number | PageViewPlace;
+      } | null)
+    | ({
+        relationTo: 'page-view-times';
+        value: number | PageViewTime;
       } | null)
     | ({
         relationTo: 'likes';
@@ -511,6 +531,19 @@ export interface PageViewPlacesSelect<T extends boolean = true> {
   lat?: T;
   lon?: T;
   visits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-view-times_select".
+ */
+export interface PageViewTimesSelect<T extends boolean = true> {
+  day?: T;
+  path?: T;
+  bucket?: T;
+  visits?: T;
+  seconds?: T;
   updatedAt?: T;
   createdAt?: T;
 }

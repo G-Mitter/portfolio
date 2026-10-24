@@ -12,6 +12,7 @@ import { dayKey, daysAgo, formatPercent, formatRatio, lastDays, parsePeriod, per
 import { likesLabel } from '@/lib/likes'
 import { countryName, sumByCity, topCountries } from '@/lib/place'
 import { SOURCE_LABELS, SOURCES } from '@/lib/source'
+import { BUCKET_LABELS, BUCKETS, formatDuration } from '@/lib/timing'
 
 // Dados novos a cada abertura; nada de cache.
 export const dynamic = 'force-dynamic'
@@ -31,7 +32,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
 
   // O gráfico mostra DAYS dias; os cartões usam o período inteiro ("tudo" = totais antigos, sem data).
   const since = daysAgo(DAYS - 1)
-  const [pages, perDay, places, sources, likes, projects] = await Promise.all([
+  const [pages, perDay, places, times, sources, likes, projects] = await Promise.all([
     payload.find({ collection: 'page-views', limit: 1000, depth: 0, pagination: false }),
     payload.find({
       collection: 'page-view-days',
@@ -42,6 +43,13 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
     }),
     payload.find({
       collection: 'page-view-places',
+      where: limit ? { day: { greater_than_equal: since } } : {},
+      limit: 10000,
+      depth: 0,
+      pagination: false,
+    }),
+    payload.find({
+      collection: 'page-view-times',
       where: limit ? { day: { greater_than_equal: since } } : {},
       limit: 10000,
       depth: 0,
@@ -85,6 +93,19 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
   const viewsSeries = lastDays(viewsByDay, DAYS)
   const likesSeries = lastDays(likesByDay, DAYS)
 
+  // 3b) Tempo: média = segundos ÷ visitas (geral e por página); faixas = quantas visitas em cada intervalo.
+  const timeByPath = new Map<string, { seconds: number; visits: number }>()
+  const visitsByBucket = new Map<string, number>()
+  for (const row of times.docs) {
+    const cur = timeByPath.get(row.path) ?? { seconds: 0, visits: 0 }
+    timeByPath.set(row.path, { seconds: cur.seconds + (row.seconds ?? 0), visits: cur.visits + (row.visits ?? 0) })
+    visitsByBucket.set(row.bucket, (visitsByBucket.get(row.bucket) ?? 0) + (row.visits ?? 0))
+  }
+  const allTimes = [...timeByPath.values()]
+  const totalTimedVisits = allTimes.reduce((sum, t) => sum + t.visits, 0)
+  const averageSeconds = ratio(allTimes.reduce((sum, t) => sum + t.seconds, 0), totalTimedVisits)
+  const maxBucket = Math.max(1, ...visitsByBucket.values())
+
   // 3) Por projeto: junta visitas (page-views, pelo endereço) e curtidas (pelo id do projeto).
   const likesByProject = new Map<number, number>()
   for (const like of likes.docs) {
@@ -96,7 +117,8 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       const page = byPath.get(`/projetos/${project.slug}`)
       const visitors = page?.visitors ?? 0
       const count = likesByProject.get(project.id) ?? 0
-      return { title: project.title, views: page?.views ?? 0, visitors, likes: count, rate: ratio(count, visitors) }
+      const time = timeByPath.get(`/projetos/${project.slug}`)
+      return { title: project.title, views: page?.views ?? 0, visitors, likes: count, rate: ratio(count, visitors), avgSeconds: time ? ratio(time.seconds, time.visits) : null }
     })
     .sort((a, b) => b.views - a.views)
   const maxViews = Math.max(1, ...projectRows.map((r) => r.views))
@@ -132,6 +154,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <div className="dash-card"><b>{totalViews.toLocaleString('pt-BR')}</b><span>Visualizações</span><small>Quantas vezes uma página foi aberta, contando repetições.</small></div>
         <div className="dash-card"><b>{totalVisitors.toLocaleString('pt-BR')}</b><span>{limit ? 'Visitantes por dia (soma)' : 'Visitantes'}</span><small>{limit ? 'Cada navegador conta uma vez por dia e por página; quem volta em outro dia conta de novo.' : 'Quantos navegadores diferentes abriram cada página.'}</small></div>
         <div className="dash-card"><b>{formatRatio(ratio(totalViews, totalVisitors))}</b><span>Visualizações por visitante</span><small>Perto de 1: a pessoa viu e foi embora. Mais alto: ela volta.</small></div>
+        <div className="dash-card"><b>{formatDuration(averageSeconds)}</b><span>Tempo médio na página</span><small>Só conta com a aba visível. Poucas visitas longas puxam a média: veja as faixas abaixo.</small></div>
         <div className="dash-card"><b>{totalLikes.toLocaleString('pt-BR')}</b><span>Curtidas</span><small>Quantas pessoas gostaram de um projeto no período.</small></div>
       </section>
 
@@ -161,6 +184,27 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                   <span>{SOURCE_LABELS[source]}</span>
                   <span className="dash-bar" style={{ width: `${(visits / totalSourceVisits) * 100}%` }} />
                   <b>{visits} ({formatPercent(ratio(visits, totalSourceVisits))})</b>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </section>
+
+      <section className="dash-box">
+        <h2>Tempo na página</h2>
+        <p className="dash-help">Quantas visitas ficaram cada faixa de tempo. Muita gente em &quot;menos de 10 s&quot; indica que a página não prendeu a atenção; visitas de mais de 1 minuto mostram interesse de verdade. O tempo só é enviado quando a pessoa sai da página, então saídas abruptas no celular podem faltar. O histórico começa no deploy deste painel.</p>
+        {totalTimedVisits === 0 ? (
+          <p className="dash-help">Ainda sem visitas com tempo neste período.</p>
+        ) : (
+          <ul className="dash-sources">
+            {BUCKETS.map((bucket) => {
+              const visits = visitsByBucket.get(bucket) ?? 0
+              return (
+                <li key={bucket}>
+                  <span>{BUCKET_LABELS[bucket]}</span>
+                  <span className="dash-bar" style={{ width: `${(visits / maxBucket) * 100}%` }} />
+                  <b>{visits} ({formatPercent(ratio(visits, totalTimedVisits))})</b>
                 </li>
               )
             })}
@@ -216,7 +260,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
         <h2>Projetos</h2>
         <p className="dash-help">A barra mostra as visualizações. A taxa de curtida é curtidas ÷ visitantes: como divide pelo público de cada projeto, compara projetos de forma justa, mesmo com audiências diferentes.</p>
         <table className="dash-table">
-          <thead><tr><th>Projeto</th><th>Visualizações</th><th>Visitantes</th><th>Curtidas</th><th>Taxa de curtida</th></tr></thead>
+          <thead><tr><th>Projeto</th><th>Visualizações</th><th>Visitantes</th><th>Curtidas</th><th>Taxa de curtida</th><th>Tempo médio</th></tr></thead>
           <tbody>
             {projectRows.map((row) => (
               <tr key={row.title}>
@@ -225,6 +269,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
                 <td>{row.visitors}</td>
                 <td title={likesLabel(row.likes)}>{row.likes}</td>
                 <td>{formatPercent(row.rate)}</td>
+                <td>{formatDuration(row.avgSeconds)}</td>
               </tr>
             ))}
           </tbody>
