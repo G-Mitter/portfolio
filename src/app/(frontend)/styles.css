@@ -45,7 +45,7 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
 .wrap { display: block; max-width: 935px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; }
 /* Em @layer base para os utilitários do Tailwind (ex.: cor do Button) poderem vencer. */
 @layer base { a { color: var(--accent); } }
@@ -168,14 +168,23 @@ body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--bo
 .available i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
 
 /* Página inicial: apresentação centralizada e três projetos em destaque */
-.intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); align-items: center; gap: 40px; padding: 24px 0 40px; border-bottom: 1px solid var(--line); }
-.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-/* Foto em retrato (4:5) com cantos arredondados e um bloco na cor de destaque atrás, deslocado. */
-.intro-photo { position: relative; overflow: hidden; aspect-ratio: 4 / 5; border-radius: 24px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 72px; color: var(--on-cover); background: var(--c-automation); box-shadow: 14px 14px 0 color-mix(in srgb, var(--accent) 35%, transparent); }
-.intro-photo img { object-fit: cover; object-position: center 20%; }
-.intro .stats { margin: 4px 0 0; }
-.intro h1 { margin: 0; max-width: 22ch; font-family: var(--display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.02em; text-wrap: balance; }
+/* Topo da home: faixa escura de ponta a ponta (cores fixas da marca, não seguem o tema do sistema). */
+.intro {
+  --bg: #141a28; --surface: #1c2438; --line: #2a3550; --fg: #f4f6fb; --muted: #9aa5bd; --accent: #6d9bff; --done: #4fcf9a;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); column-gap: 40px; align-items: end;
+  width: 100vw; margin: -28px 0 40px calc(50% - 50vw); padding: 56px max(16px, calc(50vw - 467px)) 14px; overflow: hidden;
+  background: var(--bg); color: var(--fg);
+}
+.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 8vw; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
+.intro h1 { margin: 0; max-width: 16ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(36px, 5.6vw, 68px); line-height: 1; letter-spacing: 0.01em; text-wrap: balance; }
+/* Foto recortada sobre um disco azul: o disco é só um círculo de degradê atrás da imagem. */
+.intro-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; }
+.intro-photo::before { content: ''; position: absolute; inset: 0 0 auto; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
+.intro-photo img { position: absolute; bottom: 0; left: 6%; width: 88%; height: auto; }
+/* Nome enorme cruzando a base da foto (fica na frente dela). */
+.intro-big { position: relative; z-index: 2; grid-column: 1 / -1; margin: -0.62em 0 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: min(calc((100vw - 32px) / 6.2), 152px); line-height: 0.9; letter-spacing: 0; text-transform: uppercase; white-space: nowrap; }
+.intro .stats { margin: 4px 0 0; }
 .intro .available { margin-bottom: 8px; }
 .featured { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .featured h2 { align-self: stretch; font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0; }
@@ -241,8 +250,10 @@ body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--bo
 
 @media (max-width: 640px) {
   /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
-  .intro { grid-template-columns: 1fr; gap: 24px; padding-top: 8px; }
-  .intro-photo { order: -1; aspect-ratio: 4 / 3; margin-right: 10px; box-shadow: 10px 10px 0 color-mix(in srgb, var(--accent) 35%, transparent); }
+  .intro { grid-template-columns: 1fr; width: 100vw; padding-top: 28px; }
+  .intro-photo { grid-row: 1; width: min(78vw, 320px); margin-inline: auto; }
+  .intro-big { grid-row: 2; font-size: 21vw; white-space: normal; text-align: center; margin-top: -0.5em; line-height: 0.88; }
+  .intro-text { grid-row: 3; padding: 28px 0 40px; }
   .intro .p-actions { flex-wrap: wrap; align-self: stretch; }
   .intro .p-actions > :first-child { flex-basis: 100%; }
   .intro .loc { display: block; }

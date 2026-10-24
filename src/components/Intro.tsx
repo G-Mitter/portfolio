@@ -4,7 +4,6 @@ import Link from 'next/link'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { initials } from '@/lib/initials'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
 
@@ -18,19 +17,18 @@ const SHEET_ROWS = [
 /**
  * Topo da página inicial: quem você é, o que resolve e para onde ir.
  * O botão principal leva ao contato; o outro, ao portfólio.
- * No computador: texto à esquerda e foto à direita, em retrato com cantos arredondados.
- * No celular: foto em cima, texto embaixo.
+ * Faixa escura de ponta a ponta: texto à esquerda, foto recortada sobre um disco azul
+ * à direita e o nome em letras enormes cruzando a base da foto.
+ * No celular: foto em cima, nome e texto embaixo.
  */
 export function Intro({ profile, projectCount }: { profile: Profile; projectCount: number }) {
-  const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
   const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
 
   return (
     <header className="intro">
       <div className="intro-text">
         <p className="intro-name">
-          {profile.name}
-          {profile.role && ` · ${profile.role}`}
+          {profile.role}
           {profile.location && <span className="loc"> · {profile.location}</span>}
         </p>
         {profile.bio && <h1>{profile.bio}</h1>}
@@ -91,19 +89,18 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
           )}
         </div>
       </div>
+      {/* Recorte sem fundo (public/): o disco azul fica atrás, no CSS. */}
       <div className="intro-photo">
-        {avatar?.url ? (
-          <Image
-            src={avatar.url}
-            alt={avatar.alt}
-            fill
-            sizes="(max-width: 640px) 100vw, 340px"
-            priority
-          />
-        ) : (
-          <span aria-hidden="true">{initials(profile.name)}</span>
-        )}
+        <Image
+          src="/guilherme-recorte.png"
+          alt={`Foto de ${profile.name}`}
+          width={970}
+          height={1240}
+          sizes="(max-width: 640px) 80vw, 420px"
+          priority
+        />
       </div>
+      <p className="intro-big">{profile.name}</p>
     </header>
   )
 }
