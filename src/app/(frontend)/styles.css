@@ -309,7 +309,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .profile .stats b { font-size: 24px; }
   .profile .stats span { max-width: none; }
   .tile-meta { display: none; }
-  .p-photo { width: 104px; align-self: center; }
+  .p-photo { width: 104px; align-self: center; margin-bottom: 8px; }
   .handle { font-size: 30px; overflow-wrap: anywhere; }
   .p-info, .p-head { display: contents; }
   /* Selo embaixo do nome, na coluna ao lado da foto. */
@@ -431,6 +431,8 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .intro-text > :nth-child(6) { animation-delay: 0.4s; }
   .intro-photo::before { animation: disc-in 0.8s 0.1s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   .intro-photo img { animation: photo-in 0.9s 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  /* No portfólio, no celular, a foto só aparece (sem subir), para não passar por cima dos botões. */
+  @media (max-width: 640px) { .profile .p-photo img { animation: fade-in 0.6s 0.25s ease both; } }
   .intro-big { animation: rise 0.8s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   .intro .available { animation: rise 0.6s 0.7s ease-out both; }
 
