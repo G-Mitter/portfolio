@@ -296,7 +296,7 @@ a { color: var(--accent); }
 .dash-head h1 { font-family: var(--display); margin: 24px 0 4px; }
 .dash-head p { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
 .dash-head a { color: var(--accent); }
-.dash-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.dash-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
 .dash-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
 .dash-card b { font-family: var(--display); font-size: 32px; line-height: 1.1; }
 .dash-card span { font-weight: 600; }
