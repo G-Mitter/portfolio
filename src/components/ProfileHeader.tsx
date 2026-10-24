@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { initials } from '@/lib/initials'
 import { instagramUrl } from '@/lib/instagram'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
@@ -14,7 +13,6 @@ type Props = {
 }
 
 export function ProfileHeader({ profile, projectCount }: Props) {
-  const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
   const resume = typeof profile.links?.resume === 'object' ? profile.links.resume : null
   const email = profile.links?.email
   const instagram = instagramUrl(profile.links?.instagram)
@@ -31,12 +29,16 @@ export function ProfileHeader({ profile, projectCount }: Props) {
 
   return (
     <header className="profile">
-      <div className="avatar">
-        {avatar?.url ? (
-          <Image src={avatar.url} alt={avatar.alt} fill sizes="(max-width: 640px) 80px, 200px" />
-        ) : (
-          <span aria-hidden="true">{initials(profile.name)}</span>
-        )}
+      {/* Mesmo recorte sem fundo da home (public/); o disco azul e a animação vêm do CSS de .intro-photo. */}
+      <div className="intro-photo p-photo">
+        <Image
+          src="/guilherme-recorte.png"
+          alt={`Foto de ${profile.name}`}
+          width={970}
+          height={1240}
+          sizes="(max-width: 640px) 104px, 300px"
+          priority
+        />
       </div>
       <div className="p-info">
         <div className="p-head">

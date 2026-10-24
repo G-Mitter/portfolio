@@ -59,12 +59,12 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Perfil */
 .profile {
   --bg: #141a28; --surface: #1c2438; --line: #2a3550; --fg: #f4f6fb; --muted: #9aa5bd; --accent: #6d9bff; --done: #4fcf9a; color-scheme: dark;
-  display: grid; grid-template-columns: auto 1fr; gap: 20px 48px; align-items: center;
-  width: 100vw; margin: -28px 0 8px calc(50% - 50vw); padding: 56px max(16px, calc(50vw - 534px)) 48px;
+  display: grid; grid-template-columns: auto 1fr; gap: 20px 56px; align-items: end;
+  width: 100vw; margin: -28px 0 8px calc(50% - 50vw); padding: 56px max(16px, calc(50vw - 534px)) 0; overflow: hidden;
   background: var(--bg); color: var(--fg);
 }
-.avatar { position: relative; overflow: hidden; width: 200px; height: 200px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 64px; color: var(--on-cover); background: var(--c-automation); box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--accent); }
-.avatar img { object-fit: cover; }
+.p-photo { width: 300px; }
+.profile .p-info { padding-bottom: 48px; }
 .p-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
 .p-id { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .p-id .available { margin: 0; }
@@ -294,7 +294,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .profile .stats b { font-size: 24px; }
   .profile .stats span { max-width: none; }
   .tile-meta { display: none; }
-  .avatar { width: 80px; height: 80px; font-size: 28px; }
+  .p-photo { width: 104px; align-self: center; }
   .handle { font-size: 30px; overflow-wrap: anywhere; }
   .p-info, .p-head { display: contents; }
   /* Selo embaixo do nome, na coluna ao lado da foto. */
