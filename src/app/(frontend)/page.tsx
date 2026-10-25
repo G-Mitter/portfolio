@@ -5,7 +5,7 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
 import { Intro } from '@/components/Intro'
-import { PostTile } from '@/components/PostTile'
+import { ProjectCard } from '@/components/ProjectCard'
 import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
@@ -96,11 +96,10 @@ export default async function HomePage({ searchParams }: Props) {
         <section className="featured band band-dark" aria-labelledby="destaques-titulo">
           <h2 id="destaques-titulo">Projetos em destaque</h2>
           <div className="grid">
-            {/* O resultado fica escrito embaixo da capa: no celular não existe hover. */}
+            {/* O resultado vai numa etiqueta dentro do cartão: no celular não existe hover. */}
             {projects.docs.map((project) => (
               <div key={project.id}>
-                <PostTile project={project} />
-                {project.result && <p className="featured-result">{project.result}</p>}
+                <ProjectCard project={project} showResult />
               </div>
             ))}
           </div>
