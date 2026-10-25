@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import React from 'react'
 
 import { Footer } from '@/components/Footer'
+import { OverflowDebug } from '@/components/OverflowDebug'
 import { ViewCounter } from '@/components/ViewCounter'
 import { siteUrl } from '@/lib/siteUrl'
 
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         {/* Conta as visualizações de cada página para mostrar em /admin > Visualizações. */}
         <ViewCounter />
+        <OverflowDebug />
       </body>
     </html>
   )
