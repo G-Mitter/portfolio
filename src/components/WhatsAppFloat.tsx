@@ -4,7 +4,7 @@
  * Botão flutuante do WhatsApp (home e portfólio).
  *
  * Quando aparece: depois que o topo (.intro na home, .profile no portfólio) sai da tela (quem acabou de chegar já vê o botão grande dela).
- * Quando some: com o formulário de contato à vista, para não cobrir os campos.
+ * Quando some: com o formulário de contato ou o rodapé à vista, para não cobrir campos nem links.
  * O IntersectionObserver avisa quando cada pedaço entra ou sai da tela, sem ouvir a rolagem inteira.
  */
 import { useEffect, useState } from 'react'
@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react'
 export function WhatsAppFloat({ href }: { href: string }) {
   const [pastIntro, setPastIntro] = useState(false)
   const [inContact, setInContact] = useState(false)
+  const [inFooter, setInFooter] = useState(false)
 
   useEffect(() => {
     const intro = document.querySelector('.intro, .profile')
@@ -24,11 +25,16 @@ export function WhatsAppFloat({ href }: { href: string }) {
       observer.observe(el)
       return observer
     }
-    const observers = [watch(intro, setPastIntro, true), watch(contact, setInContact)]
+    const footer = document.querySelector('.foot')
+    const observers = [
+      watch(intro, setPastIntro, true),
+      watch(contact, setInContact),
+      watch(footer, setInFooter),
+    ]
     return () => observers.forEach((observer) => observer?.disconnect())
   }, [])
 
-  const visible = pastIntro && !inContact
+  const visible = pastIntro && !inContact && !inFooter
 
   return (
     <a
