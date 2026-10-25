@@ -10,6 +10,9 @@ import { useState } from 'react'
 
 import type { Project } from '@/payload-types'
 import { CATEGORY_LABELS } from '@/lib/labels'
+import Link from 'next/link'
+
+import { Badge } from '@/components/ui/badge'
 import { PostTile } from './PostTile'
 
 type Filter = 'all' | 'in-progress' | Project['category']
@@ -57,14 +60,28 @@ export function Feed({ projects }: { projects: Project[] }) {
       <div className={swapped ? 'grid swap' : 'grid'} key={filter}>
         {visible.length === 0 && <p className="empty">Nenhum projeto nesta categoria ainda.</p>}
         {visible.map((project) => (
-          <div key={project.id}>
-            <PostTile project={project} />
-            {/* Categoria e tecnologias à vista (no celular o toque abre o projeto, então some). */}
-            <p className="tile-meta">
-              <b>{CATEGORY_LABELS[project.category]}</b>
-              {project.stack.length > 0 && ` · ${project.stack.slice(0, 3).join(', ')}`}
-            </p>
-          </div>
+          // Um cartão só: capa, nome, resumo, até 4 tecnologias e a ação, com o mesmo espaçamento em todos.
+          <article key={project.id} className="card">
+            {/* A capa é só um atalho para quem usa mouse ou toque; teclado e leitor de tela usam o título. */}
+            <PostTile project={project} decorative />
+            <div className="card-body">
+              <p className="card-cat">{CATEGORY_LABELS[project.category]}</p>
+              <h3>
+                <Link href={`/projetos/${project.slug}`}>{project.title}</Link>
+              </h3>
+              <p className="card-sum">{project.summary}</p>
+              {project.stack.length > 0 && (
+                <div className="chips">
+                  {project.stack.slice(0, 4).map((tech) => (
+                    <Badge key={tech}>{tech}</Badge>
+                  ))}
+                </div>
+              )}
+              <Link className="card-go" href={`/projetos/${project.slug}`} aria-label={`Ver projeto ${project.title}`}>
+                Ver projeto →
+              </Link>
+            </div>
+          </article>
         ))}
       </div>
     </>

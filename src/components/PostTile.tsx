@@ -4,13 +4,17 @@ import type { Project } from '@/payload-types'
 import { STATUS_LABELS } from '@/lib/labels'
 import { PostCover } from './PostCover'
 
-/** Um quadrado do feed: capa, selo de andamento e, no hover, resultado e tecnologias. */
-export function PostTile({ project }: { project: Project }) {
+/**
+ * Um quadrado do feed: capa, selo de andamento e, no hover, resultado e tecnologias.
+ * `decorative`: quando o cartão já tem título e botão com o mesmo link, a capa sai da ordem do teclado.
+ */
+export function PostTile({ project, decorative = false }: { project: Project; decorative?: boolean }) {
   return (
     <Link
       href={`/projetos/${project.slug}`}
       className="post"
       aria-label={`${project.title}, ${STATUS_LABELS[project.progress]}`}
+      {...(decorative && { tabIndex: -1, 'aria-hidden': true })}
     >
       <PostCover project={project} />
       {project.pinned && <span className="pin">📌 fixado</span>}
