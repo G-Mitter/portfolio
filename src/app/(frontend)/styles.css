@@ -50,6 +50,8 @@ a, button, summary { touch-action: manipulation; }
 /* Link para pular direto ao conteúdo: fica fora da tela até receber foco pelo teclado. */
 .skip { position: absolute; left: 16px; top: -64px; z-index: 100; padding: 10px 16px; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; }
 .skip:focus { top: 12px; }
+/* No html (e não só no body) o iPhone passa a ignorar o que sobra para a direita e não deixa dar zoom para fora da página. */
+html { overflow-x: clip; }
 body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.55; }
 .wrap { display: block; max-width: 1100px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; }
 /* Em @layer base para os utilitários do Tailwind (ex.: cor do Button) poderem vencer. */
