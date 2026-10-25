@@ -151,12 +151,14 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .highlights + .grid { gap: 20px; }
 .card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow: hidden; }
 .card .post { border-radius: 0; }
+/* O título e o resultado já estão no texto do cartão: na capa gerada por código ficam só a cor e o trecho. */
+.card .cover h3, .card .cover .res { display: none; }
 .card-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px; }
 .card-cat { margin: 0; color: var(--accent); font-size: 13px; font-weight: 600; }
 .card-body h3 { margin: 0; font-family: var(--display); font-size: 20px; line-height: 1.15; letter-spacing: -0.01em; }
 .card-body h3 a { color: inherit; text-decoration: none; }
 .card-sum { margin: 0; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); font-size: 15px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
-.card-go { margin-top: auto; padding-top: 4px; color: var(--accent); font-size: 15px; font-weight: 600; text-decoration: none; }
+.card-go { display: inline-flex; align-items: center; min-height: 44px; margin-top: auto; color: var(--accent); font-size: 15px; font-weight: 600; text-decoration: none; }
 .card-go:hover, .card-body h3 a:hover { text-decoration: underline; }
 .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0; }
 
@@ -331,7 +333,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .highlights + .grid { gap: 16px; }
   .highlights + .grid .post { aspect-ratio: 4 / 3; }
-  .highlights { padding: 12px 0; margin-bottom: 12px; }
+  /* Filtros: uma linha só, que desliza para o lado, sem quebrar linha nem comprimir os botões. */
+  .highlights { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 12px 0; margin-bottom: 12px; }
+  .highlights::-webkit-scrollbar { display: none; }
+  .hl { flex: none; white-space: nowrap; }
+  .similar a { flex-basis: 100%; text-align: center; }
   .skills { margin-top: 32px; }
   .wa-float { width: 52px; height: 52px; right: 12px; }
   .p-actions { grid-column: 1 / -1; flex-wrap: nowrap; gap: 8px; }

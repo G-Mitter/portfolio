@@ -34,6 +34,17 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
         </p>
         {profile.bio && <p className="lead">{profile.bio}</p>}
         {profile.support && <p className="support">{profile.support}</p>}
+        {/* Números que provam o trabalho, os mesmos do topo do portfólio. */}
+        <ul className="stats">
+          <li>
+            <b>{projectCount}</b> <span>projetos</span>
+          </li>
+          {profile.stats?.map((stat) => (
+            <li key={stat.id ?? stat.label}>
+              <b>{stat.value}</b> <span>{stat.label}</span>
+            </li>
+          ))}
+        </ul>
         {/* O botão de destaque leva ao contato (WhatsApp, ou o formulário se não houver número):
             é a ação que a página quer. Ver os projetos fica como segunda opção. */}
         <div className="p-actions">
@@ -52,17 +63,6 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
             <Link href="/portfolio">Ver meus projetos</Link>
           </Button>
         </div>
-        {/* Números que provam o trabalho, os mesmos do topo do portfólio. */}
-        <ul className="stats">
-          <li>
-            <b>{projectCount}</b> <span>projetos</span>
-          </li>
-          {profile.stats?.map((stat) => (
-            <li key={stat.id ?? stat.label}>
-              <b>{stat.value}</b> <span>{stat.label}</span>
-            </li>
-          ))}
-        </ul>
       </div>
       {/* Recorte sem fundo (public/): o disco azul fica atrás, no CSS. */}
       <div className="intro-photo">
