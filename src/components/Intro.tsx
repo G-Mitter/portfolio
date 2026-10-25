@@ -29,7 +29,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
       )}
       <div className="intro-text">
         <p className="intro-name">
-          {profile.role}
+          {profile.name} · {profile.role}
           {profile.location && <span className="loc"> · {profile.location}</span>}
         </p>
         {profile.bio && <p className="lead">{profile.bio}</p>}
@@ -75,7 +75,8 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
           priority
         />
       </div>
-      <h1 className="intro-big">{profile.name}</h1>
+      {/* O nome segue como <h1> para leitores de tela e buscadores, mas só aparece na linha acima da frase. */}
+      <h1 className="sr-only">{profile.name}</h1>
     </header>
   )
 }
