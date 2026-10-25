@@ -142,6 +142,26 @@ export const Projects: CollectionConfig = {
       hasMany: true,
     },
     {
+      name: 'demoVideo',
+      label: 'Vídeo de demonstração (16:9)',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Opcional. mp4 ou webm, mudo, de preferência abaixo de 1 MB. Toca em loop na página do projeto.',
+      },
+    },
+    {
+      name: 'demoVideoTall',
+      label: 'Vídeo vertical (celular)',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Opcional. Versão 9:16 para o celular. Sem ela, o vídeo 16:9 serve para todos os aparelhos.',
+      },
+    },
+    {
       name: 'stack',
       label: 'Tecnologias',
       type: 'text',

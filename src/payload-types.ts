@@ -178,6 +178,14 @@ export interface Project {
    */
   coverCode?: string | null;
   gallery?: (number | Media)[] | null;
+  /**
+   * Opcional. mp4 ou webm, mudo, de preferência abaixo de 1 MB. Toca em loop na página do projeto.
+   */
+  demoVideo?: (number | null) | Media;
+  /**
+   * Opcional. Versão 9:16 para o celular. Sem ela, o vídeo 16:9 serve para todos os aparelhos.
+   */
+  demoVideoTall?: (number | null) | Media;
   stack: string[];
   category: 'automation' | 'web' | 'ai' | 'data';
   progress: 'in-progress' | 'done';
@@ -458,6 +466,8 @@ export interface ProjectsSelect<T extends boolean = true> {
   cover?: T;
   coverCode?: T;
   gallery?: T;
+  demoVideo?: T;
+  demoVideoTall?: T;
   stack?: T;
   category?: T;
   progress?: T;

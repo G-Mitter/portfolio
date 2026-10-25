@@ -14,6 +14,7 @@ import * as migration_20261020_015111_dashboard_origem_das_visitas from './20261
 import * as migration_20261024_151913_dashboard_mapa_das_visitas from './20261024_151913_dashboard_mapa_das_visitas';
 import * as migration_20261024_152828_dashboard_tempo_na_pagina from './20261024_152828_dashboard_tempo_na_pagina';
 import * as migration_20261024_173800_texto_de_apoio from './20261024_173800_texto_de_apoio';
+import * as migration_20261025_155904_videos_de_demonstracao from './20261025_155904_videos_de_demonstracao';
 
 export const migrations = [
   {
@@ -95,5 +96,10 @@ export const migrations = [
     up: migration_20261024_173800_texto_de_apoio.up,
     down: migration_20261024_173800_texto_de_apoio.down,
     name: '20261024_173800_texto_de_apoio',
+  },
+  {
+    up: migration_20261025_155904_videos_de_demonstracao.up,
+    down: migration_20261025_155904_videos_de_demonstracao.down,
+    name: '20261025_155904_videos_de_demonstracao',
   },
 ];
