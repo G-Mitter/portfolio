@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 
 import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
+import { DemoVideo } from '@/components/DemoVideo'
 import { Intro } from '@/components/Intro'
 import { ProjectCard } from '@/components/ProjectCard'
 import { Process } from '@/components/Process'
@@ -92,6 +93,12 @@ export default async function HomePage({ searchParams }: Props) {
       />
       <Intro profile={profile} projectCount={projects.totalDocs} />
       <Statement />
+      <section className="demo band band-dark" aria-labelledby="demo-titulo">
+        <h2 id="demo-titulo">Veja o robô trabalhando</h2>
+        <p>Ele lê as planilhas, cruza vendas, recebimentos e extrato, e mostra onde o dinheiro não bateu.</p>
+        <DemoVideo />
+        <small>Demonstração com dados fictícios.</small>
+      </section>
       {projects.docs.length > 0 && (
         <section className="featured band band-dark" aria-labelledby="destaques-titulo">
           <h2 id="destaques-titulo">Projetos em destaque</h2>
