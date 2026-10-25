@@ -41,6 +41,14 @@ const DEMOS = [
     label:
       'Demonstração do Robô de Carga dos Caixas: o robô seleciona as alterações, visualiza os produtos, executa a carga e repete para as 23 lojas até aparecer "Carga concluída". Dados fictícios.',
   },
+  {
+    name: 'SupplyFlow',
+    text: 'Pedido de suprimentos da filial vira linha na planilha, baixa de estoque, aviso no Chat e custo por filial, sem ninguém digitar.',
+    wide: '/videos/supplyflow-16x9.mp4',
+    tall: '/videos/supplyflow-vertical.mp4',
+    label:
+      'Demonstração do SupplyFlow: a filial envia o pedido pelo formulário, a planilha registra a demanda e dá baixa no estoque, o Chat e o e-mail avisam a entrega, e a pesquisa mostra o custo da filial no período. Dados fictícios.',
+  },
 ]
 
 type Props = {
