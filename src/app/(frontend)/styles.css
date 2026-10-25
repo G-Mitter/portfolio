@@ -151,11 +151,12 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 }
 /* Cartão do feed: capa + texto no mesmo bloco; a altura acompanha a linha, e o botão fica sempre embaixo. */
 .highlights + .grid { gap: 20px; }
-.card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow: hidden; }
+.card { position: relative; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow: hidden; }
 .card .post { border-radius: 0; }
 /* O título e o resultado já estão no texto do cartão: na capa gerada por código ficam só a cor e o trecho. */
 .card .cover h3, .card .cover .res { display: none; }
 .card-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px; }
+/* Escondido só para a tela: absoluto dentro do .card (position: relative), senão o texto escapa da fileira rolável e alarga a página no celular. */
 .card-vh { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .card-cat { margin: 0; color: var(--accent); font-size: 13px; font-weight: 600; }
 .card-body h3 { margin: 0; font-family: var(--display); font-size: 20px; line-height: 1.15; letter-spacing: -0.01em; }
