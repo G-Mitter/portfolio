@@ -1,9 +1,8 @@
 import { Bricolage_Grotesque, JetBrains_Mono, Schibsted_Grotesk } from 'next/font/google'
 import type { Metadata, Viewport } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
+import { Footer } from '@/components/Footer'
 import { ViewCounter } from '@/components/ViewCounter'
 import { siteUrl } from '@/lib/siteUrl'
 
@@ -52,6 +51,9 @@ export const metadata: Metadata = {
 // Cor da barra do navegador no celular, igual ao fundo escuro da abertura.
 export const viewport: Viewport = { themeColor: '#141a28' }
 
+// O rodapé lê o Perfil no banco: sem isso o Next tentaria montar páginas estáticas (ex.: 404) já no build.
+export const dynamic = 'force-dynamic'
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
@@ -61,18 +63,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Pular para o conteúdo
         </a>
         <main className="wrap" id="conteudo">{children}</main>
-        {/* Rodapé sempre escuro (como o topo e o contato), por isso a logo é a versão para fundo escuro. */}
-        <footer className="foot band-dark">
-          <nav className="foot-nav" aria-label="Rodapé">
-            <Link href="/">Início</Link>
-            <Link href="/portfolio">Portfólio</Link>
-            <Link href="/#contato">Contato</Link>
-          </nav>
-          <div className="foot-base">
-            <Image src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} />
-            <p>Automações em Belo Horizonte e região</p>
-          </div>
-        </footer>
+        {/* Rodapé sempre escuro (como o topo e o contato). */}
+        <Footer />
         {/* Conta as visualizações de cada página para mostrar em /admin > Visualizações. */}
         <ViewCounter />
       </body>
