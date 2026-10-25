@@ -19,10 +19,10 @@ for (const phrase of HIGHLIGHTS) {
 
 export function Statement() {
   return (
-    <section className="band band-light statement-band">
+    <section className="band band-dark statement-band">
       <p className="statement">
         {WORDS.map((word, i) => (
-          <span className={marked.has(i) ? 'w hl' : 'w'} style={{ '--i': i } as React.CSSProperties} key={i}>
+          <span className={marked.has(i) ? 'w key' : 'w'} style={{ '--i': i } as React.CSSProperties} key={i}>
             {word}{' '}
           </span>
         ))}

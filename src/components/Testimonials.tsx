@@ -13,7 +13,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
   if (!testimonials?.length) return null
 
   return (
-    <section className="testimonials band band-light" aria-labelledby="recomendacoes-titulo">
+    <section className="testimonials band band-dark" aria-labelledby="recomendacoes-titulo">
       <h2 id="recomendacoes-titulo">Recomendações</h2>
       <ul>
         {testimonials.map((item) => {
