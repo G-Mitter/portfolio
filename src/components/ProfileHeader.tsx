@@ -34,8 +34,8 @@ export function ProfileHeader({ profile, projectCount }: Props) {
         <Image
           src="/guilherme-recorte.png"
           alt={`Foto de ${profile.name}`}
-          width={970}
-          height={1240}
+          width={1086}
+          height={1448}
           sizes="(max-width: 640px) 104px, 300px"
           priority
         />
