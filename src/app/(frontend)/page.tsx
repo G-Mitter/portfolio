@@ -52,8 +52,8 @@ export default async function HomePage({ searchParams }: Props) {
 
   // Dados estruturados (schema.org): a "ficha" que o Google lê para saber quem você é e onde atende.
   const person = {
-    '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${siteUrl}/#pessoa`,
     name: profile.name,
     alternateName: ['guimitter', profile.handle].filter(Boolean),
     jobTitle: profile.role,
@@ -64,13 +64,31 @@ export default async function HomePage({ searchParams }: Props) {
     knowsAbout: ['Automação de processos', 'RPA', 'Python', 'Desenvolvimento web', 'Inteligência artificial'],
     sameAs: [profile.links?.github, profile.links?.linkedin, instagramUrl(profile.links?.instagram)].filter(Boolean),
   }
+  // O site em si e o serviço oferecido, ligados à pessoa pelo @id.
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      person,
+      { '@type': 'WebSite', '@id': `${siteUrl}/#site`, url: siteUrl, name: 'Guilherme Mitter', inLanguage: 'pt-BR', publisher: { '@id': person['@id'] } },
+      {
+        '@type': 'ProfessionalService',
+        '@id': `${siteUrl}/#servico`,
+        name: 'Guilherme Mitter Automações',
+        url: siteUrl,
+        image: `${siteUrl}/og.png`,
+        description: 'Automação de processos, RPA, Python e sites para empresas em Santa Luzia e Belo Horizonte.',
+        founder: { '@id': person['@id'] },
+        areaServed: person.areaServed,
+      },
+    ],
+  }
 
   return (
     <>
       {/* O "<" é trocado para que nenhum texto do /admin consiga fechar a tag <script>. */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, '\\u003c') }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
       />
       <Intro profile={profile} projectCount={projects.totalDocs} />
       <Statement />
