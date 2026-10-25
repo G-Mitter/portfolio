@@ -69,8 +69,8 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
         <Image
           src="/guilherme-recorte.png"
           alt={`Foto de ${profile.name}`}
-          width={970}
-          height={1240}
+          width={1086}
+          height={1448}
           sizes="(max-width: 640px) 80vw, 640px"
           priority
         />
