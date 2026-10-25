@@ -48,7 +48,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
               <a href="#contato">Falar sobre meu projeto</a>
             </Button>
           )}
-          <Button asChild size="lg">
+          <Button asChild size="lg" className="border-primary">
             <Link href="/portfolio">Ver meus projetos</Link>
           </Button>
         </div>
