@@ -310,13 +310,18 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .profile { gap: 14px 16px; padding: 28px 16px 24px; }
   .profile .stats b { font-size: 20px; white-space: nowrap; }
   .profile .stats span { max-width: none; }
-  .tile-meta { display: none; }
+  .tile-meta { font-size: 15px; margin-bottom: 18px; }
   .p-photo { width: 104px; align-self: center; margin-bottom: 8px; }
   .handle { font-size: 30px; overflow-wrap: anywhere; }
   .p-info, .p-head { display: contents; }
   /* Selo embaixo do nome, na coluna ao lado da foto. */
   .p-id { flex-direction: column; align-items: flex-start; align-self: start; gap: 6px; padding-top: 6px; }
-  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Feed em 1 coluna: capas maiores deixam título, status e tecnologias legíveis. */
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .highlights + .grid .post { aspect-ratio: 4 / 3; }
+  .highlights { padding: 12px 0; margin-bottom: 12px; }
+  .skills { margin-top: 32px; }
+  .wa-float { width: 52px; height: 52px; right: 12px; }
   .p-actions { grid-column: 1 / -1; flex-wrap: nowrap; gap: 8px; }
   /* Os botões dividem a linha; o mais longo ganha mais espaço */
   .p-actions > * { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; text-align: center; padding: 9px 8px; white-space: nowrap; }
@@ -327,9 +332,10 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .bio, .headline, .p-links { grid-column: 1 / -1; }
   .headline { margin: 0; }
   .p-links { margin: 0; }
-  .cover { padding: 10px; }
-  .cover .glyph, .cover .res, .pin { display: none; }
-  .badge { top: 6px; right: 6px; font-size: 0; padding: 4px; }
+  .cover { padding: 16px; }
+  .cover h3 { font-size: clamp(22px, 7vw, 30px); }
+  /* Só a página inicial (destaques deslizantes) ainda esconde detalhes das capas pequenas. */
+  .featured .cover .glyph, .featured .cover .res, .featured .pin { display: none; }
   .detail { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
