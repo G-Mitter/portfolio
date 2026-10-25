@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 const badgeVariants = cva('inline-flex items-center', {
   variants: {
     variant: {
-      chip: 'rounded-full border border-border px-2.5 py-[3px] font-mono text-xs',
+      chip: 'rounded-full border border-muted-foreground/50 px-2.5 py-[3px] font-mono text-[13px]',
       status: 'gap-1.5 font-mono text-xs',
       available:
         'gap-[7px] rounded-full border border-current px-[11px] py-[3px] text-[13px] font-semibold text-success no-underline',

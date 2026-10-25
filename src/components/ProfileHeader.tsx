@@ -54,31 +54,7 @@ export function ProfileHeader({ profile, projectCount }: Props) {
               </Badge>
             )}
           </div>
-          {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
-          <div className="p-actions">
-            {/* Botão principal: leva ao formulário da página inicial. */}
-            <Button asChild variant="default">
-              <Link href="/#contato">Falar sobre meu projeto</Link>
-            </Button>
-            {whatsapp && (
-              <Button asChild variant="whatsapp">
-                <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                  WhatsApp
-                </a>
-              </Button>
-            )}
-          </div>
         </div>
-        <ul className="stats">
-          <li>
-            <b>{projectCount}</b> <span>projetos</span>
-          </li>
-          {profile.stats?.map((stat) => (
-            <li key={stat.id ?? stat.label}>
-              <b>{stat.value}</b> <span>{stat.label}</span>
-            </li>
-          ))}
-        </ul>
         {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
         {profile.bio && <p className="headline">{profile.bio}</p>}
         <p className="bio">
@@ -100,6 +76,30 @@ export function ProfileHeader({ profile, projectCount }: Props) {
             </>
           )}
         </p>
+        <ul className="stats">
+          <li>
+            <b>{projectCount}</b> <span>projetos</span>
+          </li>
+          {profile.stats?.map((stat) => (
+            <li key={stat.id ?? stat.label}>
+              <b>{stat.value}</b> <span>{stat.label}</span>
+            </li>
+          ))}
+        </ul>
+        {/* Os dois botões de contato ficam juntos: no celular viram uma linha inteira. */}
+        <div className="p-actions">
+          {/* Botão principal: leva ao formulário da página inicial. */}
+          <Button asChild variant="default">
+            <Link href="/#contato">Falar sobre meu projeto</Link>
+          </Button>
+          {whatsapp && (
+            <Button asChild variant="whatsapp">
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            </Button>
+          )}
+        </div>
         {links.length > 0 && (
           <p className="p-links">
             {links.map((link) => (

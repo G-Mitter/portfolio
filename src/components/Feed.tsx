@@ -12,10 +12,10 @@ import type { Project } from '@/payload-types'
 import { CATEGORY_LABELS } from '@/lib/labels'
 import Link from 'next/link'
 
-import { Badge } from '@/components/ui/badge'
+import { TechBadge } from '@/components/TechBadge'
 import { PostTile } from './PostTile'
 
-type Filter = 'all' | 'in-progress' | Project['category']
+type Filter = 'all' | Project['category']
 
 const FILTERS: { value: Filter; label: string }[] = [
   { value: 'all', label: 'Tudo' },
@@ -23,7 +23,6 @@ const FILTERS: { value: Filter; label: string }[] = [
     value: category,
     label: CATEGORY_LABELS[category],
   })),
-  { value: 'in-progress', label: 'Em andamento' },
 ]
 
 export function Feed({ projects }: { projects: Project[] }) {
@@ -35,7 +34,7 @@ export function Feed({ projects }: { projects: Project[] }) {
   // Com poucas dezenas de posts isso é o mais simples; com milhares,
   // o filtro iria para a consulta do banco.
   const visible = projects.filter(
-    (project) => filter === 'all' || project.category === filter || project.progress === filter,
+    (project) => filter === 'all' || project.category === filter,
   )
 
   return (
@@ -73,7 +72,7 @@ export function Feed({ projects }: { projects: Project[] }) {
               {project.stack.length > 0 && (
                 <div className="chips">
                   {project.stack.slice(0, 4).map((tech) => (
-                    <Badge key={tech}>{tech}</Badge>
+                    <TechBadge key={tech} name={tech} />
                   ))}
                 </div>
               )}
