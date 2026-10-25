@@ -219,11 +219,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Topo da home: faixa escura de ponta a ponta (cores fixas da marca, não seguem o tema do sistema). */
 .intro {
   --bg: #141a28; --surface: #1c2438; --line: #2a3550; --fg: #f4f6fb; --muted: #9aa5bd; --accent: #6d9bff; --done: #4fcf9a; color-scheme: dark;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); column-gap: 40px; align-items: end; position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); column-gap: 72px; align-items: end; position: relative;
   width: 100vw; margin: -28px 0 0 calc(50% - 50vw); padding: 72px max(16px, calc(50vw - 640px)) 14px; overflow: hidden;
   background: var(--bg); color: var(--fg);
 }
-.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 8vw; }
+.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 40px; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
 .intro .lead { margin: 0; max-width: 24ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(30px, 3.8vw, 52px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
 .intro .support { margin: 0; max-width: 44ch; color: var(--muted); font-size: 18px; line-height: 1.4; }
@@ -232,7 +232,6 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .intro-photo::before { content: ''; position: absolute; inset: 0 0 auto; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
 .intro-photo img { position: absolute; bottom: 0; left: 6%; width: 88%; height: auto; }
 /* Nome enorme cruzando a base da foto (fica na frente dela). */
-.intro-big { position: relative; z-index: 2; grid-column: 1 / -1; margin: -0.62em 0 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: min(calc((100vw - 32px) / 8.6), 148px); line-height: 0.9; letter-spacing: 0; text-transform: uppercase; white-space: nowrap; text-align: center; }
 .intro .stats { margin: 4px 0 0; }
 .intro .available { position: absolute; top: 24px; right: max(16px, calc(50vw - 640px)); z-index: 3; }
 .featured { display: flex; flex-direction: column; align-items: center; gap: 16px; }
@@ -258,9 +257,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .services h2, .process h2 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: 0; margin: 0 0 32px; }
 /* Serviços: linhas de largura total, título grande à esquerda e explicação à direita. */
 .services ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-.services li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 48px; align-items: baseline; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.services li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 48px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); }
 .services h3 { margin: 0; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(28px, 4vw, 46px); line-height: 1.02; }
 .services h3::after { content: ' \2192'; color: var(--accent); opacity: 0; }
+.services h3 { display: flex; align-items: center; gap: 14px; }
+.services h3 svg { flex: none; width: 32px; height: 32px; color: var(--accent); }
 .services p { margin: 0; max-width: 46ch; color: var(--muted); font-size: 17px; line-height: 1.5; }
 @media (hover: hover) { .services li:hover h3::after { opacity: 1; } }
 
@@ -275,7 +276,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 @media (min-width: 961px) {
   .process ol { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 40px; border-top: 0; }
   .process li { display: block; flex: 0 0 calc((100% - 80px) / 3); border-bottom: 0; border-top: 1px solid var(--line); padding: 24px 0 32px; }
-  .process li::before { display: block; margin-bottom: 16px; }
+  .process li::before { display: block; margin-bottom: 20px; }
 }
 /* Recomendações: cartões com a citação em cima e a pessoa embaixo */
 .testimonials h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0 0 16px; }
@@ -296,9 +297,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 
 /* Contato no fim da página */
 .contact-cta { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 24px 40px; scroll-margin-top: 16px; }
-.contact-big { grid-column: 1 / -1; margin: 0 0 12px; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: min(calc((100vw - 32px) / 7.7), 124px); line-height: 0.9; text-transform: uppercase; white-space: nowrap; }
-@media (max-width: 640px) { .contact-big { font-size: calc((100vw - 32px) / 4.8); white-space: normal; } }
-.contact-intro h2 { font-family: var(--display); font-size: var(--h2); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
+.contact-intro h2 { font-family: var(--display); font-size: clamp(30px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 10px; text-wrap: balance; }
 .contact-intro p { margin: 0 0 10px; color: var(--muted); }
 .contact-intro .contact-alt { font-size: 14px; }
 .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -319,8 +318,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   /* Celular: o selo vai para a esquerda, na mesma margem do texto, menor. */
   .intro .available { top: 18px; left: 16px; right: auto; padding: 2px 10px; font-size: 12.5px; }
   .intro-photo { grid-row: 1; width: min(78vw, 320px); margin-inline: auto; }
-  .intro-big { grid-row: 2; font-size: 21vw; white-space: normal; text-align: center; margin-top: -0.5em; line-height: 0.88; }
-  .intro-text { grid-row: 3; padding: 28px 0 40px; }
+  .intro-text { grid-row: 2; padding: 28px 0 40px; }
   .intro .p-actions { flex-wrap: wrap; align-self: stretch; }
   .intro .p-actions > :first-child { flex-basis: 100%; }
   .intro .loc { display: block; }
@@ -485,7 +483,6 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .intro-photo img { animation: photo-in 0.9s 0.25s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   /* No portfólio, no celular, a foto só aparece (sem subir), para não passar por cima dos botões. */
   @media (max-width: 640px) { .profile .p-photo img { animation: fade-in 0.6s 0.25s ease both; } }
-  .intro-big { animation: rise 0.8s 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   .intro .available { animation: rise 0.6s 0.7s ease-out both; }
 
   @supports (animation-timeline: view()) {

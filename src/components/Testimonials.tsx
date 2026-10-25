@@ -3,6 +3,19 @@ import Image from 'next/image'
 import { initials } from '@/lib/initials'
 import type { Profile } from '@/payload-types'
 
+/** Endereço cru escrito no /admin vira link clicável ("Visitar site ↗"); só http(s). */
+function linkify(text: string) {
+  return text.split(/(https?:\/\/\S+)/).map((part, i) =>
+    /^https?:\/\//.test(part) ? (
+      <a key={i} href={part} target="_blank" rel="noopener noreferrer">
+        Visitar site ↗<span className="sr-only"> (abre em nova aba)</span>
+      </a>
+    ) : (
+      part
+    ),
+  )
+}
+
 /**
  * "Recomendações": o que outras pessoas dizem do seu trabalho, cadastrado em /admin > Perfil.
  * Fica logo antes do formulário: é a última coisa que o cliente lê antes de decidir escrever.
@@ -21,7 +34,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
           return (
             <li key={item.id ?? item.name}>
               <figure>
-                <blockquote>{item.quote}</blockquote>
+                <blockquote>{linkify(item.quote)}</blockquote>
                 <figcaption>
                   <span className="t-photo">
                     {photo?.url ? (
@@ -32,7 +45,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
                   </span>
                   <span>
                     <b>{item.name}</b>
-                    {item.role && <small>{item.role}</small>}
+                    {item.role && <small>{linkify(item.role)}</small>}
                   </span>
                 </figcaption>
               </figure>
