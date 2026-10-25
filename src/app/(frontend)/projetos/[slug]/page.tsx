@@ -7,6 +7,7 @@ import { cache } from 'react'
 
 import config from '@/payload.config'
 import type { Media } from '@/payload-types'
+import { DemoVideo } from '@/components/DemoVideo'
 import { Gallery } from '@/components/Gallery'
 import { TechBadge } from '@/components/TechBadge'
 import { PostCover } from '@/components/PostCover'
@@ -74,6 +75,10 @@ export default async function ProjectPage({ params }: Props) {
   const images = [project.cover, ...(project.gallery ?? [])].filter(
     (item): item is Media => typeof item === 'object' && item !== null && Boolean(item.url),
   )
+
+  // Vídeo de demonstração (opcional, enviado no /admin). Sem o vertical, o 16:9 serve para o celular também.
+  const demoWide = typeof project.demoVideo === 'object' ? project.demoVideo?.url : null
+  const demoTall = typeof project.demoVideoTall === 'object' ? project.demoVideoTall?.url : null
 
   // Links internos: outros projetos no fim da página mantêm o visitante (e o Google) navegando pelo site.
   const payload = await getPayload({ config })
@@ -171,6 +176,16 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </div>
       </article>
+      {demoWide && (
+        <section className="project-demo" aria-labelledby="video-titulo">
+          <h2 id="video-titulo">Veja funcionando</h2>
+          <DemoVideo
+            wide={demoWide}
+            tall={demoTall ?? demoWide}
+            label={`Demonstração em vídeo do projeto ${project.title}.`}
+          />
+        </section>
+      )}
       {others.docs.length > 0 && (
         <nav className="more" aria-labelledby="mais-titulo">
           <h2 id="mais-titulo">Outros projetos</h2>
