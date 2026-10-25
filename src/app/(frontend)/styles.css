@@ -102,8 +102,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .profile .stats b { font-size: clamp(28px, 3vw, 40px); line-height: 1; }
 .profile .stats span { max-width: 16ch; font-size: 14px; line-height: 1.25; }
 .bio { margin: 0; max-width: 60ch; }
-.bio .role { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
-.bio .job { color: var(--accent); font-size: 15px; font-weight: 500; }
+.bio .job { color: var(--accent); font-size: 17px; font-weight: 600; }
 .bio .loc { color: var(--muted); font-size: 14px; }
 
 /* Filtros: botões de texto; o ativo fica preenchido de azul. */
@@ -312,7 +311,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .process li::before { font-size: 44px; }
   /* Celular: foto e nome lado a lado; o resto ocupa a largura toda embaixo */
   .profile { gap: 14px 16px; padding: 28px 16px 24px; }
-  .profile .stats b { font-size: 20px; white-space: nowrap; }
+  .profile .stats b { font-size: 26px; white-space: nowrap; }
   .profile .stats span { max-width: none; }
   .tile-meta { font-size: 15px; margin-bottom: 18px; }
   .p-photo { width: 104px; align-self: center; margin-bottom: 8px; }
@@ -332,7 +331,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .hover { display: none; }
   .stats { grid-column: 1 / -1; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 4px; }
   .stats li { display: flex; flex-direction: column; }
-  .stats span { font-size: 12px; }
+  .stats span { font-size: 13px; }
   .bio, .headline, .p-links { grid-column: 1 / -1; }
   .headline { margin: 0; }
   .p-links { margin: 0; }
