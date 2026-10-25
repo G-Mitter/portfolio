@@ -147,8 +147,17 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 @media (min-width: 641px) and (max-width: 960px) {
   .highlights + .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.tile-meta { margin: 8px 0 14px; color: color-mix(in srgb, var(--fg) 75%, var(--bg)); font-size: 15px; line-height: 1.35; }
-.tile-meta b { color: var(--fg); font-weight: 600; }
+/* Cartão do feed: capa + texto no mesmo bloco; a altura acompanha a linha, e o botão fica sempre embaixo. */
+.highlights + .grid { gap: 20px; }
+.card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); overflow: hidden; }
+.card .post { border-radius: 0; }
+.card-body { display: flex; flex: 1; flex-direction: column; align-items: flex-start; gap: 10px; padding: 16px; }
+.card-cat { margin: 0; color: var(--accent); font-size: 13px; font-weight: 600; }
+.card-body h3 { margin: 0; font-family: var(--display); font-size: 20px; line-height: 1.15; letter-spacing: -0.01em; }
+.card-body h3 a { color: inherit; text-decoration: none; }
+.card-sum { margin: 0; color: color-mix(in srgb, var(--fg) 80%, var(--bg)); font-size: 15px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.card-go { margin-top: auto; padding-top: 4px; color: var(--accent); font-size: 15px; font-weight: 600; text-decoration: none; }
+.card-go:hover, .card-body h3 a:hover { text-decoration: underline; }
 .empty { grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0; }
 
 /* Página do projeto */
@@ -313,7 +322,6 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .profile { gap: 14px 16px; padding: 28px 16px 24px; }
   .profile .stats b { font-size: 26px; white-space: nowrap; }
   .profile .stats span { max-width: none; }
-  .tile-meta { font-size: 15px; margin-bottom: 18px; }
   .p-photo { width: 104px; align-self: center; margin-bottom: 8px; }
   .handle { font-size: 30px; overflow-wrap: anywhere; }
   .p-info, .p-head { display: contents; }
@@ -321,6 +329,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .p-id { flex-direction: column; align-items: flex-start; align-self: start; gap: 6px; padding-top: 6px; }
   /* Feed em 1 coluna: capas maiores deixam título, status e tecnologias legíveis. */
   .grid { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .highlights + .grid { gap: 16px; }
   .highlights + .grid .post { aspect-ratio: 4 / 3; }
   .highlights { padding: 12px 0; margin-bottom: 12px; }
   .skills { margin-top: 32px; }

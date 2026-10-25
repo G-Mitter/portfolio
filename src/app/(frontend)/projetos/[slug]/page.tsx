@@ -182,7 +182,7 @@ export default async function ProjectPage({ params }: Props) {
             {project.links?.repository ? (
               <Button asChild>
                 <a href={project.links.repository} target="_blank" rel="noopener noreferrer">
-                  Ver código
+                  Ver código no GitHub
                 </a>
               </Button>
             ) : (
@@ -191,7 +191,7 @@ export default async function ProjectPage({ params }: Props) {
             {project.links?.demo && (
               <Button asChild variant="default">
                 <a href={project.links.demo} target="_blank" rel="noopener noreferrer">
-                  Ver demo
+                  Acessar demonstração
                 </a>
               </Button>
             )}
