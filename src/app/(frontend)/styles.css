@@ -455,11 +455,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .statement .w { color: color-mix(in srgb, var(--fg) 20%, transparent); animation: word-in linear both; animation-timeline: view(); animation-range: cover calc(24% + var(--i) * 0.3%) cover calc(44% + var(--i) * 0.3%); }
   @keyframes word-in { to { color: var(--fg); } }
   @keyframes word-in-hl { to { color: var(--accent); } }
-  .statement .w.hl { animation-name: word-in-hl; }
+  .statement .w.key { animation-name: word-in-hl; }
 }
 @media (max-width: 640px) { .band { padding-block: 40px; } }
-@media (prefers-reduced-motion: reduce) { .statement .w { animation: none; color: var(--fg); } .statement .w.hl { color: var(--accent); } }
-.statement .hl { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .statement .w { animation: none; color: var(--fg); } .statement .w.key { color: var(--accent); } }
+.statement .key { color: var(--accent); }
 
 /* Botão flutuante do WhatsApp; o componente liga a classe .on depois da abertura. */
 .wa-float { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 50; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--whatsapp); color: #fff; box-shadow: 0 6px 18px rgb(0 0 0 / 0.3); opacity: 0; visibility: hidden; transform: translateY(16px) scale(0.9); pointer-events: none; }
