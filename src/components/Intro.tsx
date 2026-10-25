@@ -32,7 +32,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
           {profile.role}
           {profile.location && <span className="loc"> · {profile.location}</span>}
         </p>
-        {profile.bio && <h1>{profile.bio}</h1>}
+        {profile.bio && <p className="lead">{profile.bio}</p>}
         {profile.support && <p className="support">{profile.support}</p>}
         {/* O botão de destaque leva ao contato (WhatsApp, ou o formulário se não houver número):
             é a ação que a página quer. Ver os projetos fica como segunda opção. */}
@@ -75,7 +75,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
           priority
         />
       </div>
-      <p className="intro-big">{profile.name}</p>
+      <h1 className="intro-big">{profile.name}</h1>
     </header>
   )
 }

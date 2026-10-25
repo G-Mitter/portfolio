@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { STATUS_LABELS } from '@/lib/labels'
 import { isVisitorId, VISITOR_COOKIE } from '@/lib/likes'
+import { siteUrl } from '@/lib/siteUrl'
 
 export const dynamic = 'force-dynamic'
 
@@ -70,10 +71,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: project.title,
     description: project.summary,
     alternates: { canonical: `/projetos/${slug}` },
+    // O openGraph da página substitui o do layout, por isso repete o básico e cai na imagem padrão sem capa.
     openGraph: {
+      type: 'article',
+      locale: 'pt_BR',
+      siteName: 'Guilherme Mitter',
       title: project.title,
       description: project.summary,
-      images: cover?.url ? [cover.url] : undefined,
+      images: [cover?.url ?? '/og.png'],
     },
   }
 }
@@ -92,8 +97,37 @@ export default async function ProjectPage({ params }: Props) {
     (item): item is Media => typeof item === 'object' && item !== null && Boolean(item.url),
   )
 
+  // Links internos: outros projetos no fim da página mantêm o visitante (e o Google) navegando pelo site.
+  const payload = await getPayload({ config })
+  const others = await payload.find({
+    collection: 'projects',
+    where: { slug: { not_equals: slug } },
+    sort: ['-pinned', '_order'],
+    limit: 3,
+    depth: 0,
+    overrideAccess: false,
+    select: { title: true, slug: true },
+  })
+
+  // Dados estruturados do projeto (schema.org), lidos pelo Google.
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: project.title,
+    description: project.summary,
+    url: `${siteUrl}/projetos/${slug}`,
+    image: images[0]?.url ? new URL(images[0].url, siteUrl).toString() : undefined,
+    keywords: project.stack.join(', '),
+    author: { '@type': 'Person', name: 'Guilherme Mitter', url: siteUrl },
+  }
+
   return (
     <>
+      {/* O "<" é trocado para que nenhum texto do /admin consiga fechar a tag <script>. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
+      />
       <Link className="back" href="/portfolio">
         ← voltar ao portfólio
       </Link>
@@ -164,6 +198,18 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </div>
       </article>
+      {others.docs.length > 0 && (
+        <nav className="more" aria-labelledby="mais-titulo">
+          <h2 id="mais-titulo">Outros projetos</h2>
+          <ul>
+            {others.docs.map((other) => (
+              <li key={other.slug}>
+                <Link href={`/projetos/${other.slug}`}>{other.title}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </>
   )
 }

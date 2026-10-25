@@ -15,6 +15,9 @@ const nextConfig: NextConfig = {
       {
         pathname: '/guilherme-recorte.png',
       },
+      {
+        pathname: '/marca/**',
+      },
     ],
   },
   webpack: (webpackConfig) => {

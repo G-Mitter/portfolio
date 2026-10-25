@@ -40,7 +40,13 @@ export const metadata: Metadata = {
   description:
     'Guilherme Mitter (guimitter), desenvolvedor de automações, sites e IA em Santa Luzia e Belo Horizonte. Veja os projetos e peça um orçamento.',
   // Prévia ao compartilhar o link (LinkedIn, WhatsApp). O Next completa url e imagem de cada página.
-  openGraph: { type: 'website', locale: 'pt_BR', siteName: 'Guilherme Mitter' },
+  openGraph: {
+    type: 'website',
+    locale: 'pt_BR',
+    siteName: 'Guilherme Mitter',
+    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'Guilherme Mitter, automações em Santa Luzia e Belo Horizonte' }],
+  },
+  twitter: { card: 'summary_large_image' },
 }
 
 // Cor da barra do navegador no celular, igual ao fundo escuro da abertura.
@@ -63,7 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/#contato">Contato</Link>
           </nav>
           <div className="foot-base">
-            <Image src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} unoptimized />
+            <Image src="/marca/logo-escuro.png" alt="Guilherme Mitter Automações" width={200} height={40} />
             <p>Automações em Belo Horizonte e região</p>
           </div>
         </footer>
