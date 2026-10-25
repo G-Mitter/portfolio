@@ -9,7 +9,7 @@
  * - `pending` fica true enquanto envia, para travar o botão.
  * Mesmo com o JavaScript desligado o formulário funciona, porque é um <form> de verdade.
  */
-import { useActionState } from 'react'
+import { useActionState, useEffect, useRef } from 'react'
 
 import { type ContactState, sendMessage } from '@/app/(frontend)/actions'
 import { Button } from '@/components/ui/button'
@@ -21,10 +21,19 @@ const initialState: ContactState = { status: 'idle' }
 
 export function ContactForm({ source }: { source?: string }) {
   const [state, formAction, pending] = useActionState(sendMessage, initialState)
+  const formRef = useRef<HTMLFormElement>(null)
+  const doneRef = useRef<HTMLParagraphElement>(null)
+
+  // Depois de enviar, o foco precisa ir para algum lugar: na confirmação (o botão sumiu)
+  // ou no primeiro campo com erro (leitor de tela lê o erro ligado a ele).
+  useEffect(() => {
+    if (state.status === 'sent') doneRef.current?.focus()
+    else formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+  }, [state])
 
   if (state.status === 'sent') {
     return (
-      <p className="form-done" role="status">
+      <p className="form-done" role="status" tabIndex={-1} ref={doneRef}>
         Mensagem recebida! Respondo pelo contato que você deixou.
       </p>
     )
@@ -34,7 +43,7 @@ export function ContactForm({ source }: { source?: string }) {
   const values = state.values ?? {}
 
   return (
-    <form className="contact-form" action={formAction}>
+    <form className="contact-form" action={formAction} ref={formRef}>
       {source && <input type="hidden" name="source" value={source} />}
       {/* Pote de mel: escondido de pessoas (e de leitores de tela), robôs preenchem. */}
       <div className="hp" aria-hidden="true">
@@ -57,7 +66,7 @@ export function ContactForm({ source }: { source?: string }) {
           aria-describedby={errors.name ? 'erro-name' : undefined}
         />
         {errors.name && (
-          <small className="field-error" id="erro-name">
+          <small className="field-error" role="alert" id="erro-name">
             {errors.name}
           </small>
         )}
@@ -76,7 +85,7 @@ export function ContactForm({ source }: { source?: string }) {
           aria-describedby={errors.contact ? 'erro-contact' : undefined}
         />
         {errors.contact && (
-          <small className="field-error" id="erro-contact">
+          <small className="field-error" role="alert" id="erro-contact">
             {errors.contact}
           </small>
         )}
@@ -96,7 +105,7 @@ export function ContactForm({ source }: { source?: string }) {
           aria-describedby={errors.problem ? 'erro-problem' : undefined}
         />
         {errors.problem && (
-          <small className="field-error" id="erro-problem">
+          <small className="field-error" role="alert" id="erro-problem">
             {errors.problem}
           </small>
         )}
