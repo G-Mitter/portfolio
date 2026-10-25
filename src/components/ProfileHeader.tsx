@@ -82,10 +82,13 @@ export function ProfileHeader({ profile, projectCount }: Props) {
         {/* A bio é a promessa para o cliente, por isso vem primeiro e em destaque. */}
         {profile.bio && <p className="headline">{profile.bio}</p>}
         <p className="bio">
-          <span className="role">
-            {profile.name}
-            {profile.role && ` · ${profile.role}`}
-          </span>
+          <span className="role">{profile.name}</span>
+          {profile.role && (
+            <>
+              <br />
+              <span className="job">{profile.role}</span>
+            </>
+          )}
           {profile.location && (
             <>
               <br />
