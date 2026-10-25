@@ -112,7 +112,7 @@ export function ContactForm({ source }: { source?: string }) {
       </label>
 
       <div className="full form-foot">
-        <Button variant="default" size="lg" type="submit" disabled={pending}>
+        <Button className="contact-submit" variant="default" size="lg" type="submit" disabled={pending}>
           {pending ? 'Enviando…' : 'Enviar mensagem'}
         </Button>
         {state.message && (
