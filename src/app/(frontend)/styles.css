@@ -85,13 +85,14 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .p-id .available { margin: 0; }
 .p-actions { display: flex; flex-wrap: wrap; gap: 10px; }
 .handle { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 4.4vw, 56px); line-height: 1; margin: 0; letter-spacing: 0.01em; text-transform: uppercase; }
-.bio .contact { font-weight: 600; }
+.bio .contact { color: var(--muted); font-size: 14px; font-weight: 500; text-decoration: none; }
+.bio .contact:hover { color: var(--fg); }
 /* A bio em destaque: é a promessa para quem chega no site */
 .headline { margin: 0 0 10px; max-width: 34ch; font-family: var(--display); font-weight: 700; font-size: clamp(19px, 2.4vw, 24px); line-height: 1.2; letter-spacing: -0.01em; text-wrap: balance; }
 /* Links secundários (LinkedIn, GitHub, Instagram, Currículo) numa linha discreta */
-.p-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 10px 0 0; font-size: 14px; font-weight: 600; }
-.p-links a { text-decoration: none; }
-.p-links a:hover { text-decoration: underline; }
+.p-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; font-size: 14px; font-weight: 600; }
+.p-links a { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--fg); text-decoration: none; }
+.p-links a:hover { border-color: var(--accent); color: var(--accent); }
 .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 14px 0 12px; padding: 0; list-style: none; }
 .stats b { font-family: var(--display); font-size: 18px; font-variant-numeric: tabular-nums; }
 .stats span { color: var(--muted); }
@@ -101,7 +102,8 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .profile .stats b { font-size: clamp(28px, 3vw, 40px); line-height: 1; }
 .profile .stats span { max-width: 16ch; font-size: 14px; line-height: 1.25; }
 .bio { margin: 0; max-width: 60ch; }
-.bio .role { font-weight: 600; }
+.bio .role { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.bio .job { color: var(--accent); font-size: 15px; font-weight: 500; }
 .bio .loc { color: var(--muted); font-size: 14px; }
 
 /* Filtros: botões de texto; o ativo fica preenchido de azul. */
@@ -306,14 +308,14 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   .process li::before { font-size: 44px; }
   /* Celular: foto e nome lado a lado; o resto ocupa a largura toda embaixo */
   .profile { gap: 14px 16px; padding: 28px 16px 24px; }
-  .profile .stats b { font-size: 24px; }
+  .profile .stats b { font-size: 20px; white-space: nowrap; }
   .profile .stats span { max-width: none; }
   .tile-meta { display: none; }
   .p-photo { width: 104px; align-self: center; margin-bottom: 8px; }
   .handle { font-size: 30px; overflow-wrap: anywhere; }
   .p-info, .p-head { display: contents; }
   /* Selo embaixo do nome, na coluna ao lado da foto. */
-  .p-id { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .p-id { flex-direction: column; align-items: flex-start; align-self: start; gap: 6px; padding-top: 6px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .p-actions { grid-column: 1 / -1; flex-wrap: nowrap; gap: 8px; }
   /* Os botões dividem a linha; o mais longo ganha mais espaço */
