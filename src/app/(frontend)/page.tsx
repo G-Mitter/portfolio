@@ -23,6 +23,26 @@ export const dynamic = 'force-dynamic'
 // Endereço oficial da página: evita o Google tratar /?projeto=... como outra página.
 export const metadata: Metadata = { alternates: { canonical: '/' } }
 
+// Vídeos da seção "Veja os robôs trabalhando" (arquivos em public/videos/). Para somar um, é só incluir uma linha aqui.
+const DEMOS = [
+  {
+    name: 'Conciliador',
+    text: 'Cruza vendas, recebimentos e extrato e mostra onde o dinheiro não bateu.',
+    wide: '/videos/conciliador-demo-16x9.mp4',
+    tall: '/videos/conciliador-demo-vertical.mp4',
+    label:
+      'Demonstração do Conciliador: o robô lê as planilhas, concilia 1.248 dados em 3 segundos e mostra que o recebido ficou R$ 12.350 abaixo do vendido. Dados fictícios.',
+  },
+  {
+    name: 'Robô de Carga dos Caixas',
+    text: 'Envia os produtos novos e alterados para os caixas de todas as lojas, sem ninguém na frente.',
+    wide: '/videos/robo-carga-16x9.mp4',
+    tall: '/videos/robo-carga-vertical.mp4',
+    label:
+      'Demonstração do Robô de Carga dos Caixas: o robô seleciona as alterações, visualiza os produtos, executa a carga e repete para as 23 lojas até aparecer "Carga concluída". Dados fictícios.',
+  },
+]
+
 type Props = {
   // ?projeto=slug vem do botão "Quer algo parecido?" da página de um projeto.
   searchParams: Promise<{ projeto?: string | string[] }>
@@ -94,10 +114,19 @@ export default async function HomePage({ searchParams }: Props) {
       <Intro profile={profile} projectCount={projects.totalDocs} />
       <Statement />
       <section className="demo band band-dark" aria-labelledby="demo-titulo">
-        <h2 id="demo-titulo">Veja o robô trabalhando</h2>
-        <p>Ele lê as planilhas, cruza vendas, recebimentos e extrato, e mostra onde o dinheiro não bateu.</p>
-        <DemoVideo />
-        <small>Demonstração com dados fictícios.</small>
+        <h2 id="demo-titulo">Veja os robôs trabalhando</h2>
+        <div className="demo-list">
+          {DEMOS.map((demo) => (
+            <figure key={demo.name}>
+              <DemoVideo wide={demo.wide} tall={demo.tall} label={demo.label} />
+              <figcaption>
+                <b>{demo.name}</b>
+                <span>{demo.text}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <small>Demonstrações com dados fictícios.</small>
       </section>
       {projects.docs.length > 0 && (
         <section className="featured band band-dark" aria-labelledby="destaques-titulo">

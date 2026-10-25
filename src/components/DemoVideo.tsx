@@ -2,9 +2,6 @@
 
 import { useEffect, useRef, useSyncExternalStore } from 'react'
 
-const WIDE = '/videos/conciliador-demo-16x9.mp4'
-const TALL = '/videos/conciliador-demo-vertical.mp4'
-
 // Lê uma media query do navegador e atualiza quando ela muda. No servidor devolve null ("ainda não sei").
 function useMedia(query: string) {
   return useSyncExternalStore(
@@ -19,18 +16,18 @@ function useMedia(query: string) {
 }
 
 /**
- * Vídeo curto em loop (demonstração do Conciliador, com dados fictícios).
+ * Vídeo curto em loop de uma demonstração (dados fictícios): `wide` é o arquivo 16:9, `tall` o vertical e `label` a descrição para leitores de tela.
  * - Celular recebe a versão vertical; o resto, a 16:9. O arquivo só é escolhido depois que a página
  *   abre (no navegador), então ninguém baixa os dois.
  * - Só toca quando aparece na tela: fora dela fica parado e não gasta bateria nem dados.
  * - Quem pediu "reduzir movimento" no aparelho vê o vídeo parado, com botão de play.
  * - Precisa estar mudo e com playsInline: sem isso o iPhone não deixa tocar sozinho.
  */
-export function DemoVideo() {
+export function DemoVideo({ wide, tall, label }: { wide: string; tall: string; label: string }) {
   const ref = useRef<HTMLVideoElement>(null)
   const narrow = useMedia('(max-width: 640px)')
   const still = useMedia('(prefers-reduced-motion: reduce)') === true
-  const src = narrow === null ? undefined : narrow ? TALL : WIDE
+  const src = narrow === null ? undefined : narrow ? tall : wide
 
   useEffect(() => {
     const video = ref.current
@@ -53,7 +50,7 @@ export function DemoVideo() {
         playsInline
         preload="metadata"
         controls={still}
-        aria-label="Demonstração do Conciliador: o robô lê as planilhas, concilia 1.248 dados em 3 segundos e mostra que o recebido ficou R$ 12.350 abaixo do vendido. Dados fictícios."
+        aria-label={label}
       />
     </div>
   )

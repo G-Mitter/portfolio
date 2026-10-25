@@ -237,7 +237,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .intro .available { position: absolute; top: 24px; right: max(16px, calc(50vw - 640px)); z-index: 3; }
 .demo { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 .demo h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0; }
-.demo p { margin: 0; max-width: 52ch; color: var(--muted); font-size: 18px; line-height: 1.4; }
+.demo-list { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+.demo figure { margin: 0; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.demo figcaption { max-width: 52ch; display: flex; flex-direction: column; gap: 2px; }
+.demo figcaption b { font-family: var(--display); font-size: 20px; }
+.demo figcaption span { color: var(--muted); font-size: 16px; line-height: 1.4; }
 .demo small { color: var(--muted); font-size: 13px; }
 .demo-box { width: 100%; max-width: 880px; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--surface); }
 .demo-box video { display: block; width: 100%; height: 100%; }
