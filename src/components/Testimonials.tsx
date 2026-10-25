@@ -4,7 +4,16 @@ import { initials } from '@/lib/initials'
 import type { Profile } from '@/payload-types'
 
 /** Endereço cru escrito no /admin vira link clicável ("Visitar site ↗"); só http(s). */
-function linkify(text: string) {
+function linkify(text: string, named = false) {
+  // "Nome https://site" (campo do cargo): o próprio nome vira o link.
+  const withName = named ? text.match(/^(.+?)\s+(https?:\/\/\S+)$/) : null
+  if (withName) {
+    return (
+      <a href={withName[2]} target="_blank" rel="noopener noreferrer">
+        {withName[1]} ↗<span className="sr-only"> (abre em nova aba)</span>
+      </a>
+    )
+  }
   return text.split(/(https?:\/\/\S+)/).map((part, i) =>
     /^https?:\/\//.test(part) ? (
       <a key={i} href={part} target="_blank" rel="noopener noreferrer">
@@ -45,7 +54,7 @@ export function Testimonials({ testimonials }: { testimonials: Profile['testimon
                   </span>
                   <span>
                     <b>{item.name}</b>
-                    {item.role && <small>{linkify(item.role)}</small>}
+                    {item.role && <small>{linkify(item.role, true)}</small>}
                   </span>
                 </figcaption>
               </figure>

@@ -11,16 +11,20 @@ import { PostTile } from './PostTile'
  * `showResult`: mostra o resultado numa etiqueta (usado nos destaques, onde o número convence).
  */
 export function ProjectCard({ project, showResult = false }: { project: Project; showResult?: boolean }) {
+  // Capa enviada no /admin já traz título e resumo escritos na arte: nos destaques da home o texto
+  // repetido sai da vista, mas segue no HTML (leitor de tela e Google).
+  const textInCover = showResult && typeof project.cover === 'object' && Boolean(project.cover?.url)
+  const hidden = textInCover ? 'card-vh' : undefined
   return (
     <article className="card">
       {/* A capa é só um atalho para quem usa mouse ou toque; teclado e leitor de tela usam o título. */}
       <PostTile project={project} decorative />
       <div className="card-body">
         <p className="card-cat">{CATEGORY_LABELS[project.category]}</p>
-        <h3>
+        <h3 className={hidden}>
           <Link href={`/projetos/${project.slug}`}>{project.title}</Link>
         </h3>
-        <p className="card-sum">{project.summary}</p>
+        <p className={hidden ? `card-sum ${hidden}` : 'card-sum'}>{project.summary}</p>
         {showResult && project.result && (
           <p className="card-result">
             <span>{project.result}</span>
