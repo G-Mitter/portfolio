@@ -288,6 +288,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 @media (hover: hover) { .services li:hover h3::after { opacity: 1; } }
 
 /* Minha trajetória: linha vertical azul com um ponto em cada marco. */
+.timeline-photo { display: block; width: 100%; height: auto; margin: 0 0 40px; border-radius: 14px; border: 1px solid var(--line); }
 .timeline ol { margin: 0; padding: 0 0 0 28px; list-style: none; border-left: 2px solid var(--line); }
 .timeline li { position: relative; padding: 0 0 36px; }
 .timeline li:last-child { padding-bottom: 0; }
