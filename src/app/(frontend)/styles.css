@@ -271,7 +271,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .skills dd { margin: 0; }
 
 /* Como posso ajudar */
-.services h2, .process h2 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: 0; margin: 0 0 32px; }
+.services h2, .process h2, .timeline h2 { font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 5vw, 60px); line-height: 1; letter-spacing: 0; margin: 0 0 32px; }
 /* Serviços: linhas de largura total, título grande à esquerda e explicação à direita. */
 .services ul { max-width: 880px; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
 .services li { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 8px 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--line); }
@@ -281,6 +281,15 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .services h3 svg { flex: none; width: 40px; height: 40px; color: var(--accent); }
 .services p { margin: 0; max-width: 46ch; color: var(--muted); font-size: 17px; line-height: 1.5; }
 @media (hover: hover) { .services li:hover h3::after { opacity: 1; } }
+
+/* Minha trajetória: linha vertical azul com um ponto em cada marco. */
+.timeline ol { margin: 0; padding: 0 0 0 28px; list-style: none; border-left: 2px solid var(--line); }
+.timeline li { position: relative; padding: 0 0 36px; }
+.timeline li:last-child { padding-bottom: 0; }
+.timeline li::before { content: ''; position: absolute; left: -37px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--bg); }
+.timeline-period { margin: 0 0 6px; color: var(--accent); font-size: 14px; font-weight: 600; }
+.timeline h3 { margin: 0 0 8px; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.1; }
+.timeline li p:last-child { margin: 0; max-width: 62ch; color: var(--muted); font-size: 16px; line-height: 1.5; }
 
 /* Como eu trabalho: etapas em linhas, com o número grande só em contorno. */
 .process > p { margin: -16px 0 28px; color: var(--muted); font-size: 17px; }
