@@ -119,7 +119,7 @@ export default async function HomePage({ searchParams }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
       />
-      <Intro profile={profile} projectCount={projects.totalDocs} />
+      <Intro profile={profile} projectCount={projects.totalDocs} featured={projects.docs[0]} />
       <Statement />
       <section className="demo band band-dark" aria-labelledby="demo-titulo">
         <h2 id="demo-titulo">Veja os robôs trabalhando</h2>

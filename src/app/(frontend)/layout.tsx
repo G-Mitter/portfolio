@@ -58,6 +58,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
+        {/* Barra fina que enche conforme a página rola (só CSS; ver .read-bar no styles.css). */}
+        <div className="read-bar" aria-hidden="true" />
         {/* Quem navega pelo teclado pula direto para o conteúdo (o link só aparece ao receber foco). */}
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
