@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 /**
  * "Minha trajetória": marcos da carreira em ordem, do mais antigo ao mais recente.
  * Os textos vêm do currículo e ficam aqui no código (como a lista de vídeos da home);
@@ -35,6 +37,14 @@ export function Timeline() {
   return (
     <section className="timeline band band-dark" aria-labelledby="trajetoria-titulo">
       <h2 id="trajetoria-titulo">Minha trajetória</h2>
+      <Image
+        className="timeline-photo"
+        src="/guilherme-trabalhando.jpg"
+        alt="Guilherme de perfil, trabalhando em uma mesa com monitor largo e notebook, com o código e o próprio portfólio abertos nas telas"
+        width={1200}
+        height={675}
+        sizes="(min-width: 960px) 934px, 100vw"
+      />
       <ol>
         {MILESTONES.map((m) => (
           <li key={m.period}>
