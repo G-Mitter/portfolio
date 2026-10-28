@@ -22,7 +22,7 @@ export function Intro({
 }: {
   profile: Profile
   projectCount: number
-  featured?: Project
+  featured?: Project[]
 }) {
   const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
 
@@ -83,7 +83,9 @@ export function Intro({
           sizes="(max-width: 640px) 80vw, 640px"
           priority
         />
-        {featured && <HeroCard project={featured} />}
+        {featured?.slice(0, 3).map((project, i) => (
+          <HeroCard key={project.id} project={project} n={(i + 1) as 1 | 2 | 3} />
+        ))}
       </div>
       {/* O nome segue como <h1> para leitores de tela e buscadores, mas só aparece na linha acima da frase. */}
       <h1 className="sr-only">{profile.name}</h1>
