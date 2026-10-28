@@ -220,7 +220,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .available i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
 /* Selo "Disponível": um anel sai da bolinha verde e some, de tempos em tempos. */
 @media (prefers-reduced-motion: no-preference) {
-  @keyframes dot-pulse { to { transform: scale(3); opacity: 0; } }
+  @keyframes dot-pulse { to { transform: scale(2.4); opacity: 0; } }
   .available i::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: currentColor; animation: dot-pulse 2s ease-out infinite; }
 }
 
