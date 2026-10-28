@@ -217,7 +217,12 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 
 /* Selo "Disponível para projetos" */
 .available { margin-bottom: 8px; }
-.available i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
+.available i { position: relative; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 25%, transparent); }
+/* Selo "Disponível": um anel sai da bolinha verde e some, de tempos em tempos. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes dot-pulse { to { transform: scale(3); opacity: 0; } }
+  .available i::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: currentColor; animation: dot-pulse 2s ease-out infinite; }
+}
 
 /* Página inicial: apresentação centralizada e três projetos em destaque */
 /* Topo da home: faixa escura de ponta a ponta (cores fixas da marca, não seguem o tema do sistema). */
@@ -547,7 +552,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Cartão "post" ao lado da foto na home: só em telas largas, onde há espaço sem empurrar os botões. */
 .hero-card { display: none; }
 @media (min-width: 961px) {
-  .hero-card { display: grid; gap: 8px; position: absolute; z-index: 2; left: -10%; top: 6%; width: 260px; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
+  .hero-card { display: grid; gap: 8px; position: absolute; z-index: 2; left: -16%; top: 11%; width: 250px; height: 150px; align-content: start; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
   .hero-card p { margin: 0; }
   .hero-card-cat { color: var(--muted); font-size: 13px; }
   .hero-card-title { font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
@@ -555,13 +560,12 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   /* Textos do /admin podem ser longos: no máximo 2 linhas, o resto vira "…". */
   .hero-card-title, .hero-card-result { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 }
-/* Cartões 2 e 3: compactos, em cascata sobre o espaço vazio à esquerda; só em telas bem largas (senão encostam no título). */
+/* Cartões 2 e 3: iguais ao 1º, em degraus sobre o espaço vazio à esquerda; só em telas bem largas (senão encostam no título). */
 .hero-card-2, .hero-card-3 { display: none; }
 @media (min-width: 1280px) {
-  .hero-card-2, .hero-card-3 { display: grid; width: 220px; padding: 12px 14px; }
-  .hero-card-2 .hero-card-title, .hero-card-3 .hero-card-title { font-size: 16px; }
-  .hero-card-2 { left: -50%; top: 12%; }
-  .hero-card-3 { left: -88%; top: 4%; }
+  .hero-card-2, .hero-card-3 { display: grid; }
+  .hero-card-2 { left: -61%; top: 7%; }
+  .hero-card-3 { left: -106%; top: 3%; }
 }
 @media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
   @keyframes hero-float { 50% { transform: translateY(-10px); } }
