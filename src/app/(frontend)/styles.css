@@ -552,7 +552,7 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Cartão "post" ao lado da foto na home: só em telas largas, onde há espaço sem empurrar os botões. */
 .hero-card { display: none; }
 @media (min-width: 961px) {
-  .hero-card { display: grid; gap: 8px; position: absolute; z-index: 2; left: -16%; top: 11%; width: 250px; height: 150px; align-content: start; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
+  .hero-card { display: grid; gap: 8px; position: absolute; z-index: 2; left: -120px; top: 11%; width: 250px; height: 150px; align-content: start; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
   .hero-card p { margin: 0; }
   .hero-card-cat { color: var(--muted); font-size: 13px; }
   .hero-card-title { font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
@@ -564,8 +564,9 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .hero-card-2, .hero-card-3 { display: none; }
 @media (min-width: 1280px) {
   .hero-card-2, .hero-card-3 { display: grid; }
-  .hero-card-2 { left: -61%; top: 7%; }
-  .hero-card-3 { left: -106%; top: 3%; }
+  /* O 3º alinha com a margem esquerda do texto da abertura (nunca sai da tela); o 2º fica no meio entre o 3º e o 1º. */
+  .hero-card-2 { left: calc((-120px + max(-680px, calc(632px - 100vw))) / 2); top: 7%; }
+  .hero-card-3 { left: max(-680px, calc(632px - 100vw)); top: 3%; }
 }
 @media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
   @keyframes hero-float { 50% { transform: translateY(-10px); } }
