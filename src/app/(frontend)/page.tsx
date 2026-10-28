@@ -11,6 +11,7 @@ import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
+import { Timeline } from '@/components/Timeline'
 import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { Button } from '@/components/ui/button'
 import { instagramUrl } from '@/lib/instagram'
@@ -154,6 +155,7 @@ export default async function HomePage({ searchParams }: Props) {
       )}
       <Services services={profile.services} />
       <Process steps={profile.process} />
+      <Timeline />
       <Testimonials testimonials={profile.testimonials} />
       <ContactSection
         whatsapp={whatsapp}
