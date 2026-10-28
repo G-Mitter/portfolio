@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
         pathname: '/guilherme-recorte.png',
       },
       {
+        pathname: '/guilherme-trabalhando.jpg',
+      },
+      {
         pathname: '/marca/**',
       },
     ],
