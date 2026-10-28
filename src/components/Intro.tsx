@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
-import type { Profile } from '@/payload-types'
+import { HeroCard } from '@/components/HeroCard'
+import type { Profile, Project } from '@/payload-types'
 
 /**
  * Topo da página inicial: quem você é, o que resolve e para onde ir.
@@ -14,7 +15,15 @@ import type { Profile } from '@/payload-types'
  * O selo "Disponível" fica no canto superior direito.
  * No celular: foto em cima, nome e texto embaixo.
  */
-export function Intro({ profile, projectCount }: { profile: Profile; projectCount: number }) {
+export function Intro({
+  profile,
+  projectCount,
+  featured,
+}: {
+  profile: Profile
+  projectCount: number
+  featured?: Project
+}) {
   const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
 
   return (
@@ -74,6 +83,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
           sizes="(max-width: 640px) 80vw, 640px"
           priority
         />
+        {featured && <HeroCard project={featured} />}
       </div>
       {/* O nome segue como <h1> para leitores de tela e buscadores, mas só aparece na linha acima da frase. */}
       <h1 className="sr-only">{profile.name}</h1>
