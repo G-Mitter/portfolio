@@ -5,7 +5,9 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
 import { DemoVideo } from '@/components/DemoVideo'
+import { Faq } from '@/components/Faq'
 import { Intro } from '@/components/Intro'
+import { Offer } from '@/components/Offer'
 import { ProjectCard } from '@/components/ProjectCard'
 import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
@@ -155,8 +157,10 @@ export default async function HomePage({ searchParams }: Props) {
       )}
       <Services services={profile.services} />
       <Process steps={profile.process} />
+      <Offer whatsapp={whatsapp} />
       <Timeline />
       <Testimonials testimonials={profile.testimonials} />
+      <Faq />
       <ContactSection
         whatsapp={whatsapp}
         email={profile.links?.email}
