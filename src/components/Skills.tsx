@@ -14,7 +14,7 @@ export function Skills({ skills }: { skills: Profile['skills'] }) {
   return (
     <section className="skills" aria-labelledby="tecnologias-titulo">
       <h2 id="tecnologias-titulo">Tecnologias</h2>
-      <p>Com o que já trabalhei nos projetos e no dia a dia.</p>
+      <p>Do trabalho e da faculdade.</p>
       <dl>
         {skills.map((skill) => (
           <div key={skill.id ?? skill.group}>
