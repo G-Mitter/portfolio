@@ -49,7 +49,9 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   for (const f of files.docs) filesByFolder.set(f.pasta, [...(filesByFolder.get(f.pasta) ?? []), f])
   // Depois de 5 dias da data o post sai da tela (e a rotina diária apaga os arquivos).
   const monthPosts = posts.filter((p) => p.day.startsWith(month) && !isExpired(p))
-  const downloads = (p: Post) => (filesByFolder.get(deliveryFolder(p)) ?? []).filter((f) => !texts.has(f.id))
+  // LinkedIn posta o carrossel em PDF; Instagram, as imagens. Cada post mostra só o que vai postar.
+  const forNetwork = (p: Post, mime?: string | null) => (p.rede === 'linkedin') === (mime === 'application/pdf')
+  const downloads = (p: Post) => (filesByFolder.get(deliveryFolder(p)) ?? []).filter((f) => !texts.has(f.id) && forNetwork(p, f.mimeType))
   const listed = day ? monthPosts.filter((p) => p.day === day) : monthPosts
   const byDay = new Map<string, Post[]>()
   for (const p of monthPosts) byDay.set(p.day, [...(byDay.get(p.day) ?? []), p])
