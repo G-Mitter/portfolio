@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { deliveryFolder, monthGrid, parseMonth, parsePosts, shiftMonth } from '@/lib/marketing'
+import { deliveryFolder, expiredFolders, isExpired, monthGrid, parseMonth, parsePosts, shiftMonth, type Post } from '@/lib/marketing'
 
 const ICS = [
   'BEGIN:VCALENDAR',
@@ -59,5 +59,20 @@ describe('deliveryFolder', () => {
   it('acha a pasta da entrega pelo arquivo ou pela legenda', () => {
     expect(deliveryFolder({ arquivo: 'Marketing/Entregas/2026-10-31-reel-robo-carga/reel.mp4', legenda: '' })).toBe('2026-10-31-reel-robo-carga')
     expect(deliveryFolder({ arquivo: '', legenda: 'Marketing\\Entregas\\2026-10-31-carrossel\\legenda.md' })).toBe('2026-10-31-carrossel')
+  })
+})
+
+describe('limpeza depois de 5 dias', () => {
+  const now = new Date('2026-11-08T12:00:00-03:00')
+  const post = (day: string, pasta: string) => ({ day, arquivo: `Marketing/Entregas/${pasta}/x.png`, legenda: '' }) as Post
+
+  it('o post sai no 5º dia depois da data', () => {
+    expect(isExpired({ day: '2026-11-03' }, now)).toBe(true)
+    expect(isExpired({ day: '2026-11-04' }, now)).toBe(false)
+  })
+
+  it('só apaga a pasta quando todos os posts dela passaram do prazo', () => {
+    const posts = [post('2026-11-03', 'a'), post('2026-11-03', 'b'), post('2026-11-06', 'b'), post('2026-11-10', 'c')]
+    expect(expiredFolders(posts, now)).toEqual(['a'])
   })
 })

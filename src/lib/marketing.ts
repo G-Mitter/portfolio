@@ -7,7 +7,7 @@
  *   descrição: uma linha por campo, "rede: instagram", "formato: reels", "arquivo: ...", "legenda: ...", "status: agendado"
  */
 
-import { dayKey } from './dashboard'
+import { dayKey, daysAgo } from './dashboard'
 
 export type Post = {
   start: Date
@@ -111,4 +111,31 @@ export function deliveryFolder(post: Pick<Post, 'arquivo' | 'legenda'>): string 
   const parts = path.split('/').filter(Boolean)
   const i = parts.indexOf('Entregas')
   return i >= 0 ? (parts[i + 1] ?? '') : (parts.at(-2) ?? '')
+}
+
+/** Quantos dias depois da data do post os arquivos saem do site e o post sai da tela. */
+export const KEEP_DAYS = 5
+
+/** O post já passou do prazo? (dia do post + 5 dias chegou) */
+export function isExpired(post: Pick<Post, 'day'>, now = new Date()): boolean {
+  return post.day <= daysAgo(KEEP_DAYS, now)
+}
+
+/** Pastas que podem ser apagadas: todos os posts que usam a pasta já passaram do prazo. */
+export function expiredFolders(posts: Post[], now = new Date()): string[] {
+  const keep = new Set(posts.filter((p) => !isExpired(p, now)).map(deliveryFolder))
+  return [...new Set(posts.filter((p) => isExpired(p, now)).map(deliveryFolder))].filter((f) => f && !keep.has(f))
+}
+
+/** Lê a agenda do Google. Sem a variável ou com erro, devolve a explicação em vez de quebrar. */
+export async function loadPosts(): Promise<{ posts: Post[]; error?: string }> {
+  const url = process.env.GOOGLE_CALENDAR_ICS_URL
+  if (!url) return { posts: [], error: 'Falta a variável GOOGLE_CALENDAR_ICS_URL na Vercel (endereço secreto iCal da sua agenda).' }
+  try {
+    const res = await fetch(url, { cache: 'no-store' })
+    if (!res.ok) return { posts: [], error: `O Google respondeu ${res.status} ao ler a agenda.` }
+    return { posts: parsePosts(await res.text()) }
+  } catch {
+    return { posts: [], error: 'Não consegui ler a agenda do Google agora.' }
+  }
 }
