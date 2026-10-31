@@ -5,27 +5,15 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
+import { DownloadAll } from '@/components/DownloadAll'
 import { Card } from '@/components/ui/card'
 import { dayKey } from '@/lib/dashboard'
-import { deliveryFolder, monthGrid, parseMonth, parsePosts, shiftMonth, type Post } from '@/lib/marketing'
+import { deliveryFolder, isExpired, loadPosts, monthGrid, parseMonth, shiftMonth, type Post } from '@/lib/marketing'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Marketing', robots: { index: false, follow: false } }
 
 const WEEKDAYS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']
-
-/** Lê a agenda do Google. Sem a variável ou com erro, a página explica em vez de quebrar. */
-async function loadPosts(): Promise<{ posts: Post[]; error?: string }> {
-  const url = process.env.GOOGLE_CALENDAR_ICS_URL
-  if (!url) return { posts: [], error: 'Falta a variável GOOGLE_CALENDAR_ICS_URL na Vercel (endereço secreto iCal da sua agenda).' }
-  try {
-    const res = await fetch(url, { cache: 'no-store' })
-    if (!res.ok) return { posts: [], error: `O Google respondeu ${res.status} ao ler a agenda.` }
-    return { posts: parsePosts(await res.text()) }
-  } catch {
-    return { posts: [], error: 'Não consegui ler a agenda do Google agora.' }
-  }
-}
 
 /** /marketing: calendário das postagens (eventos "[Post]" do Google Agenda), só com login do /admin. */
 export default async function MarketingPage({ searchParams }: { searchParams: Promise<{ mes?: string }> }) {
@@ -41,7 +29,8 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   // Arquivos enviados ao site, por pasta da entrega: cada post mostra os da sua pasta.
   const filesByFolder = new Map<string, typeof files.docs>()
   for (const f of files.docs) filesByFolder.set(f.pasta, [...(filesByFolder.get(f.pasta) ?? []), f])
-  const monthPosts = posts.filter((p) => p.day.startsWith(month))
+  // Depois de 5 dias da data o post sai da tela (e a rotina diária apaga os arquivos).
+  const monthPosts = posts.filter((p) => p.day.startsWith(month) && !isExpired(p))
   const byDay = new Map<string, Post[]>()
   for (const p of monthPosts) byDay.set(p.day, [...(byDay.get(p.day) ?? []), p])
   const today = dayKey(new Date())
@@ -107,6 +96,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
                 {p.legenda && <small>Legenda: {p.legenda}</small>}
                 {(filesByFolder.get(deliveryFolder(p))?.length ?? 0) > 0 && (
                   <span className="mkt-files">
+                    {(filesByFolder.get(deliveryFolder(p))?.length ?? 0) > 1 && <DownloadAll />}
                     {filesByFolder.get(deliveryFolder(p))?.map((f) => (
                       <a key={f.id} href={f.url ?? '#'} download={f.filename ?? undefined}>⬇ {f.filename}</a>
                     ))}
