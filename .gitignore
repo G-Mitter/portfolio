@@ -41,6 +41,7 @@ next-env.d.ts
 .env
 
 /media
+/marketing-files
 
 # Playwright
 node_modules/
