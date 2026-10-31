@@ -10,6 +10,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { MarketingFiles } from './collections/MarketingFiles'
 import { Projects } from './collections/Projects'
 import { Likes } from './collections/Likes'
 import { Messages } from './collections/Messages'
@@ -31,7 +32,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, PageViewPlaces, PageViewTimes, Likes, Media, Users],
+  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, PageViewPlaces, PageViewTimes, Likes, Media, MarketingFiles, Users],
   globals: [Profile],
   // Painel /admin em português
   i18n: {
@@ -77,7 +78,7 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
       token: process.env.BLOB_READ_WRITE_TOKEN,
-      collections: { media: true },
+      collections: { media: true, 'marketing-files': true },
       // Cria as mesmas colunas no banco com o plugin ligado ou desligado,
       // para o banco do seu computador e o de produção terem o mesmo formato.
       alwaysInsertFields: true,

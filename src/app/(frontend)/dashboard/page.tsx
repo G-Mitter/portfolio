@@ -141,7 +141,7 @@ export default async function DashboardPage({ searchParams }: { searchParams: Pr
       <AutoRefresh seconds={30} />
       <header className="dash-head">
         <h1>Dashboard</h1>
-        <p>Atualiza sozinho a cada 30 segundos. Suas visitas logado no /admin não contam. <Link href="/portfolio">Voltar ao portfólio</Link></p>
+        <p>Atualiza sozinho a cada 30 segundos. Suas visitas logado no /admin não contam. <Link href="/portfolio">Voltar ao portfólio</Link> · <Link href="/marketing">Marketing</Link></p>
         <nav className="dash-periods" aria-label="Período">
           {PERIODS.map((p) => (
             <Link key={p} href={`/dashboard?dias=${p}`} className={p === period ? 'on' : ''} aria-current={p === period ? 'true' : undefined}>

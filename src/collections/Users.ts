@@ -6,7 +6,9 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  // Chave de API: deixa o Claude enviar os arquivos do marketing (/api/marketing-files) sem a sua senha.
+  // Ligue em /admin > Usuários > você > "Ativar chave de API".
+  auth: { useAPIKey: true },
   // O e-mail e a senha o Payload cria sozinho (auth: true).
   fields: [],
 }
