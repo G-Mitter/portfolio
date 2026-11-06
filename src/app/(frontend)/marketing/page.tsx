@@ -88,7 +88,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
                       <>
                         <Link href={`/marketing?mes=${month}&dia=${d}#postagens`} className="mkt-day">{Number(d.slice(8))}</Link>
                         {byDay.get(d)?.map((p) => (
-                          <a key={p.start.getTime() + p.title} href={`/marketing?mes=${month}&dia=${d}#${anchor(p)}`} className={`mkt-chip mkt-${p.rede}`} title={p.title}>
+                          <a key={postKey(p)} href={`/marketing?mes=${month}&dia=${d}#${anchor(p)}`} className={`mkt-chip mkt-${p.rede}`} title={p.title}>
                             {p.time} {p.formato}
                           </a>
                         ))}
@@ -112,7 +112,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
         ) : (
           <ul className="mkt-list">
             {listed.map((p) => (
-              <li key={p.start.getTime() + p.title} id={anchor(p)}>
+              <li key={postKey(p)} id={anchor(p)}>
                 <b>{p.start.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })} {p.time}</b>
                 <span className={`mkt-chip mkt-${p.rede}`}>{p.rede} · {p.formato}</span>
                 <span className={`mkt-status mkt-${p.status}`}>{p.status}</span>
@@ -138,3 +138,5 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
 }
 
 const anchor = (p: Post) => `post-${p.start.getTime()}-${p.rede}`
+// Mesmo post no Instagram e no LinkedIn tem horário e título iguais: sem a rede, a chave repete e o React deixa itens do dia anterior na tela.
+const postKey = (p: Post) => `${p.start.getTime()}-${p.rede}-${p.formato}-${p.title}`
