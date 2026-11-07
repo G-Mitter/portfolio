@@ -634,3 +634,4 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .mkt-text { flex-basis: 100%; display: flex; gap: 8px; align-items: flex-start; }
 .mkt-text pre { flex: 1; margin: 0; padding: 10px 12px; max-height: 240px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 8px; font-family: inherit; font-size: 13px; }
 .mkt-text button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--accent); font-size: 13px; cursor: pointer; white-space: nowrap; }
+.mkt-list small.mkt-metrics { font-family: inherit; color: var(--fg, inherit); }

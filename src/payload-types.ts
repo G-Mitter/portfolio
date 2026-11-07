@@ -77,6 +77,8 @@ export interface Config {
     likes: Like;
     media: Media;
     'marketing-files': MarketingFile;
+    campaigns: Campaign;
+    'instagram-posts': InstagramPost;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -95,6 +97,8 @@ export interface Config {
     likes: LikesSelect<false> | LikesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'marketing-files': MarketingFilesSelect<false> | MarketingFilesSelect<true>;
+    campaigns: CampaignsSelect<false> | CampaignsSelect<true>;
+    'instagram-posts': InstagramPostsSelect<false> | InstagramPostsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -107,9 +111,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     profile: Profile;
+    'instagram-conexao': InstagramConexao;
   };
   globalsSelect: {
     profile: ProfileSelect<false> | ProfileSelect<true>;
+    'instagram-conexao': InstagramConexaoSelect<false> | InstagramConexaoSelect<true>;
   };
   locale: null;
   widgets: {
@@ -346,6 +352,53 @@ export interface MarketingFile {
   focalY?: number | null;
 }
 /**
+ * Cada campanha junta posts com o mesmo objetivo. O /marketing compara os números delas.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns".
+ */
+export interface Campaign {
+  id: number;
+  nome: string;
+  /**
+   * Sem espaços nem acentos, ex.: robo-carga-nov. Vai na linha "campanha:" do evento [Post].
+   */
+  codigo: string;
+  objetivo?: string | null;
+  inicio?: string | null;
+  fim?: string | null;
+  orcamento?: number | null;
+  status?: ('planejada' | 'ativa' | 'encerrada') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Vêm do Instagram sozinhos, uma vez por dia. Você só escolhe a campanha, se não veio da agenda.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram-posts".
+ */
+export interface InstagramPost {
+  id: number;
+  igId: string;
+  tipo: 'reels' | 'carrossel' | 'foto' | 'video' | 'story';
+  publicadoEm: string;
+  link?: string | null;
+  legenda?: string | null;
+  campanha?: (number | null) | Campaign;
+  alcance?: number | null;
+  visualizacoes?: number | null;
+  curtidas?: number | null;
+  comentarios?: number | null;
+  salvamentos?: number | null;
+  compartilhamentos?: number | null;
+  respostas?: number | null;
+  interacoes?: number | null;
+  atualizadoEm?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -438,6 +491,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'marketing-files';
         value: number | MarketingFile;
+      } | null)
+    | ({
+        relationTo: 'campaigns';
+        value: number | Campaign;
+      } | null)
+    | ({
+        relationTo: 'instagram-posts';
+        value: number | InstagramPost;
       } | null)
     | ({
         relationTo: 'users';
@@ -642,6 +703,44 @@ export interface MarketingFilesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "campaigns_select".
+ */
+export interface CampaignsSelect<T extends boolean = true> {
+  nome?: T;
+  codigo?: T;
+  objetivo?: T;
+  inicio?: T;
+  fim?: T;
+  orcamento?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram-posts_select".
+ */
+export interface InstagramPostsSelect<T extends boolean = true> {
+  igId?: T;
+  tipo?: T;
+  publicadoEm?: T;
+  link?: T;
+  legenda?: T;
+  campanha?: T;
+  alcance?: T;
+  visualizacoes?: T;
+  curtidas?: T;
+  comentarios?: T;
+  salvamentos?: T;
+  compartilhamentos?: T;
+  respostas?: T;
+  interacoes?: T;
+  atualizadoEm?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -804,6 +903,20 @@ export interface Profile {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram-conexao".
+ */
+export interface InstagramConexao {
+  id: number;
+  token?: string | null;
+  tokenDoEnv?: string | null;
+  renovadoEm?: string | null;
+  ultimaSincronizacao?: string | null;
+  ultimoErro?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "profile_select".
  */
 export interface ProfileSelect<T extends boolean = true> {
@@ -862,6 +975,20 @@ export interface ProfileSelect<T extends boolean = true> {
         whatsapp?: T;
         resume?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instagram-conexao_select".
+ */
+export interface InstagramConexaoSelect<T extends boolean = true> {
+  token?: T;
+  tokenDoEnv?: T;
+  renovadoEm?: T;
+  ultimaSincronizacao?: T;
+  ultimoErro?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

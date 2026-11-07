@@ -16,6 +16,7 @@ import * as migration_20261024_152828_dashboard_tempo_na_pagina from './20261024
 import * as migration_20261024_173800_texto_de_apoio from './20261024_173800_texto_de_apoio';
 import * as migration_20261025_155904_videos_de_demonstracao from './20261025_155904_videos_de_demonstracao';
 import * as migration_20261031_165422_materiais_marketing from './20261031_165422_materiais_marketing';
+import * as migration_20261031_193348_marketing_instagram_campanhas from './20261031_193348_marketing_instagram_campanhas';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20261031_165422_materiais_marketing.up,
     down: migration_20261031_165422_materiais_marketing.down,
-    name: '20261031_165422_materiais_marketing'
+    name: '20261031_165422_materiais_marketing',
+  },
+  {
+    up: migration_20261031_193348_marketing_instagram_campanhas.up,
+    down: migration_20261031_193348_marketing_instagram_campanhas.down,
+    name: '20261031_193348_marketing_instagram_campanhas'
   },
 ];

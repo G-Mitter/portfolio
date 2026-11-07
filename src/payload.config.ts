@@ -11,6 +11,8 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { MarketingFiles } from './collections/MarketingFiles'
+import { Campaigns } from './collections/Campaigns'
+import { InstagramPosts } from './collections/InstagramPosts'
 import { Projects } from './collections/Projects'
 import { Likes } from './collections/Likes'
 import { Messages } from './collections/Messages'
@@ -20,6 +22,7 @@ import { PageViewPlaces } from './collections/PageViewPlaces'
 import { PageViewSources } from './collections/PageViewSources'
 import { PageViewTimes } from './collections/PageViewTimes'
 import { Profile } from './globals/Profile'
+import { InstagramConnection } from './globals/InstagramConnection'
 import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
@@ -32,8 +35,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, PageViewPlaces, PageViewTimes, Likes, Media, MarketingFiles, Users],
-  globals: [Profile],
+  collections: [Projects, Messages, PageViews, PageViewDays, PageViewSources, PageViewPlaces, PageViewTimes, Likes, Media, MarketingFiles, Campaigns, InstagramPosts, Users],
+  globals: [Profile, InstagramConnection],
   // Painel /admin em português
   i18n: {
     supportedLanguages: { pt },

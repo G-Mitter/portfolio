@@ -1,0 +1,15 @@
+# Stories do Instagram somem da API 24 h depois de publicados, e a rotina da Vercel (plano grátis) só roda uma vez por dia.
+# Por isso o GitHub chama a atualização dos stories de hora em hora. Precisa do segredo CRON_SECRET em
+# Settings > Secrets and variables > Actions (o mesmo valor da Vercel).
+name: Stories do Instagram
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "https://www.guimitter.com.br/api/instagram-posts/sincronizar?stories=1"

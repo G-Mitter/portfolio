@@ -9,6 +9,7 @@ import config from '@/payload.config'
 import { CopyText, DownloadAll } from '@/components/MarketingActions'
 import { Card } from '@/components/ui/card'
 import { dayKey } from '@/lib/dashboard'
+import { TIPO_LABELS, matchMedia, summarize, type Row } from '@/lib/instagramStats'
 import { deliveryFolder, isExpired, loadPosts, monthGrid, parseMonth, shiftMonth, type Post } from '@/lib/marketing'
 
 export const dynamic = 'force-dynamic'
@@ -25,10 +26,20 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   const { mes, dia } = await searchParams
   const month = parseMonth(mes)
   const day = dia && /^\d{4}-\d{2}-\d{2}$/.test(dia) && dia.startsWith(month) ? dia : null
-  const [{ posts, error }, files] = await Promise.all([
+  const [{ posts, error }, files, igAll, campaigns, conn] = await Promise.all([
     loadPosts(),
     payload.find({ collection: 'marketing-files', limit: 1000, depth: 0, pagination: false, select: { filename: true, url: true, pasta: true, prefix: true, mimeType: true } }),
+    payload.find({ collection: 'instagram-posts', limit: 1000, depth: 0, pagination: false }),
+    payload.find({ collection: 'campaigns', limit: 1000, depth: 0, pagination: false }),
+    payload.findGlobal({ slug: 'instagram-conexao' }),
   ])
+  // Instagram: números dos posts do mês, por formato, e de cada campanha (todos os meses).
+  const ig = igAll.docs
+  const igMonth = ig.filter((m) => dayKey(new Date(m.publicadoEm)).startsWith(month))
+  const campaignName = new Map(campaigns.docs.map((c) => [c.id, c.nome]))
+  const campaignOf = (m: (typeof ig)[number]) => (typeof m.campanha === 'number' ? (campaignName.get(m.campanha) ?? '') : '') || 'Sem campanha'
+  const budget = new Map(campaigns.docs.map((c) => [c.nome, c.orcamento ?? 0]))
+  const metricsOf = (p: Post) => (p.rede === 'instagram' ? matchMedia(p, ig, posts) : undefined)
   // Legendas (.md/.txt) aparecem como texto com botão de copiar, em vez de arquivo para baixar.
   const texts = new Map<number, string>()
   await Promise.all(
@@ -117,6 +128,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
                 <span className={`mkt-chip mkt-${p.rede}`}>{p.rede} · {p.formato}</span>
                 <span className={`mkt-status mkt-${p.status}`}>{p.status}</span>
                 <span>{p.title}</span>
+                {metricsOf(p) && <small className="mkt-metrics">{metricLine(metricsOf(p)!)}</small>}
                 {p.arquivo && <small>Arquivo: {p.arquivo}</small>}
                 {p.legenda && <small>Legenda: {p.legenda}</small>}
                 {(filesByFolder.get(deliveryFolder(p)) ?? []).map((f) => texts.has(f.id) && <CopyText key={f.id} text={texts.get(f.id)!} />)}
@@ -133,7 +145,77 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
           </ul>
         )}
       </Card>
+
+      <Card className="dash-box">
+        <h2 id="instagram">Desempenho no Instagram</h2>
+        <p className="dash-help">
+          Números que o próprio Instagram mostra nos insights, atualizados uma vez por dia (stories, de hora em hora, porque somem em 24 h).
+          Cada post continua sendo atualizado por 30 dias.
+          {conn.ultimaSincronizacao ? ` Última atualização: ${new Date(conn.ultimaSincronizacao).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}.` : ' Ainda sem nenhuma atualização: falta ligar a conta (variável INSTAGRAM_TOKEN).'}
+        </p>
+        {conn.ultimoErro && <p className="dash-help">Último erro: {conn.ultimoErro}</p>}
+        {igMonth.length === 0 ? (
+          <p className="dash-help">Nenhum post do Instagram neste mês.</p>
+        ) : (
+          <>
+            <h3 className="dash-sub">Por formato no mês (média por post)</h3>
+            <StatsTable rows={summarize(igMonth, (m) => TIPO_LABELS[m.tipo])} first="Formato" average />
+            <h3 className="dash-sub">Posts do mês</h3>
+            <table className="dash-table">
+              <thead><tr><th>Data</th><th>Formato</th><th>Campanha</th>{COLS.map(([, l]) => <th key={l}>{l}</th>)}<th /></tr></thead>
+              <tbody>
+                {[...igMonth].sort((a, b) => b.alcance! - a.alcance!).map((m) => (
+                  <tr key={m.id}>
+                    <td>{new Date(m.publicadoEm).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })}</td>
+                    <td>{TIPO_LABELS[m.tipo]}</td>
+                    <td>{campaignOf(m)}</td>
+                    {COLS.map(([k]) => <td key={k}>{fmt(m[k] ?? 0)}</td>)}
+                    <td>{m.link && <a href={m.link} target="_blank" rel="noreferrer">abrir</a>}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+        {ig.length > 0 && (
+          <>
+            <h3 className="dash-sub">Campanhas (todos os meses, soma)</h3>
+            <StatsTable rows={summarize(ig, campaignOf)} first="Campanha" budget={budget} />
+          </>
+        )}
+      </Card>
     </>
+  )
+}
+
+const COLS = [
+  ['alcance', 'Alcance'],
+  ['visualizacoes', 'Visualizações'],
+  ['curtidas', 'Curtidas'],
+  ['comentarios', 'Coment.'],
+  ['salvamentos', 'Salvos'],
+  ['compartilhamentos', 'Compart.'],
+  ['interacoes', 'Interações'],
+] as const
+
+const fmt = (n: number) => Math.round(n).toLocaleString('pt-BR')
+const metricLine = (m: Partial<Record<(typeof COLS)[number][0], number | null>>) => COLS.map(([k, l]) => `${l} ${fmt(m[k] ?? 0)}`).join(' · ')
+
+function StatsTable({ rows, first, average, budget }: { rows: [string, Row][]; first: string; average?: boolean; budget?: Map<string, number> }) {
+  return (
+    <table className="dash-table">
+      <thead><tr><th>{first}</th><th>Posts</th>{COLS.map(([, l]) => <th key={l}>{l}</th>)}{budget && <th>Orçamento</th>}</tr></thead>
+      <tbody>
+        {rows.map(([name, r]) => (
+          <tr key={name}>
+            <td>{name}</td>
+            <td>{r.posts}</td>
+            {COLS.map(([k]) => <td key={k}>{fmt(average ? r[k] / r.posts : r[k])}</td>)}
+            {budget && <td>{budget.get(name) ? `R$ ${fmt(budget.get(name)!)}` : '–'}</td>}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   )
 }
 
