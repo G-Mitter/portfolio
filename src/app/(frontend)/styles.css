@@ -634,3 +634,24 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .mkt-text { flex-basis: 100%; display: flex; gap: 8px; align-items: flex-start; }
 .mkt-text pre { flex: 1; margin: 0; padding: 10px 12px; max-height: 240px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; border: 1px solid var(--line); border-radius: 8px; font-family: inherit; font-size: 13px; }
 .mkt-text button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--accent); font-size: 13px; cursor: pointer; white-space: nowrap; }
+
+/* Cabeçalho fixo (cores fixas da marca, como o topo e o rodapé). O scroll-padding evita que ele cubra o título ao clicar em um link. */
+html { scroll-padding-top: 72px; }
+.site-header { position: sticky; top: 0; z-index: 50; background: rgb(20 26 40 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #2a3550; color: #f4f6fb; }
+.sh-bar { display: flex; align-items: center; gap: 20px; max-width: 1280px; margin: 0 auto; padding: 10px 16px; min-height: 56px; }
+.sh-logo { display: flex; margin-right: auto; }
+.sh-logo img { height: 28px; width: auto; }
+.sh-nav { display: flex; gap: 22px; }
+.sh-nav a, .sh-menu a { color: #f4f6fb; text-decoration: none; font-size: 15px; }
+.sh-nav a:hover, .sh-menu a:hover { color: #6d9bff; }
+.sh-cta { padding: 8px 16px; border-radius: 8px; background: var(--whatsapp); color: #fff; font-weight: 600; font-size: 15px; text-decoration: none; }
+.sh-menu { display: none; position: relative; }
+.sh-menu summary { list-style: none; cursor: pointer; padding: 8px 12px; border: 1px solid #2a3550; border-radius: 8px; font-size: 15px; }
+.sh-menu summary::-webkit-details-marker { display: none; }
+.sh-menu nav { position: absolute; right: 0; top: calc(100% + 8px); min-width: 200px; display: flex; flex-direction: column; padding: 8px; border: 1px solid #2a3550; border-radius: 12px; background: #141a28; }
+.sh-menu nav a { padding: 12px; }
+@media (max-width: 760px) {
+  .sh-nav { display: none; }
+  .sh-menu { display: block; }
+  .sh-bar { gap: 10px; }
+}
