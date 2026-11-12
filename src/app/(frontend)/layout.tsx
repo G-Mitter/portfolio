@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next'
 import React from 'react'
 
 import { Footer } from '@/components/Footer'
+import { SiteHeader } from '@/components/SiteHeader'
 import { ViewCounter } from '@/components/ViewCounter'
 import { siteUrl } from '@/lib/siteUrl'
 
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip" href="#conteudo">
           Pular para o conteúdo
         </a>
+        <SiteHeader />
         <main className="wrap" id="conteudo">{children}</main>
         {/* Rodapé sempre escuro (como o topo e o contato). */}
         <Footer />
