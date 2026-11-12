@@ -108,8 +108,8 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/layout.tsx": {
-    "mtime": 1794514218.8826172,
-    "seen": 1794514270.7239916,
+    "mtime": 1794515009.9621382,
+    "seen": 1794515066.1656194,
     "ast_hash": "85c4a188aff7c853e04c44f296cb0036",
     "semantic_hash": ""
   },
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/page.tsx": {
-    "mtime": 1794514177.968949,
-    "seen": 1794514270.723998,
-    "ast_hash": "03bf54d2b88178303d0a7cd4b2cf380b",
+    "mtime": 1794515033.1006136,
+    "seen": 1794515066.1656246,
+    "ast_hash": "4f7a37054cda56e437410140f448e58d",
     "semantic_hash": ""
   },
   "src/app/(frontend)/portfolio/page.tsx": {
@@ -323,16 +323,10 @@
     "ast_hash": "d1777268f0ba234d729738062e9bab0b",
     "semantic_hash": ""
   },
-  "src/components/HeroCard.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.7240438,
-    "ast_hash": "afe5ccd6a0660996626035b7a13becd5",
-    "semantic_hash": ""
-  },
   "src/components/Intro.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.724045,
-    "ast_hash": "d76343b5054a2ed5331c136d75a69e20",
+    "mtime": 1794515033.1001463,
+    "seen": 1794515066.1656642,
+    "ast_hash": "0c139fac038063c86eae2d9148d5c08c",
     "semantic_hash": ""
   },
   "src/components/LikeButton.tsx": {
@@ -396,8 +390,8 @@
     "semantic_hash": ""
   },
   "src/components/SiteHeader.tsx": {
-    "mtime": 1794514218.8640897,
-    "seen": 1794514270.7240603,
+    "mtime": 1794515009.9621382,
+    "seen": 1794515066.1656783,
     "ast_hash": "357629e1dddd20c167543954628df005",
     "semantic_hash": ""
   },

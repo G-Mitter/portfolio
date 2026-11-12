@@ -1,17 +1,17 @@
 # Graph Report - portfolio  (2026-11-12)
 
 ## Corpus Check
-- 167 files · ~134,500 words
+- 166 files · ~134,379 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: .css 2, .example 1, (none) 1)
 
 ## Summary
-- 669 nodes · 1295 edges · 59 communities (32 shown, 27 thin omitted)
+- 667 nodes · 1286 edges · 54 communities (32 shown, 22 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b9ad2f4e`
+- Built from commit: `e9a2469f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -44,23 +44,18 @@
 - Skills.tsx
 - seed.ts
 - index.ts
-- [...slug]/route.ts
-- next.config.ts
-- Profile.ts
+- sitemap.ts
+- (frontend)/views.ts
+- source.ts
 - vite-tsconfig-paths
 - .prettierrc.json
 - eslint-config-next
-- dotenv
+- cross-env@^7.0.3
 - 20261002_144740_como_eu_trabalho.ts
 - engines
-- graphql/route.ts
+- sharp
 - AGENTS.md
 - graphql@^16.8.1
-- @payloadcms/storage-vercel-blob
-- @payloadcms/translations
-- @payloadcms/ui@3.90.2
-- react-dom@19.2.6
-- tailwind-merge
 - postcss.config.mjs
 - vercel.json
 
@@ -70,60 +65,60 @@
 3. `@payloadcms/db-postgres` - 22 edges
 4. `react` - 20 edges
 5. `Button()` - 19 edges
-6. `vitest` - 18 edges
-7. `DashboardPage()` - 18 edges
+6. `DashboardPage()` - 18 edges
+7. `vitest` - 18 edges
 8. `HomePage()` - 17 edges
 9. `compilerOptions` - 17 edges
 10. `scripts` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `ContactForm()` --indirect_call--> `sendMessage()`  [INFERRED]
-  src/components/ContactForm.tsx → src/app/(frontend)/actions.ts
-- `DashboardPage()` --calls--> `Card()`  [EXTRACTED]
-  src/app/(frontend)/dashboard/page.tsx → src/components/ui/card.tsx
-- `DashboardPage()` --calls--> `dayKey()`  [EXTRACTED]
-  src/app/(frontend)/dashboard/page.tsx → src/lib/dashboard.ts
-- `DashboardPage()` --calls--> `likesLabel()`  [EXTRACTED]
-  src/app/(frontend)/dashboard/page.tsx → src/lib/likes.ts
-- `RootLayout()` --calls--> `SiteHeader()`  [EXTRACTED]
-  src/app/(frontend)/layout.tsx → src/components/SiteHeader.tsx
+- `HomePage()` --calls--> `ContactSection()`  [EXTRACTED]
+  src/app/(frontend)/page.tsx → src/components/ContactSection.tsx
+- `HomePage()` --calls--> `DemoVideo()`  [EXTRACTED]
+  src/app/(frontend)/page.tsx → src/components/DemoVideo.tsx
+- `HomePage()` --calls--> `ProjectCard()`  [EXTRACTED]
+  src/app/(frontend)/page.tsx → src/components/ProjectCard.tsx
+- `NotFound()` --calls--> `Button()`  [EXTRACTED]
+  src/app/(frontend)/not-found.tsx → src/components/ui/button.tsx
+- `PortfolioPage()` --calls--> `Feed()`  [EXTRACTED]
+  src/app/(frontend)/portfolio/page.tsx → src/components/Feed.tsx
 
 ## Import Cycles
 - None detected.
 
-## Communities (59 total, 27 thin omitted)
+## Communities (54 total, 22 thin omitted)
 
 ### Community 0 - "(frontend)/page.tsx"
 Cohesion: 0.07
-Nodes (41): next, metadata, NotFound(), DEMOS, dynamic, HomePage(), metadata, Props (+33 more)
+Nodes (42): next, metadata, NotFound(), DEMOS, dynamic, HomePage(), metadata, Props (+34 more)
 
 ### Community 1 - "react"
-Cohesion: 0.10
-Nodes (30): vitest@4.0.18, class-variance-authority, @radix-ui/react-slot, react, vitest, ContactState, sendMessage(), ContactForm() (+22 more)
+Cohesion: 0.11
+Nodes (27): class-variance-authority, @radix-ui/react-slot, react, ContactState, sendMessage(), ContactForm(), initialState, ContactSection() (+19 more)
 
 ### Community 2 - "dashboard/page.tsx"
 Cohesion: 0.13
-Nodes (28): DashboardPage(), dynamic, metadata, AutoRefresh(), LineChart(), PAD, WorldMap(), DayPoint (+20 more)
+Nodes (29): DashboardPage(), dynamic, metadata, AutoRefresh(), LineChart(), PAD, WorldMap(), dayKey() (+21 more)
 
 ### Community 3 - "payload-types.ts"
 Cohesion: 0.06
 Nodes (36): Auth, CollectionsWidget, Config, GeneratedTypes, Like, LikesSelect, MarketingFile, MarketingFilesSelect (+28 more)
 
 ### Community 4 - "marketing/page.tsx"
-Cohesion: 0.13
-Nodes (30): anchor(), dynamic, MarketingPage(), metadata, postKey(), WEEKDAYS, cleanup(), joinParts() (+22 more)
+Cohesion: 0.12
+Nodes (31): @vercel/blob@2.3.1, @vercel/blob, anchor(), dynamic, MarketingPage(), metadata, postKey(), WEEKDAYS (+23 more)
 
 ### Community 5 - "steps"
 Cohesion: 0.07
 Nodes (28): env, runs-on, services, steps, DATABASE_URL, PAYLOAD_SECRET, POSTGRES_DB, POSTGRES_PASSWORD (+20 more)
 
 ### Community 6 - "payload.config.ts"
-Cohesion: 0.12
-Nodes (16): payload, publishedOrLoggedIn(), Likes, Media, PageViewDays, PageViewPlaces, PageViews, PageViewSources (+8 more)
+Cohesion: 0.15
+Nodes (12): dirname, __filename, nextConfig, payload, Likes, Media, PageViewDays, PageViewPlaces (+4 more)
 
 ### Community 7 - "lib/views.ts"
-Cohesion: 0.16
-Nodes (18): POST(), countView(), ViewCounter(), matchPage(), classifySource(), HOSTS, Source, SOURCE_LABELS (+10 more)
+Cohesion: 0.24
+Nodes (11): POST(), PageViewTimes, matchPage(), Bucket, BUCKET_LABELS, bucketFor(), BUCKETS, MAX_SECONDS (+3 more)
 
 ### Community 8 - "compilerOptions"
 Cohesion: 0.10
@@ -131,22 +126,22 @@ Nodes (20): compilerOptions, allowJs, baseUrl, esModuleInterop, incremental, iso
 
 ### Community 9 - "dependencies"
 Cohesion: 0.10
-Nodes (20): dependencies, class-variance-authority@^0.7.1, clsx@^2.1.1, cross-env@^7.0.3, next@16.3.8, payload@3.90.2, @payloadcms/richtext-lexical@3.90.2, @radix-ui/react-slot@^1.5.0 (+12 more)
+Nodes (20): dependencies, class-variance-authority@^0.7.1, clsx@^2.1.1, next@16.3.8, payload@3.90.2, @payloadcms/translations@3.90.2, @payloadcms/ui@3.90.2, postcss@^8.5.31 (+12 more)
 
 ### Community 10 - "@payloadcms/next"
-Cohesion: 0.13
-Nodes (7): @payloadcms/next@3.90.2, @payloadcms/next, importMap, Args, Args, GET, Args
+Cohesion: 0.07
+Nodes (19): @payloadcms/next@3.90.2, @payloadcms/richtext-lexical@3.90.2, @payloadcms/storage-vercel-blob@3.90.2, @payloadcms/next, @payloadcms/richtext-lexical, @payloadcms/storage-vercel-blob, importMap, Args (+11 more)
 
 ### Community 11 - "(frontend)/layout.tsx"
-Cohesion: 0.13
-Nodes (11): body, display, dynamic, metadata, mono, RootLayout(), viewport, dynamic (+3 more)
+Cohesion: 0.20
+Nodes (8): body, display, dynamic, metadata, mono, RootLayout(), viewport, Footer()
 
 ### Community 12 - "devDependencies"
 Cohesion: 0.11
 Nodes (19): devDependencies, eslint@^9.16.0, jsdom@28.0.0, prettier@^3.4.2, @testing-library/react@16.3.0, tsx@4.23.15, @types/node@22.19.9, @types/react@19.2.14 (+11 more)
 
 ### Community 13 - "ProjectCard.tsx"
-Cohesion: 0.27
+Cohesion: 0.28
 Nodes (10): Feed(), Filter, FILTERS, PostCover(), Props, PostTile(), ProjectCard(), CATEGORY_LABELS (+2 more)
 
 ### Community 14 - "components.json"
@@ -167,15 +162,15 @@ Nodes (12): environment, image, ports, restart, volumes, POSTGRES_DB, POSTGRES_P
 
 ### Community 18 - "package.json"
 Cohesion: 0.15
-Nodes (12): @payloadcms/email-resend@3.90.2, postcss@^8.5.31, @tailwindcss/postcss@^4.3.3, description, license, name, private, type (+4 more)
+Nodes (12): @payloadcms/email-resend@3.90.2, react-dom@19.2.6, simple-icons@^16.35.0, description, license, name, private, type (+4 more)
 
 ### Community 19 - "LikeButton.tsx"
 Cohesion: 0.31
 Nodes (9): LikeState, toggleLike(), LikeButton(), handleClick(), openInvite(), Props, isVisitorId(), likesLabel() (+1 more)
 
 ### Community 20 - "admin.e2e.spec.ts"
-Cohesion: 0.27
-Nodes (7): @playwright/test@1.58.2, @playwright/test, login(), LoginOptions, cleanupTestUser(), seedTestUser(), testUser
+Cohesion: 0.18
+Nodes (9): dotenv@16.4.7, @playwright/test@1.58.2, dotenv, @playwright/test, login(), LoginOptions, cleanupTestUser(), seedTestUser() (+1 more)
 
 ### Community 21 - "allowBuilds"
 Cohesion: 0.20
@@ -190,24 +185,24 @@ Cohesion: 0.43
 Nodes (4): Skills(), ICONS, TechBadge(), splitItems()
 
 ### Community 26 - "seed.ts"
-Cohesion: 0.39
-Nodes (5): slugify(), paragraph(), projects, seed(), SeedProject
+Cohesion: 0.21
+Nodes (9): publishedOrLoggedIn(), Projects, isHttpUrl(), validateHttpUrl(), slugify(), paragraph(), projects, seed() (+1 more)
 
-### Community 28 - "[...slug]/route.ts"
-Cohesion: 0.29
-Nodes (6): DELETE, GET, OPTIONS, PATCH, POST, PUT
+### Community 28 - "sitemap.ts"
+Cohesion: 0.31
+Nodes (3): dynamic, Messages, siteUrl
 
-### Community 29 - "next.config.ts"
-Cohesion: 0.33
-Nodes (3): dirname, __filename, nextConfig
+### Community 29 - "(frontend)/views.ts"
+Cohesion: 0.36
+Nodes (6): countView(), ViewCounter(), addPlace(), addSource(), addView(), createdIds
 
-### Community 30 - "Profile.ts"
-Cohesion: 0.60
-Nodes (3): Profile, isHttpUrl(), validateHttpUrl()
+### Community 30 - "source.ts"
+Cohesion: 0.28
+Nodes (6): PageViewSources, classifySource(), HOSTS, Source, SOURCE_LABELS, SOURCES
 
 ### Community 31 - "vite-tsconfig-paths"
-Cohesion: 0.40
-Nodes (4): vite-tsconfig-paths@6.0.5, @vitejs/plugin-react@4.5.2, vite-tsconfig-paths, @vitejs/plugin-react
+Cohesion: 0.29
+Nodes (6): vite-tsconfig-paths@6.0.5, @vitejs/plugin-react@4.5.2, vitest@4.0.18, vite-tsconfig-paths, @vitejs/plugin-react, vitest
 
 ### Community 32 - ".prettierrc.json"
 Cohesion: 0.40
@@ -222,22 +217,22 @@ Cohesion: 0.67
 Nodes (3): engines, node, pnpm
 
 ## Knowledge Gaps
-- **27 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **22 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `next` connect `(frontend)/page.tsx` to `dashboard/page.tsx`, `marketing/page.tsx`, `payload.config.ts`, `lib/views.ts`, `dependencies`, `@payloadcms/next`, `(frontend)/layout.tsx`, `ProjectCard.tsx`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `next.config.ts`?**
-  _High betweenness centrality (0.120) - this node is a cross-community bridge._
+- **Why does `next` connect `(frontend)/page.tsx` to `dashboard/page.tsx`, `marketing/page.tsx`, `payload.config.ts`, `lib/views.ts`, `dependencies`, `@payloadcms/next`, `(frontend)/layout.tsx`, `ProjectCard.tsx`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `sitemap.ts`, `(frontend)/views.ts`?**
+  _High betweenness centrality (0.118) - this node is a cross-community bridge._
 - **Should `(frontend)/page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.07322068612391193 - nodes in this community are weakly interconnected._
-- **Why does `payload` connect `payload.config.ts` to `(frontend)/page.tsx`, `react`, `dashboard/page.tsx`, `marketing/page.tsx`, `lib/views.ts`, `dependencies`, `@payloadcms/next`, `(frontend)/layout.tsx`, `20261002_140150_ordem_feed.ts`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `admin.e2e.spec.ts`, `seed.ts`, `Profile.ts`?**
+  _Cohesion score 0.06971153846153846 - nodes in this community are weakly interconnected._
+- **Why does `payload` connect `payload.config.ts` to `(frontend)/page.tsx`, `react`, `dashboard/page.tsx`, `marketing/page.tsx`, `lib/views.ts`, `dependencies`, `@payloadcms/next`, `(frontend)/layout.tsx`, `20261002_140150_ordem_feed.ts`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `admin.e2e.spec.ts`, `seed.ts`, `sitemap.ts`, `(frontend)/views.ts`, `source.ts`?**
   _High betweenness centrality (0.105) - this node is a cross-community bridge._
 - **Should `react` be split into smaller, more focused modules?**
-  _Cohesion score 0.09966777408637874 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11025641025641025 - nodes in this community are weakly interconnected._
 - **Why does `@payloadcms/db-postgres` connect `@payloadcms/db-postgres` to `20261002_144740_como_eu_trabalho.ts`, `20260930_235140_initial.ts`, `20261001_161241_imagens_vercel_blob.ts`, `20261002_134058_contato_whatsapp.ts`, `lib/views.ts`, `20261002_140150_ordem_feed.ts`, `20261002_150425_instagram.ts`, `20261020_013314_dashboard_visualizacoes_por_dia.ts`, `20261020_015111_dashboard_origem_das_visitas.ts`, `20261024_151913_dashboard_mapa_das_visitas.ts`, `20261024_152828_dashboard_tempo_na_pagina.ts`, `20261024_173800_texto_de_apoio.ts`, `20261031_165422_materiais_marketing.ts`, `package.json`, `20261002_141521_formulario_contato.ts`, `index.ts`, `payload.config.ts`?**
   _High betweenness centrality (0.092) - this node is a cross-community bridge._
 - **Should `dashboard/page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.12762762762762764 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12802275960170698 - nodes in this community are weakly interconnected._
 - **Should `payload-types.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.05555555555555555 - nodes in this community are weakly interconnected._
