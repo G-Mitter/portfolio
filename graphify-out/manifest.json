@@ -324,9 +324,9 @@
     "semantic_hash": ""
   },
   "src/components/Intro.tsx": {
-    "mtime": 1794515033.1001463,
-    "seen": 1794515066.1656642,
-    "ast_hash": "0c139fac038063c86eae2d9148d5c08c",
+    "mtime": 1794515711.7758956,
+    "seen": 1794515789.6628,
+    "ast_hash": "b984054a44ca00656c5bb0a8a805c117",
     "semantic_hash": ""
   },
   "src/components/LikeButton.tsx": {
@@ -390,9 +390,9 @@
     "semantic_hash": ""
   },
   "src/components/SiteHeader.tsx": {
-    "mtime": 1794515009.9621382,
-    "seen": 1794515066.1656783,
-    "ast_hash": "357629e1dddd20c167543954628df005",
+    "mtime": 1794515711.7767394,
+    "seen": 1794515789.6628163,
+    "ast_hash": "84ba8de67d04bd3854fe8ba8ef719871",
     "semantic_hash": ""
   },
   "src/components/Skills.tsx": {
@@ -1089,6 +1089,12 @@
     "mtime": 1794514177.9665554,
     "seen": 1794514270.7242298,
     "ast_hash": "880f8427ede3c4f2162f62e4b68685fc",
+    "semantic_hash": ""
+  },
+  "src/components/IntroDemo.tsx": {
+    "mtime": 1794515770.4794383,
+    "seen": 1794515789.6628022,
+    "ast_hash": "4ae70e378234d23fa544f30a8277c8e0",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {

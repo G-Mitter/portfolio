@@ -2,13 +2,14 @@ import Link from 'next/link'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { IntroDemo } from '@/components/IntroDemo'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 import type { Profile } from '@/payload-types'
 
 /**
  * Topo da página inicial: quem é, o que resolve e uma única ação (agendar o diagnóstico).
  * Faixa escura de ponta a ponta: texto à esquerda e, à direita, um exemplo do que o robô entrega
- * (dados fictícios, com selo). A foto do Guilherme fica na seção "Quem faz", mais abaixo.
+ * (carrossel de exemplos, dados fictícios). A foto do Guilherme fica na seção "Quem faz", mais abaixo.
  * O selo "Disponível" fica no canto superior direito. No celular, o exemplo vem depois do texto.
  */
 export function Intro({ profile, projectCount }: { profile: Profile; projectCount: number }) {
@@ -62,16 +63,7 @@ export function Intro({ profile, projectCount }: { profile: Profile; projectCoun
         </div>
         <p className="intro-note">Sem compromisso. Preço fechado antes de começar.</p>
       </div>
-      {/* Exemplo do resultado de um robô de conciliação. Decorativo e com dados fictícios. */}
-      <div className="intro-demo" aria-hidden="true">
-        <p className="intro-demo-title">Conciliação da semana</p>
-        <ul>
-          <li><span>Depósito não recebido</span><b>Filial 07</b><em>R$ 1.240,00</em></li>
-          <li><span>Venda sem baixa</span><b>Filial 12</b><em>R$ 389,90</em></li>
-          <li><span>Taxa cobrada a mais</span><b>Filial 03</b><em>R$ 86,40</em></li>
-        </ul>
-        <p className="intro-demo-foot">5 auditorias em uma execução <small>dados fictícios</small></p>
-      </div>
+      <IntroDemo />
       {/* O nome segue como <h1> para leitores de tela e buscadores, mas só aparece na linha acima da frase. */}
       <h1 className="sr-only">{profile.name}</h1>
     </header>
