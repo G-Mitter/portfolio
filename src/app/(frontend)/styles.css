@@ -228,14 +228,14 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 /* Topo da home: faixa escura de ponta a ponta (cores fixas da marca, não seguem o tema do sistema). */
 .intro {
   --bg: #141a28; --surface: #1c2438; --line: #2a3550; --fg: #f4f6fb; --muted: #9aa5bd; --accent: #6d9bff; --done: #4fcf9a; color-scheme: dark;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 600px); column-gap: 72px; align-items: end; position: relative;
-  width: 100vw; margin: -28px 0 0 calc(50% - 50vw); padding: 72px max(16px, calc(50vw - 640px)) 14px; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 560px); column-gap: 72px; align-items: center; position: relative; min-height: clamp(560px, 80vh, 760px);
+  width: 100vw; margin: -28px 0 0 calc(50% - 50vw); padding: 88px max(16px, calc(50vw - 640px)) 72px; overflow: hidden;
   background: var(--bg); color: var(--fg);
 }
-.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-bottom: 40px; }
+.intro-text { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
 .intro-name { margin: 0; color: var(--muted); font-size: 15px; }
-.intro .lead { margin: 0; max-width: 24ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(30px, 3.8vw, 52px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
-.intro .support { margin: 0; max-width: 44ch; color: var(--muted); font-size: 18px; line-height: 1.4; }
+.intro .lead { margin: 0; max-width: 20ch; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(34px, 4.6vw, 66px); line-height: 1.05; letter-spacing: 0.01em; text-wrap: balance; }
+.intro .support { margin: 0; max-width: 46ch; color: var(--muted); font-size: 19px; line-height: 1.45; }
 /* Foto recortada sobre um disco azul: o disco é só um círculo de degradê atrás da imagem. */
 .intro-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; }
 .intro-photo::before { content: ''; position: absolute; inset: 0 0 auto; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
@@ -366,11 +366,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 
 @media (max-width: 640px) {
   /* Na página inicial os três botões quebram linha; o principal ocupa a largura toda */
-  .intro { grid-template-columns: 1fr; width: 100vw; padding-top: 64px; }
+  .intro { grid-template-columns: 1fr; width: 100vw; min-height: 0; padding-block: 64px 40px; }
   /* Celular: o selo vai para a esquerda, na mesma margem do texto, menor. */
   .intro .available { top: 18px; left: 16px; right: auto; padding: 2px 10px; font-size: 12.5px; }
   .intro-photo { grid-row: 1; width: min(78vw, 320px); margin-inline: auto; }
-  .intro-text { grid-row: 2; padding: 28px 0 40px; }
+  .intro-text { grid-row: 1; padding: 8px 0 32px; }
   .intro .p-actions { flex-wrap: wrap; align-self: stretch; }
   .intro .p-actions > :first-child { flex-basis: 100%; }
   .intro .loc { display: block; }
@@ -567,32 +567,6 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
   }
 }
 
-/* Cartão "post" ao lado da foto na home: só em telas largas, onde há espaço sem empurrar os botões. */
-.hero-card { display: none; }
-@media (min-width: 961px) {
-  .hero-card { display: grid; gap: 8px; position: absolute; z-index: 2; left: -120px; top: 11%; width: 250px; height: 150px; align-content: start; padding: 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
-  .hero-card p { margin: 0; }
-  .hero-card-cat { color: var(--muted); font-size: 13px; }
-  .hero-card-title { font-family: var(--display); font-weight: 700; font-size: 18px; line-height: 1.2; }
-  .hero-card-result { color: var(--accent); font-size: 13px; font-weight: 600; line-height: 1.3; }
-  /* Textos do /admin podem ser longos: no máximo 2 linhas, o resto vira "…". */
-  .hero-card-title, .hero-card-result { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-}
-/* Cartões 2 e 3: iguais ao 1º, em degraus sobre o espaço vazio à esquerda; só em telas bem largas (senão encostam no título). */
-.hero-card-2, .hero-card-3 { display: none; }
-@media (min-width: 1280px) {
-  .hero-card-2, .hero-card-3 { display: grid; }
-  /* O 3º alinha com a margem esquerda do texto da abertura (nunca sai da tela); o 2º fica no meio entre o 3º e o 1º. */
-  .hero-card-2 { left: calc((-120px + max(-680px, calc(632px - 100vw))) / 2); top: 7%; }
-  .hero-card-3 { left: max(-680px, calc(632px - 100vw)); top: 3%; }
-}
-@media (min-width: 961px) and (prefers-reduced-motion: no-preference) {
-  @keyframes hero-float { 50% { transform: translateY(-10px); } }
-  .hero-card { animation: hero-float 6s ease-in-out infinite; }
-  .hero-card-2 { animation-duration: 7.5s; animation-delay: -2s; }
-  .hero-card-3 { animation-duration: 5s; animation-delay: -3.5s; }
-}
-
 /* No celular os destaques rolam na horizontal: a entrada pela rolagem vertical não se aplica a eles. */
 @media (max-width: 640px) { .featured .grid > div { animation: none; } }
 
@@ -636,11 +610,11 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 .mkt-text button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--accent); font-size: 13px; cursor: pointer; white-space: nowrap; }
 
 /* Cabeçalho fixo (cores fixas da marca, como o topo e o rodapé). O scroll-padding evita que ele cubra o título ao clicar em um link. */
-html { scroll-padding-top: 72px; }
+html { scroll-padding-top: 88px; }
 .site-header { position: sticky; top: 0; z-index: 50; background: rgb(20 26 40 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid #2a3550; color: #f4f6fb; }
-.sh-bar { display: flex; align-items: center; gap: 20px; max-width: 1280px; margin: 0 auto; padding: 10px 16px; min-height: 56px; }
+.sh-bar { display: flex; align-items: center; gap: 20px; max-width: 1280px; margin: 0 auto; padding: 12px 16px; min-height: 72px; }
 .sh-logo { display: flex; margin-right: auto; }
-.sh-logo img { height: 28px; width: auto; }
+.sh-logo img { height: 40px; width: auto; }
 .sh-nav { display: flex; gap: 22px; }
 .sh-nav a, .sh-menu a { color: #f4f6fb; text-decoration: none; font-size: 15px; }
 .sh-nav a:hover, .sh-menu a:hover { color: #6d9bff; }
@@ -653,5 +627,42 @@ html { scroll-padding-top: 72px; }
 @media (max-width: 760px) {
   .sh-nav { display: none; }
   .sh-menu { display: block; }
-  .sh-bar { gap: 10px; }
+  .sh-bar { gap: 10px; min-height: 60px; padding-block: 10px; }
+  .sh-logo img { height: 30px; }
 }
+/* Telas bem estreitas (até 340px): logo, botão e menu precisam caber na mesma linha. */
+@media (max-width: 340px) {
+  .sh-bar { gap: 8px; padding-inline: 12px; }
+  .sh-logo img { height: 24px; }
+  .sh-cta { padding: 8px 10px; font-size: 14px; }
+  .sh-menu summary { padding: 8px 10px; font-size: 14px; }
+}
+
+/* Topo da home: aviso abaixo dos botões e carrossel de exemplos (dados fictícios) no lugar da foto. */
+.intro-note { margin: 0; color: var(--muted); font-size: 14px; }
+.intro-demo { touch-action: pan-y; user-select: none; align-self: center; justify-self: end; width: min(100%, 520px); padding: 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); box-shadow: 0 14px 34px rgb(0 0 0 / 0.35); }
+.intro-demo p { margin: 0; }
+.demo-slides { display: grid; }
+.demo-slide { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity 0.5s, transform 0.5s, visibility 0s 0.5s; }
+.demo-slide[data-active='true'] { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.demo-tag { margin-bottom: 6px; color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; }
+.intro-demo-title { font-family: var(--display); font-weight: 700; font-size: 22px; }
+.intro-demo ul { margin: 16px 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.intro-demo li { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px; border-radius: 10px; background: var(--bg); }
+.intro-demo li span { grid-column: 1; font-size: 16px; }
+.intro-demo li b { grid-column: 1; color: var(--muted); font-size: 13px; font-weight: 500; }
+.intro-demo li em { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--done); font-style: normal; font-weight: 700; font-variant-numeric: tabular-nums; }
+.intro-demo-foot { color: var(--accent); font-size: 14px; font-weight: 600; }
+.intro-demo-foot small { margin-left: 8px; color: var(--muted); font-weight: 400; }
+.demo-controls { display: flex; align-items: center; gap: 4px; margin-top: 16px; }
+.demo-arrow { width: 44px; height: 44px; border: 0; background: none; color: var(--muted); font-size: 28px; line-height: 1; cursor: pointer; }
+.demo-arrow:hover { color: var(--fg); }
+.demo-dots { display: flex; }
+/* Ponto pequeno, mas com área de toque de 44px (o ::before desenha o ponto). */
+.demo-dots button { position: relative; width: 44px; height: 44px; margin: -14px 0; border: 0; background: none; cursor: pointer; }
+.demo-dots button::before { content: ''; position: absolute; inset: 50% auto auto 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--line); transform: translate(-50%, -50%); transition: background 0.2s, width 0.2s; }
+.demo-dots button[aria-current='true']::before { width: 22px; border-radius: 4px; background: var(--accent); }
+.demo-pause { margin-left: auto; min-height: 44px; padding: 0 8px; border: 0; background: none; color: var(--muted); font-size: 14px; cursor: pointer; }
+.demo-pause:hover { color: var(--fg); }
+@media (prefers-reduced-motion: reduce) { .demo-slide { transition: none; } }
+@media (max-width: 640px) { .intro-demo { grid-row: 2; justify-self: stretch; padding: 18px; } }

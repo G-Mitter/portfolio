@@ -1,29 +1,18 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { IntroDemo } from '@/components/IntroDemo'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
-import { HeroCard } from '@/components/HeroCard'
-import type { Profile, Project } from '@/payload-types'
+import type { Profile } from '@/payload-types'
 
 /**
- * Topo da página inicial: quem você é, o que resolve e para onde ir.
- * O botão principal leva ao contato; o outro, ao portfólio.
- * Faixa escura de ponta a ponta: texto à esquerda, foto recortada sobre um disco azul
- * à direita e o nome em letras enormes, centralizado, cruzando a base da foto.
- * O selo "Disponível" fica no canto superior direito.
- * No celular: foto em cima, nome e texto embaixo.
+ * Topo da página inicial: quem é, o que resolve e uma única ação (agendar o diagnóstico).
+ * Faixa escura de ponta a ponta: texto à esquerda e, à direita, um exemplo do que o robô entrega
+ * (carrossel de exemplos, dados fictícios). A foto do Guilherme fica na seção "Quem faz", mais abaixo.
+ * O selo "Disponível" fica no canto superior direito. No celular, o exemplo vem depois do texto.
  */
-export function Intro({
-  profile,
-  projectCount,
-  featured,
-}: {
-  profile: Profile
-  projectCount: number
-  featured?: Project[]
-}) {
+export function Intro({ profile, projectCount }: { profile: Profile; projectCount: number }) {
   const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
 
   return (
@@ -60,7 +49,7 @@ export function Intro({
           {whatsapp ? (
             <Button asChild size="lg" variant="whatsapp">
               <a href={whatsapp} target="_blank" rel="noopener noreferrer">
-                Conversar no WhatsApp
+                Agendar diagnóstico grátis de 30 min
               </a>
             </Button>
           ) : (
@@ -72,21 +61,9 @@ export function Intro({
             <Link href="/portfolio">Ver meus projetos</Link>
           </Button>
         </div>
+        <p className="intro-note">Sem compromisso. Preço fechado antes de começar.</p>
       </div>
-      {/* Recorte sem fundo (public/): o disco azul fica atrás, no CSS. */}
-      <div className="intro-photo">
-        <Image
-          src="/guilherme-recorte.png"
-          alt={`Foto de ${profile.name}`}
-          width={1086}
-          height={1448}
-          sizes="(max-width: 640px) 80vw, 640px"
-          priority
-        />
-        {featured?.slice(0, 3).map((project, i) => (
-          <HeroCard key={project.id} project={project} n={(i + 1) as 1 | 2 | 3} />
-        ))}
-      </div>
+      <IntroDemo />
       {/* O nome segue como <h1> para leitores de tela e buscadores, mas só aparece na linha acima da frase. */}
       <h1 className="sr-only">{profile.name}</h1>
     </header>

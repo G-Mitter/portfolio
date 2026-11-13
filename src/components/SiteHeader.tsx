@@ -29,7 +29,7 @@ export async function SiteHeader() {
     <header className="site-header">
       <div className="sh-bar">
         <Link href="/" className="sh-logo" aria-label="Gui Mitter, página inicial">
-          <Image src="/marca/logo-escuro.png" alt="" width={140} height={28} priority />
+          <Image src="/marca/logo-escuro.png" alt="" width={202} height={40} priority />
         </Link>
         <nav className="sh-nav" aria-label="Principal">
           {LINKS.map((l) => (

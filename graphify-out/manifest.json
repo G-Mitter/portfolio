@@ -108,8 +108,8 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/layout.tsx": {
-    "mtime": 1794514218.8826172,
-    "seen": 1794514270.7239916,
+    "mtime": 1794515009.9621382,
+    "seen": 1794515066.1656194,
     "ast_hash": "85c4a188aff7c853e04c44f296cb0036",
     "semantic_hash": ""
   },
@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/page.tsx": {
-    "mtime": 1794514177.968949,
-    "seen": 1794514270.723998,
-    "ast_hash": "03bf54d2b88178303d0a7cd4b2cf380b",
+    "mtime": 1794515033.1006136,
+    "seen": 1794515066.1656246,
+    "ast_hash": "4f7a37054cda56e437410140f448e58d",
     "semantic_hash": ""
   },
   "src/app/(frontend)/portfolio/page.tsx": {
@@ -323,16 +323,10 @@
     "ast_hash": "d1777268f0ba234d729738062e9bab0b",
     "semantic_hash": ""
   },
-  "src/components/HeroCard.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.7240438,
-    "ast_hash": "afe5ccd6a0660996626035b7a13becd5",
-    "semantic_hash": ""
-  },
   "src/components/Intro.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.724045,
-    "ast_hash": "d76343b5054a2ed5331c136d75a69e20",
+    "mtime": 1794515711.7758956,
+    "seen": 1794515789.6628,
+    "ast_hash": "b984054a44ca00656c5bb0a8a805c117",
     "semantic_hash": ""
   },
   "src/components/LikeButton.tsx": {
@@ -396,9 +390,9 @@
     "semantic_hash": ""
   },
   "src/components/SiteHeader.tsx": {
-    "mtime": 1794514218.8640897,
-    "seen": 1794514270.7240603,
-    "ast_hash": "357629e1dddd20c167543954628df005",
+    "mtime": 1794515711.7767394,
+    "seen": 1794515789.6628163,
+    "ast_hash": "84ba8de67d04bd3854fe8ba8ef719871",
     "semantic_hash": ""
   },
   "src/components/Skills.tsx": {
@@ -1095,6 +1089,18 @@
     "mtime": 1794514177.9665554,
     "seen": 1794514270.7242298,
     "ast_hash": "880f8427ede3c4f2162f62e4b68685fc",
+    "semantic_hash": ""
+  },
+  "src/components/IntroDemo.tsx": {
+    "mtime": 1794606485.76976,
+    "seen": 1794606536.31209,
+    "ast_hash": "30897eaed427ed901e52fbd7214ff528",
+    "semantic_hash": ""
+  },
+  "tests/int/introDemo.int.spec.ts": {
+    "mtime": 1794606520.43934,
+    "seen": 1794606536.3122265,
+    "ast_hash": "1e1385f23e469dd6513d9a26485b645a",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {
