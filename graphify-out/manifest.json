@@ -1092,9 +1092,15 @@
     "semantic_hash": ""
   },
   "src/components/IntroDemo.tsx": {
-    "mtime": 1794515770.4794383,
-    "seen": 1794515789.6628022,
-    "ast_hash": "4ae70e378234d23fa544f30a8277c8e0",
+    "mtime": 1794606485.76976,
+    "seen": 1794606536.31209,
+    "ast_hash": "30897eaed427ed901e52fbd7214ff528",
+    "semantic_hash": ""
+  },
+  "tests/int/introDemo.int.spec.ts": {
+    "mtime": 1794606520.43934,
+    "seen": 1794606536.3122265,
+    "ast_hash": "1e1385f23e469dd6513d9a26485b645a",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {

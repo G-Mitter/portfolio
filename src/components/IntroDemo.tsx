@@ -1,11 +1,12 @@
 'use client'
 
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 
 /**
  * Exemplos do que o Guilherme entrega (dados fictícios), um por vez, no topo da home.
  * Troca sozinho a cada 5 s. Pausa com o mouse, com o foco ou no botão de pausa.
  * Quem pediu "reduzir movimento" no aparelho vê o primeiro, parado, e troca pelos pontos.
+ * Também troca arrastando (dedo ou mouse), pelas setas na tela e pelas setas do teclado.
  */
 const SLIDES = [
   {
@@ -61,6 +62,7 @@ const SLIDES = [
 ] as const
 
 const SLIDE_MS = 5000
+const SWIPE_PX = 40 // quanto precisa arrastar na horizontal para contar como "passar"
 
 // true quando o aparelho pediu menos movimento; no servidor devolve null ("ainda não sei").
 function useReducedMotion() {
@@ -80,6 +82,9 @@ export function IntroDemo() {
   const [hover, setHover] = useState(false)
   const [paused, setPaused] = useState(false)
   const still = useReducedMotion() !== false // null (servidor) também começa parado
+  const startX = useRef<number | null>(null)
+
+  const go = (step: number) => setIndex((i) => (i + step + SLIDES.length) % SLIDES.length)
 
   useEffect(() => {
     if (still || hover || paused) return
@@ -97,6 +102,18 @@ export function IntroDemo() {
       onMouseLeave={() => setHover(false)}
       onFocus={() => setHover(true)}
       onBlur={() => setHover(false)}
+      onPointerDown={(e) => { startX.current = e.clientX }}
+      onPointerUp={(e) => {
+        if (startX.current === null) return
+        const dx = e.clientX - startX.current
+        startX.current = null
+        if (Math.abs(dx) >= SWIPE_PX) go(dx < 0 ? 1 : -1)
+      }}
+      onPointerCancel={() => { startX.current = null }}
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowRight') go(1)
+        if (e.key === 'ArrowLeft') go(-1)
+      }}
     >
       {/* Todos os cartões ocupam o mesmo lugar: a caixa tem sempre a altura do maior, sem pular. */}
       <div className="demo-slides" aria-live="off">
@@ -120,6 +137,7 @@ export function IntroDemo() {
         ))}
       </div>
       <div className="demo-controls">
+        <button type="button" className="demo-arrow" aria-label="Exemplo anterior" onClick={() => go(-1)}>‹</button>
         <div className="demo-dots">
           {SLIDES.map((slide, i) => (
             <button
@@ -131,6 +149,7 @@ export function IntroDemo() {
             />
           ))}
         </div>
+        <button type="button" className="demo-arrow" aria-label="Próximo exemplo" onClick={() => go(1)}>›</button>
         {!still && (
           <button type="button" className="demo-pause" onClick={() => setPaused((p) => !p)}>
             {paused ? 'Retomar' : 'Pausar'}
