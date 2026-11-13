@@ -132,9 +132,9 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/page.tsx": {
-    "mtime": 1794515033.1006136,
-    "seen": 1794515066.1656246,
-    "ast_hash": "4f7a37054cda56e437410140f448e58d",
+    "mtime": 1794606911.349339,
+    "seen": 1794606969.727229,
+    "ast_hash": "7ebd47a6e1989fe393c69d6841b9e6d2",
     "semantic_hash": ""
   },
   "src/app/(frontend)/portfolio/page.tsx": {
@@ -294,9 +294,9 @@
     "semantic_hash": ""
   },
   "src/components/DemoVideo.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.724037,
-    "ast_hash": "eae03c2f6e0a339c2ac8d061fb5b5e1a",
+    "mtime": 1794606899.338516,
+    "seen": 1794606969.7272735,
+    "ast_hash": "09a1a109e3eb005bad6cb69c50a6eb4a",
     "semantic_hash": ""
   },
   "src/components/Faq.tsx": {
@@ -324,8 +324,8 @@
     "semantic_hash": ""
   },
   "src/components/Intro.tsx": {
-    "mtime": 1794515711.7758956,
-    "seen": 1794515789.6628,
+    "mtime": 1794606860.4440002,
+    "seen": 1794606969.7272797,
     "ast_hash": "b984054a44ca00656c5bb0a8a805c117",
     "semantic_hash": ""
   },
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "src/components/ProjectCard.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.7240577,
-    "ast_hash": "f3384dcf9ddd0d0cd126884985aa96da",
+    "mtime": 1794606918.3022363,
+    "seen": 1794606969.7272937,
+    "ast_hash": "96fd075285b6820b147605245560ec7f",
     "semantic_hash": ""
   },
   "src/components/Services.tsx": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "src/components/SiteHeader.tsx": {
-    "mtime": 1794515711.7767394,
-    "seen": 1794515789.6628163,
+    "mtime": 1794606860.4440002,
+    "seen": 1794606969.7272966,
     "ast_hash": "84ba8de67d04bd3854fe8ba8ef719871",
     "semantic_hash": ""
   },
@@ -1092,15 +1092,27 @@
     "semantic_hash": ""
   },
   "src/components/IntroDemo.tsx": {
-    "mtime": 1794606485.76976,
-    "seen": 1794606536.31209,
+    "mtime": 1794606860.4440002,
+    "seen": 1794606969.7272816,
     "ast_hash": "30897eaed427ed901e52fbd7214ff528",
     "semantic_hash": ""
   },
   "tests/int/introDemo.int.spec.ts": {
-    "mtime": 1794606520.43934,
-    "seen": 1794606536.3122265,
+    "mtime": 1794606860.4440002,
+    "seen": 1794606969.7274153,
     "ast_hash": "1e1385f23e469dd6513d9a26485b645a",
+    "semantic_hash": ""
+  },
+  "src/components/DemoCarousel.tsx": {
+    "mtime": 1794606918.3019373,
+    "seen": 1794606969.7272718,
+    "ast_hash": "429c995fd46a7017cad643409649eade",
+    "semantic_hash": ""
+  },
+  "tests/int/demoCarousel.int.spec.ts": {
+    "mtime": 1794606942.4864933,
+    "seen": 1794606969.7274094,
+    "ast_hash": "7b21366a59e363736e577ecf0c8042d5",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {
