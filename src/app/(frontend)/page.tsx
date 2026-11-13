@@ -4,11 +4,10 @@ import { getPayload } from 'payload'
 
 import config from '@/payload.config'
 import { ContactSection } from '@/components/ContactSection'
-import { DemoVideo } from '@/components/DemoVideo'
+import { DemoCarousel } from '@/components/DemoCarousel'
 import { Faq } from '@/components/Faq'
 import { Intro } from '@/components/Intro'
 import { Offer } from '@/components/Offer'
-import { ProjectCard } from '@/components/ProjectCard'
 import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
@@ -27,9 +26,11 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 // Vídeos da seção "Veja os robôs trabalhando" (arquivos em public/videos/). Para somar um, é só incluir uma linha aqui.
+// `match` é um pedaço do título do projeto no /admin: com ele o cartão ganha o link "Ver o projeto".
 const DEMOS = [
   {
     name: 'Conciliador',
+    match: 'conciliador',
     text: 'Cruza vendas, recebimentos e extrato e mostra onde o dinheiro não bateu.',
     wide: '/videos/conciliador-demo-16x9.mp4',
     tall: '/videos/conciliador-demo-vertical.mp4',
@@ -38,6 +39,7 @@ const DEMOS = [
   },
   {
     name: 'Robô de Carga dos Caixas',
+    match: 'carga dos caixas',
     text: 'Envia os produtos novos e alterados para os caixas de todas as lojas, sem ninguém na frente.',
     wide: '/videos/robo-carga-16x9.mp4',
     tall: '/videos/robo-carga-vertical.mp4',
@@ -46,6 +48,7 @@ const DEMOS = [
   },
   {
     name: 'SupplyFlow',
+    match: 'supplyflow',
     text: 'Pedido de suprimentos da filial vira linha na planilha, baixa de estoque, aviso no Chat e custo por filial, sem ninguém digitar.',
     wide: '/videos/supplyflow-16x9.mp4',
     tall: '/videos/supplyflow-vertical.mp4',
@@ -61,7 +64,7 @@ type Props = {
 
 /**
  * Página inicial (guimitter.com.br): apresentação para clientes.
- * Mostra quem você é, três projetos em destaque e o que você oferece,
+ * Mostra quem você é, os robôs trabalhando (carrossel com link para cada projeto) e o que você oferece,
  * e termina no formulário de contato. O feed completo fica em /portfolio.
  */
 export default async function HomePage({ searchParams }: Props) {
@@ -72,14 +75,19 @@ export default async function HomePage({ searchParams }: Props) {
     payload.findGlobal({ slug: 'profile', depth: 1 }),
     payload.find({
       collection: 'projects',
-      depth: 1,
-      limit: 3, // os três primeiros do feed: fixados e depois a ordem do /admin
+      depth: 0, // só título e endereço: servem para ligar cada demonstração ao seu projeto
+      limit: 50,
       sort: ['-pinned', '_order'],
       overrideAccess: false,
     }),
   ])
 
   const whatsapp = whatsappUrl(profile.links?.whatsapp, contactMessage(profile.name))
+  // Cada demonstração ganha o link do projeto cujo título tem o `match`; sem projeto, fica sem link.
+  const demoSlides = DEMOS.map((demo) => {
+    const project = projects.docs.find((p) => p.title.toLowerCase().includes(demo.match))
+    return { ...demo, href: project ? `/projetos/${project.slug}` : undefined }
+  })
   const avatar = typeof profile.avatar === 'object' ? profile.avatar : null
 
   // Dados estruturados (schema.org): a "ficha" que o Google lê para saber quem você é e onde atende.
@@ -126,35 +134,12 @@ export default async function HomePage({ searchParams }: Props) {
       <Statement />
       <section className="demo band band-dark" aria-labelledby="demo-titulo">
         <h2 id="demo-titulo">Veja os robôs trabalhando</h2>
-        <div className="demo-list">
-          {DEMOS.map((demo) => (
-            <figure key={demo.name}>
-              <DemoVideo wide={demo.wide} tall={demo.tall} label={demo.label} />
-              <figcaption>
-                <b>{demo.name}</b>
-                <span>{demo.text}</span>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
+        <DemoCarousel slides={demoSlides} />
         <small>Demonstrações com dados fictícios.</small>
+        <Button asChild>
+          <Link href="/portfolio">Ver todos os {projects.totalDocs} projetos →</Link>
+        </Button>
       </section>
-      {projects.docs.length > 0 && (
-        <section className="featured band band-dark" aria-labelledby="destaques-titulo">
-          <h2 id="destaques-titulo">Projetos em destaque</h2>
-          <div className="grid">
-            {/* O resultado vai numa etiqueta dentro do cartão: no celular não existe hover. */}
-            {projects.docs.map((project) => (
-              <div key={project.id}>
-                <ProjectCard project={project} showResult />
-              </div>
-            ))}
-          </div>
-          <Button asChild>
-            <Link href="/portfolio">Ver todos os {projects.totalDocs} projetos →</Link>
-          </Button>
-        </section>
-      )}
       <Services services={profile.services} />
       <Process steps={profile.process} />
       <Offer whatsapp={whatsapp} />
