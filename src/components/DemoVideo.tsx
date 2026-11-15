@@ -3,7 +3,7 @@
 import { useEffect, useRef, useSyncExternalStore } from 'react'
 
 // Lê uma media query do navegador e atualiza quando ela muda. No servidor devolve null ("ainda não sei").
-function useMedia(query: string) {
+export function useMedia(query: string) {
   return useSyncExternalStore(
     (onChange) => {
       const media = window.matchMedia(query)
@@ -22,8 +22,24 @@ function useMedia(query: string) {
  * - Só toca quando aparece na tela: fora dela fica parado e não gasta bateria nem dados.
  * - Quem pediu "reduzir movimento" no aparelho vê o vídeo parado, com botão de play.
  * - Precisa estar mudo e com playsInline: sem isso o iPhone não deixa tocar sozinho.
+ * - No carrossel: `active` false deixa o vídeo parado no começo, `loop` false faz o vídeo acabar
+ *   (e `onEnded` avisar o carrossel para passar ao próximo).
  */
-export function DemoVideo({ wide, tall, label }: { wide: string; tall: string; label: string }) {
+export function DemoVideo({
+  wide,
+  tall,
+  label,
+  active = true,
+  loop = true,
+  onEnded,
+}: {
+  wide: string
+  tall: string
+  label: string
+  active?: boolean
+  loop?: boolean
+  onEnded?: () => void
+}) {
   const ref = useRef<HTMLVideoElement>(null)
   const narrow = useMedia('(max-width: 640px)')
   const still = useMedia('(prefers-reduced-motion: reduce)') === true
@@ -32,13 +48,18 @@ export function DemoVideo({ wide, tall, label }: { wide: string; tall: string; l
   useEffect(() => {
     const video = ref.current
     if (!video || !src || still) return
+    if (!active) {
+      video.pause()
+      video.currentTime = 0
+      return
+    }
     const watcher = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) video.play().catch(() => {})
       else video.pause()
     })
     watcher.observe(video)
     return () => watcher.disconnect()
-  }, [src, still])
+  }, [src, still, active])
 
   return (
     <div className="demo-box">
@@ -46,7 +67,8 @@ export function DemoVideo({ wide, tall, label }: { wide: string; tall: string; l
         ref={ref}
         src={src}
         muted
-        loop
+        loop={loop}
+        onEnded={onEnded}
         playsInline
         preload="metadata"
         controls={still}
