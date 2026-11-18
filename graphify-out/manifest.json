@@ -132,15 +132,15 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/page.tsx": {
-    "mtime": 1794606911.349339,
-    "seen": 1794606969.727229,
-    "ast_hash": "7ebd47a6e1989fe393c69d6841b9e6d2",
+    "mtime": 1795008121.5684621,
+    "seen": 1795008167.2237267,
+    "ast_hash": "849acd6fee989ca2e46f3ca0c0abd4bc",
     "semantic_hash": ""
   },
   "src/app/(frontend)/portfolio/page.tsx": {
-    "mtime": 1794514177.968949,
-    "seen": 1794514270.7239995,
-    "ast_hash": "76e7a2e2b17fde5b9307125f4abd182a",
+    "mtime": 1795008121.569273,
+    "seen": 1795008167.2237296,
+    "ast_hash": "4f2a46c09c3afb9c6cad92ae69e8135a",
     "semantic_hash": ""
   },
   "src/app/(frontend)/projetos/[slug]/page.tsx": {
@@ -294,8 +294,8 @@
     "semantic_hash": ""
   },
   "src/components/DemoVideo.tsx": {
-    "mtime": 1794606899.338516,
-    "seen": 1794606969.7272735,
+    "mtime": 1795008103.4655166,
+    "seen": 1795008167.2237716,
     "ast_hash": "09a1a109e3eb005bad6cb69c50a6eb4a",
     "semantic_hash": ""
   },
@@ -378,8 +378,8 @@
     "semantic_hash": ""
   },
   "src/components/ProjectCard.tsx": {
-    "mtime": 1794606918.3022363,
-    "seen": 1794606969.7272937,
+    "mtime": 1795008103.4655166,
+    "seen": 1795008167.2237895,
     "ast_hash": "96fd075285b6820b147605245560ec7f",
     "semantic_hash": ""
   },
@@ -432,9 +432,9 @@
     "semantic_hash": ""
   },
   "src/components/WhatsAppFloat.tsx": {
-    "mtime": 1794514177.9701495,
-    "seen": 1794514270.72407,
-    "ast_hash": "4eb294ac21f8f60d737d93ce8e01f180",
+    "mtime": 1795008152.7063346,
+    "seen": 1795008167.2238007,
+    "ast_hash": "6f3410a7c4f264a51badd95fed2c0b36",
     "semantic_hash": ""
   },
   "src/components/WorldMap.tsx": {
@@ -1104,15 +1104,21 @@
     "semantic_hash": ""
   },
   "src/components/DemoCarousel.tsx": {
-    "mtime": 1794606918.3019373,
-    "seen": 1794606969.7272718,
+    "mtime": 1795008103.4655166,
+    "seen": 1795008167.2237704,
     "ast_hash": "429c995fd46a7017cad643409649eade",
     "semantic_hash": ""
   },
   "tests/int/demoCarousel.int.spec.ts": {
-    "mtime": 1794606942.4864933,
-    "seen": 1794606969.7274094,
+    "mtime": 1795008103.4655166,
+    "seen": 1795008167.223888,
     "ast_hash": "7b21366a59e363736e577ecf0c8042d5",
+    "semantic_hash": ""
+  },
+  "src/components/About.tsx": {
+    "mtime": 1795008152.7009268,
+    "seen": 1795008167.2237635,
+    "ast_hash": "3e5c6ab619abea1548b8cc36b0511cd3",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {

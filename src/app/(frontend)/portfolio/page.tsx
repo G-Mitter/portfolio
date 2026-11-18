@@ -6,6 +6,7 @@ import config from '@/payload.config'
 import { Feed } from '@/components/Feed'
 import { ProfileHeader } from '@/components/ProfileHeader'
 import { Skills } from '@/components/Skills'
+import { Timeline } from '@/components/Timeline'
 import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { contactMessage, whatsappUrl } from '@/lib/whatsapp'
 
@@ -44,6 +45,7 @@ export default async function PortfolioPage() {
     <>
       <ProfileHeader profile={profile} projectCount={projects.totalDocs} />
       <Feed projects={projects.docs} />
+      <Timeline />
       <Skills skills={profile.skills} />
       {whatsapp && <WhatsAppFloat href={whatsapp} />}
       {/* Atalho discreto para o dashboard (que pede login do /admin). */}
