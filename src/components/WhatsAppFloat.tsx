@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * Botão flutuante do WhatsApp (home e portfólio).
+ * Botão flutuante do WhatsApp (só no portfólio; na home o cabeçalho já tem o botão).
  *
  * Quando aparece: depois que o topo (.intro na home, .profile no portfólio) sai da tela (quem acabou de chegar já vê o botão grande dela).
  * Quando some: com o formulário de contato ou o rodapé à vista, para não cobrir campos nem links.
