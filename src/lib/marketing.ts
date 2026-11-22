@@ -4,7 +4,7 @@
  *
  * Formato do evento (criado pela skill de cronograma):
  *   título:    "[Post] Instagram · Reels · Robô de carga dos caixas"
- *   descrição: uma linha por campo, "rede: instagram", "formato: reels", "arquivo: ...", "legenda: ...", "status: agendado"
+ *   descrição: uma linha por campo, "rede: instagram", "formato: reels", "arquivo: ...", "legenda: ...", "campanha: robo-carga-nov", "status: agendado"
  */
 
 import { dayKey, daysAgo } from './dashboard'
@@ -19,6 +19,7 @@ export type Post = {
   status: string
   arquivo: string
   legenda: string
+  campanha: string // código da campanha (linha "campanha: robo-carga-nov")
 }
 
 const TZ = 'America/Sao_Paulo'
@@ -76,6 +77,7 @@ function toPost(ev: Record<string, string>): Post | null {
     formato: (fields.formato ?? (parts.length >= 3 ? parts[1] : '')).toLowerCase(),
     status: (fields.status ?? 'agendado').toLowerCase(),
     arquivo: fields.arquivo ?? '',
+    campanha: (fields.campanha ?? '').toLowerCase(),
     legenda: fields.legenda ?? '',
   }
 }

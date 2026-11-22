@@ -1,3 +1,6 @@
 {
-  "crons": [{ "path": "/api/marketing-files/limpar", "schedule": "0 9 * * *" }]
+  "crons": [
+    { "path": "/api/marketing-files/limpar", "schedule": "0 9 * * *" },
+    { "path": "/api/instagram-posts/sincronizar", "schedule": "0 10 * * *" }
+  ]
 }
