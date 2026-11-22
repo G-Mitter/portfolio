@@ -120,9 +120,9 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/marketing/page.tsx": {
-    "mtime": 1794514177.968949,
-    "seen": 1794514270.7239947,
-    "ast_hash": "1ae2d5c236f88e03b1dd69ef9e4cfa10",
+    "mtime": 1795384857.564435,
+    "seen": 1795384904.1935,
+    "ast_hash": "5f300a1040636d899b09a8dc35c15a70",
     "semantic_hash": ""
   },
   "src/app/(frontend)/not-found.tsx": {
@@ -132,14 +132,14 @@
     "semantic_hash": ""
   },
   "src/app/(frontend)/page.tsx": {
-    "mtime": 1795008121.5684621,
-    "seen": 1795008167.2237267,
+    "mtime": 1795384833.90715,
+    "seen": 1795384904.1935039,
     "ast_hash": "849acd6fee989ca2e46f3ca0c0abd4bc",
     "semantic_hash": ""
   },
   "src/app/(frontend)/portfolio/page.tsx": {
-    "mtime": 1795008121.569273,
-    "seen": 1795008167.2237296,
+    "mtime": 1795384833.90715,
+    "seen": 1795384904.1935053,
     "ast_hash": "4f2a46c09c3afb9c6cad92ae69e8135a",
     "semantic_hash": ""
   },
@@ -432,8 +432,8 @@
     "semantic_hash": ""
   },
   "src/components/WhatsAppFloat.tsx": {
-    "mtime": 1795008152.7063346,
-    "seen": 1795008167.2238007,
+    "mtime": 1795384833.90715,
+    "seen": 1795384904.1935859,
     "ast_hash": "6f3410a7c4f264a51badd95fed2c0b36",
     "semantic_hash": ""
   },
@@ -528,9 +528,9 @@
     "semantic_hash": ""
   },
   "src/lib/marketing.ts": {
-    "mtime": 1794514177.9708874,
-    "seen": 1794514270.7241018,
-    "ast_hash": "e738c0ac2599c0efb19a6753f5e03c4e",
+    "mtime": 1795384837.2951503,
+    "seen": 1795384904.193608,
+    "ast_hash": "e8fd44ea34e6d97e2d5c553f915055bd",
     "semantic_hash": ""
   },
   "src/lib/pagePath.ts": {
@@ -816,21 +816,21 @@
     "semantic_hash": ""
   },
   "src/migrations/index.ts": {
-    "mtime": 1794514177.9715323,
-    "seen": 1794514270.7241673,
-    "ast_hash": "c630e7f2fa254785e145d98ba5332157",
+    "mtime": 1795384877.9471526,
+    "seen": 1795384904.1937046,
+    "ast_hash": "c942bcf694322492c53d63f39cb45257",
     "semantic_hash": ""
   },
   "src/payload-types.ts": {
-    "mtime": 1794514177.9715323,
-    "seen": 1794514270.7241688,
-    "ast_hash": "bd00756d865b7e4f3c45f8dfd1b01a39",
+    "mtime": 1795384871.5831523,
+    "seen": 1795384904.1937068,
+    "ast_hash": "74b51b8fd2832eb102d27ac64c90313a",
     "semantic_hash": ""
   },
   "src/payload.config.ts": {
-    "mtime": 1794514177.9715323,
-    "seen": 1794514270.72417,
-    "ast_hash": "5492bca0f49141d5a000fea6a6d3744a",
+    "mtime": 1795384837.2991502,
+    "seen": 1795384904.1937087,
+    "ast_hash": "02af05fd68c7c3ec38610b61363fffc5",
     "semantic_hash": ""
   },
   "src/seed/seed.ts": {
@@ -960,9 +960,9 @@
     "semantic_hash": ""
   },
   "vercel.json": {
-    "mtime": 1794514177.973442,
-    "seen": 1794514270.7241995,
-    "ast_hash": "7b918726cdd00b3a4a81a3a5af0bc497",
+    "mtime": 1795384837.3031502,
+    "seen": 1795384904.1937404,
+    "ast_hash": "dda3e4ceba138e080d6e3af27818a856",
     "semantic_hash": ""
   },
   "vitest.config.mts": {
@@ -1116,9 +1116,51 @@
     "semantic_hash": ""
   },
   "src/components/About.tsx": {
-    "mtime": 1795008152.7009268,
-    "seen": 1795008167.2237635,
+    "mtime": 1795384833.90715,
+    "seen": 1795384904.1935437,
     "ast_hash": "3e5c6ab619abea1548b8cc36b0511cd3",
+    "semantic_hash": ""
+  },
+  "src/collections/Campaigns.ts": {
+    "mtime": 1795384834.35115,
+    "seen": 1795384904.1935248,
+    "ast_hash": "c645be1a09f4c93ccc549f0b61fbfa91",
+    "semantic_hash": ""
+  },
+  "src/collections/InstagramPosts.ts": {
+    "mtime": 1795384860.4162548,
+    "seen": 1795384904.193526,
+    "ast_hash": "51df07ca24ca874e0e7eb331311f5d87",
+    "semantic_hash": ""
+  },
+  "src/globals/InstagramConnection.ts": {
+    "mtime": 1795384852.1966002,
+    "seen": 1795384904.1935947,
+    "ast_hash": "cb54bc11abc4a3ae77f06389fd963a46",
+    "semantic_hash": ""
+  },
+  "src/lib/instagramStats.ts": {
+    "mtime": 1795384852.1967635,
+    "seen": 1795384904.1936045,
+    "ast_hash": "c1edd0e246a0c093e8f53477de756045",
+    "semantic_hash": ""
+  },
+  "src/migrations/20261122_220117_marketing_instagram_campanhas.json": {
+    "mtime": 1795384877.9431527,
+    "seen": 1795384904.1937013,
+    "ast_hash": "6f40a6a8ed7c2fb13386c8f61cfaf371",
+    "semantic_hash": ""
+  },
+  "src/migrations/20261122_220117_marketing_instagram_campanhas.ts": {
+    "mtime": 1795384877.9431527,
+    "seen": 1795384904.1937027,
+    "ast_hash": "5e58ad3ac9966505958a5a69ad3d6b66",
+    "semantic_hash": ""
+  },
+  "tests/int/instagramStats.int.spec.ts": {
+    "mtime": 1795384852.1969874,
+    "seen": 1795384904.1937273,
+    "ast_hash": "5a6707ed4b51c5f9faee505d26df7f5d",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {
