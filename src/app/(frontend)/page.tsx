@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@/payload.config'
+import { About } from '@/components/About'
 import { ContactSection } from '@/components/ContactSection'
 import { DemoCarousel } from '@/components/DemoCarousel'
 import { Faq } from '@/components/Faq'
@@ -12,8 +13,6 @@ import { Process } from '@/components/Process'
 import { Statement } from '@/components/Statement'
 import { Services } from '@/components/Services'
 import { Testimonials } from '@/components/Testimonials'
-import { Timeline } from '@/components/Timeline'
-import { WhatsAppFloat } from '@/components/WhatsAppFloat'
 import { Button } from '@/components/ui/button'
 import { instagramUrl } from '@/lib/instagram'
 import { siteUrl } from '@/lib/siteUrl'
@@ -142,16 +141,15 @@ export default async function HomePage({ searchParams }: Props) {
       </section>
       <Services services={profile.services} />
       <Process steps={profile.process} />
-      <Offer whatsapp={whatsapp} />
-      <Timeline />
       <Testimonials testimonials={profile.testimonials} />
+      <Offer whatsapp={whatsapp} />
       <Faq />
+      <About />
       <ContactSection
         whatsapp={whatsapp}
         email={profile.links?.email}
         source={typeof projeto === 'string' ? projeto : undefined}
       />
-      {whatsapp && <WhatsAppFloat href={whatsapp} />}
     </>
   )
 }

@@ -285,6 +285,14 @@ body { margin: 0; overflow-x: clip; background: var(--bg); color: var(--fg); fon
 @media (hover: hover) { .services li:hover h3::after { opacity: 1; } }
 
 /* Minha trajetória: linha vertical azul com um ponto em cada marco. */
+.about { display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr); column-gap: 48px; align-items: center; }
+.about-photo { width: 100%; height: auto; border-radius: 16px; background: linear-gradient(160deg, #4474ec 0%, #2f5fd6 45%, #1b2a55 100%); }
+.about h2 { margin: 0 0 14px; font-family: var(--display); font-stretch: 75%; font-weight: 800; font-size: clamp(28px, 3.6vw, 40px); line-height: 1.05; }
+.about p { margin: 0 0 22px; max-width: 54ch; font-size: 18px; line-height: 1.5; }
+.about-stats { margin: 0; display: flex; flex-wrap: wrap; gap: 20px 32px; }
+.about-stats dt { font-family: var(--display); font-weight: 800; font-size: 22px; }
+.about-stats dd { margin: 2px 0 0; color: var(--muted); font-size: 14px; }
+@media (max-width: 640px) { .about { grid-template-columns: minmax(0, 1fr); row-gap: 24px; } .about-photo { width: min(60vw, 240px); margin-inline: auto; } }
 .timeline-photo { display: block; width: 100%; height: auto; margin: 0 0 40px; border-radius: 14px; border: 1px solid var(--line); }
 .timeline ol { margin: 0; padding: 0 0 0 28px; list-style: none; border-left: 2px solid var(--line); }
 .timeline li { position: relative; padding: 0 0 36px; }
