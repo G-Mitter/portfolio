@@ -17,6 +17,7 @@ import * as migration_20261024_173800_texto_de_apoio from './20261024_173800_tex
 import * as migration_20261025_155904_videos_de_demonstracao from './20261025_155904_videos_de_demonstracao';
 import * as migration_20261031_165422_materiais_marketing from './20261031_165422_materiais_marketing';
 import * as migration_20261122_220117_marketing_instagram_campanhas from './20261122_220117_marketing_instagram_campanhas';
+import * as migration_20261123_171340_instagram_capa from './20261123_171340_instagram_capa';
 
 export const migrations = [
   {
@@ -112,6 +113,11 @@ export const migrations = [
   {
     up: migration_20261122_220117_marketing_instagram_campanhas.up,
     down: migration_20261122_220117_marketing_instagram_campanhas.down,
-    name: '20261122_220117_marketing_instagram_campanhas'
+    name: '20261122_220117_marketing_instagram_campanhas',
+  },
+  {
+    up: migration_20261123_171340_instagram_capa.up,
+    down: migration_20261123_171340_instagram_capa.down,
+    name: '20261123_171340_instagram_capa'
   },
 ];
