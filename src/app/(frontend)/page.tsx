@@ -7,6 +7,7 @@ import { About } from '@/components/About'
 import { ContactSection } from '@/components/ContactSection'
 import { DemoCarousel } from '@/components/DemoCarousel'
 import { Faq } from '@/components/Faq'
+import { InstagramStrip } from '@/components/InstagramStrip'
 import { Intro } from '@/components/Intro'
 import { Offer } from '@/components/Offer'
 import { Process } from '@/components/Process'
@@ -70,7 +71,7 @@ export default async function HomePage({ searchParams }: Props) {
   const { projeto } = await searchParams
   const payload = await getPayload({ config })
 
-  const [profile, projects] = await Promise.all([
+  const [profile, projects, igPosts] = await Promise.all([
     payload.findGlobal({ slug: 'profile', depth: 1 }),
     payload.find({
       collection: 'projects',
@@ -78,6 +79,15 @@ export default async function HomePage({ searchParams }: Props) {
       limit: 50,
       sort: ['-pinned', '_order'],
       overrideAccess: false,
+    }),
+    // Capas dos últimos posts do feed (stories ficam de fora); só os que já têm capa no Blob.
+    payload.find({
+      collection: 'instagram-posts',
+      where: { and: [{ tipo: { not_equals: 'story' } }, { capaUrl: { exists: true } }] },
+      sort: '-publicadoEm',
+      limit: 6,
+      depth: 0,
+      select: { link: true, capaUrl: true },
     }),
   ])
 
@@ -150,6 +160,7 @@ export default async function HomePage({ searchParams }: Props) {
         email={profile.links?.email}
         source={typeof projeto === 'string' ? projeto : undefined}
       />
+      <InstagramStrip items={igPosts.docs} profileUrl={instagramUrl(profile.links?.instagram)} />
     </>
   )
 }

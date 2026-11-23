@@ -682,3 +682,10 @@ html { scroll-padding-top: 88px; }
 .mkt-top{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
 .mkt-top a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:inherit}
 .mkt-top img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px}
+
+.ig-strip { text-align: center; }
+.ig-strip h2 { font-family: var(--display); font-size: var(--h2); letter-spacing: -0.02em; margin: 0 0 20px; }
+.ig-strip ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0 0 24px; padding: 0; list-style: none; }
+.ig-strip img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 10px; display: block; }
+.ig-follow { display: inline-block; padding: 12px 22px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; }
+@media (min-width: 720px) { .ig-strip ul { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
