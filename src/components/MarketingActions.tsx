@@ -20,10 +20,11 @@ export function DownloadAll() {
 }
 
 /** Texto da legenda com botão de copiar (no celular, sem baixar o .md). */
-export function CopyText({ text }: { text: string }) {
+export function CopyText({ text, title }: { text: string; title?: string }) {
   const [copied, setCopied] = useState(false)
   return (
     <div className="mkt-text">
+      {title && <h4 className="mkt-text-title">{title}</h4>}
       <pre>{text}</pre>
       <button
         type="button"

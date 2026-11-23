@@ -673,3 +673,4 @@ html { scroll-padding-top: 88px; }
   .demo-controls { flex-wrap: wrap; justify-content: center; }
   .demo-pause { margin-left: 0; }
 }
+.mkt-text-title{font-size:.8rem;font-weight:700;margin:6px 0 2px;text-transform:uppercase;letter-spacing:.04em}

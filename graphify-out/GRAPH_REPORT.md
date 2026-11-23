@@ -1,17 +1,17 @@
-# Graph Report - portfolio  (2026-11-22)
+# Graph Report - portfolio  (2026-11-23)
 
 ## Corpus Check
-- 178 files · ~148,112 words
+- 178 files · ~148,237 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 5 file(s) not represented in the graph (top: .css 2, .example 1, (none) 1)
 
 ## Summary
-- 733 nodes · 1423 edges · 57 communities (27 shown, 30 thin omitted)
+- 734 nodes · 1425 edges · 57 communities (27 shown, 30 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1e32eba5`
+- Built from commit: `d3b579c5`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,8 +65,8 @@
 3. `react` - 24 edges
 4. `@payloadcms/db-postgres` - 23 edges
 5. `vitest` - 21 edges
-6. `Button()` - 19 edges
-7. `MarketingPage()` - 18 edges
+6. `MarketingPage()` - 19 edges
+7. `Button()` - 19 edges
 8. `DashboardPage()` - 18 edges
 9. `compilerOptions` - 17 edges
 10. `HomePage()` - 15 edges
@@ -76,12 +76,12 @@
   src/app/(frontend)/marketing/page.tsx → src/components/ui/card.tsx
 - `MarketingPage()` --calls--> `dayKey()`  [EXTRACTED]
   src/app/(frontend)/marketing/page.tsx → src/lib/dashboard.ts
-- `matchEvent()` --calls--> `dayKey()`  [EXTRACTED]
-  src/lib/instagramStats.ts → src/lib/dashboard.ts
-- `toPost()` --calls--> `dayKey()`  [EXTRACTED]
-  src/lib/marketing.ts → src/lib/dashboard.ts
-- `parseMonth()` --calls--> `dayKey()`  [EXTRACTED]
-  src/lib/marketing.ts → src/lib/dashboard.ts
+- `NotFound()` --calls--> `Button()`  [EXTRACTED]
+  src/app/(frontend)/not-found.tsx → src/components/ui/button.tsx
+- `HomePage()` --calls--> `ContactSection()`  [EXTRACTED]
+  src/app/(frontend)/page.tsx → src/components/ContactSection.tsx
+- `HomePage()` --calls--> `DemoCarousel()`  [EXTRACTED]
+  src/app/(frontend)/page.tsx → src/components/DemoCarousel.tsx
 
 ## Import Cycles
 - None detected.
@@ -89,8 +89,8 @@
 ## Communities (57 total, 30 thin omitted)
 
 ### Community 0 - "(frontend)/page.tsx"
-Cohesion: 0.06
-Nodes (47): class-variance-authority@^0.7.1, class-variance-authority, next, metadata, NotFound(), DEMOS, dynamic, HomePage() (+39 more)
+Cohesion: 0.07
+Nodes (44): class-variance-authority@^0.7.1, class-variance-authority, next, metadata, NotFound(), DEMOS, dynamic, HomePage() (+36 more)
 
 ### Community 1 - "ContactForm.tsx"
 Cohesion: 0.14
@@ -98,7 +98,7 @@ Nodes (21): ContactState, sendMessage(), ContactForm(), initialState, ContactSec
 
 ### Community 2 - "dashboard/page.tsx"
 Cohesion: 0.13
-Nodes (28): DashboardPage(), dynamic, metadata, AutoRefresh(), LineChart(), PAD, WorldMap(), dayKey() (+20 more)
+Nodes (29): DashboardPage(), dynamic, metadata, AutoRefresh(), LineChart(), PAD, WorldMap(), dayKey() (+21 more)
 
 ### Community 3 - "payload-types.ts"
 Cohesion: 0.05
@@ -106,7 +106,7 @@ Nodes (42): Auth, Campaign, CampaignsSelect, CollectionsWidget, Config, Generate
 
 ### Community 4 - "marketing/page.tsx"
 Cohesion: 0.07
-Nodes (57): anchor(), COLS, dynamic, fmt(), MarketingPage(), metadata, metricLine(), postKey() (+49 more)
+Nodes (58): anchor(), COLS, dynamic, fmt(), MarketingPage(), metadata, metricLine(), postKey() (+50 more)
 
 ### Community 5 - "steps"
 Cohesion: 0.07
@@ -114,7 +114,7 @@ Nodes (28): env, runs-on, services, steps, DATABASE_URL, PAYLOAD_SECRET, POSTGRE
 
 ### Community 6 - "payload.config.ts"
 Cohesion: 0.05
-Nodes (48): dirname, __filename, nextConfig, payload, publishedOrLoggedIn(), POST(), countView(), Campaigns (+40 more)
+Nodes (47): dirname, __filename, nextConfig, payload, publishedOrLoggedIn(), POST(), countView(), Campaigns (+39 more)
 
 ### Community 7 - "(frontend)/layout.tsx"
 Cohesion: 0.12
@@ -177,8 +177,8 @@ Cohesion: 0.25
 Nodes (7): Como funciona, Estrutura do código, O que o site faz, Portfólio · Guilherme Mitter, Qualidade e segurança, Sobre, Tecnologias
 
 ### Community 28 - "DemoCarousel.tsx"
-Cohesion: 0.15
-Nodes (11): @testing-library/react@16.3.0, react, @testing-library/react, DemoCarousel(), Slide, DemoVideo(), useMedia(), IntroDemo() (+3 more)
+Cohesion: 0.12
+Nodes (14): @testing-library/react@16.3.0, react, @testing-library/react, DemoCarousel(), Slide, DemoVideo(), useMedia(), IntroDemo() (+6 more)
 
 ### Community 31 - "vite-tsconfig-paths"
 Cohesion: 0.29
@@ -205,7 +205,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `next` connect `(frontend)/page.tsx` to `dashboard/page.tsx`, `marketing/page.tsx`, `payload.config.ts`, `(frontend)/layout.tsx`, `dependencies`, `@payloadcms/next`, `ProjectCard.tsx`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `DemoCarousel.tsx`?**
   _High betweenness centrality (0.118) - this node is a cross-community bridge._
 - **Should `(frontend)/page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.06298904538341157 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0684811237928007 - nodes in this community are weakly interconnected._
 - **Why does `payload` connect `payload.config.ts` to `(frontend)/page.tsx`, `ContactForm.tsx`, `dashboard/page.tsx`, `marketing/page.tsx`, `(frontend)/layout.tsx`, `dependencies`, `@payloadcms/next`, `20261002_140150_ordem_feed.ts`, `[slug]/page.tsx`, `package.json`, `LikeButton.tsx`, `admin.e2e.spec.ts`?**
   _High betweenness centrality (0.112) - this node is a cross-community bridge._
 - **Should `ContactForm.tsx` be split into smaller, more focused modules?**
@@ -213,6 +213,6 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `@payloadcms/db-postgres` connect `@payloadcms/db-postgres` to `20261002_154200_recomendacoes.ts`, `20261002_165054_visualizacoes.ts`, `20261122_220117_marketing_instagram_campanhas.ts`, `payload.config.ts`, `20261002_134058_contato_whatsapp.ts`, `20261002_140150_ordem_feed.ts`, `20261002_150425_instagram.ts`, `20261002_152720_tecnologias.ts`, `20261020_013314_dashboard_visualizacoes_por_dia.ts`, `20261020_015111_dashboard_origem_das_visitas.ts`, `20261024_151913_dashboard_mapa_das_visitas.ts`, `20261024_173800_texto_de_apoio.ts`, `20261031_165422_materiais_marketing.ts`, `package.json`, `20261002_141521_formulario_contato.ts`, `20261002_162615_curtidas.ts`, `index.ts`?**
   _High betweenness centrality (0.089) - this node is a cross-community bridge._
 - **Should `dashboard/page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.13213213213213212 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12802275960170698 - nodes in this community are weakly interconnected._
 - **Should `payload-types.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.047619047619047616 - nodes in this community are weakly interconnected._

@@ -64,6 +64,9 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   const forNetwork = (p: Post, mime?: string | null) => (p.rede === 'linkedin') === (mime === 'application/pdf')
   const downloads = (p: Post) => (filesByFolder.get(deliveryFolder(p)) ?? []).filter((f) => !texts.has(f.id) && forNetwork(p, f.mimeType))
   const listed = day ? monthPosts.filter((p) => p.day === day) : monthPosts
+  // Instruções e legenda sem rede aparecem só no 1º post da pasta; legenda de rede, só no post dessa rede.
+  const firstOfFolder = new Map<string, Post>()
+  for (const p of [...monthPosts].sort((a, b) => a.start.getTime() - b.start.getTime())) if (!firstOfFolder.has(deliveryFolder(p))) firstOfFolder.set(deliveryFolder(p), p)
   const byDay = new Map<string, Post[]>()
   for (const p of monthPosts) byDay.set(p.day, [...(byDay.get(p.day) ?? []), p])
   const today = dayKey(new Date())
@@ -131,7 +134,10 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
                 {metricsOf(p) && <small className="mkt-metrics">{metricLine(metricsOf(p)!)}</small>}
                 {p.arquivo && <small>Arquivo: {p.arquivo}</small>}
                 {p.legenda && <small>Legenda: {p.legenda}</small>}
-                {(filesByFolder.get(deliveryFolder(p)) ?? []).map((f) => texts.has(f.id) && <CopyText key={f.id} text={texts.get(f.id)!} />)}
+                {(filesByFolder.get(deliveryFolder(p)) ?? []).map((f) => {
+                  const t = textTitle(f.filename ?? '', p, firstOfFolder.get(deliveryFolder(p)) === p)
+                  return texts.has(f.id) && t ? <CopyText key={f.id} text={texts.get(f.id)!} title={t} /> : null
+                })}
                 {downloads(p).length > 0 && (
                   <span className="mkt-files">
                     {downloads(p).length > 1 && <DownloadAll />}
@@ -222,3 +228,11 @@ function StatsTable({ rows, first, average, budget }: { rows: [string, Row][]; f
 const anchor = (p: Post) => `post-${p.start.getTime()}-${p.rede}`
 // Mesmo post no Instagram e no LinkedIn tem horário e título iguais: sem a rede, a chave repete e o React deixa itens do dia anterior na tela.
 const postKey = (p: Post) => `${p.start.getTime()}-${p.rede}-${p.formato}-${p.title}`
+
+function textTitle(name: string, p: Post, first: boolean): string | null {
+  const n = name.toLowerCase()
+  if (n.startsWith('como-postar')) return first ? 'Instruções de postagem' : null
+  if (n.includes('instagram')) return p.rede === 'instagram' ? 'Legenda do Instagram' : null
+  if (n.includes('linkedin')) return p.rede === 'linkedin' ? 'Legenda do LinkedIn' : null
+  return first ? 'Legenda (Instagram e LinkedIn)' : null
+}
