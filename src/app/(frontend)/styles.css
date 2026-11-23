@@ -674,3 +674,11 @@ html { scroll-padding-top: 88px; }
   .demo-pause { margin-left: 0; }
 }
 .mkt-text-title{font-size:.8rem;font-weight:700;margin:6px 0 2px;text-transform:uppercase;letter-spacing:.04em}
+
+.mkt-thumb{width:56px;height:56px;object-fit:cover;border-radius:6px}
+.mkt-thumb-s{width:36px;height:36px;object-fit:cover;border-radius:4px;display:block}
+.mkt-bar{display:grid;grid-template-columns:110px 1fr 70px;gap:8px;align-items:center;margin:4px 0}
+.mkt-bar i{display:block;height:12px;border-radius:6px;background:currentColor;opacity:.55}
+.mkt-top{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.mkt-top a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:inherit}
+.mkt-top img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px}

@@ -385,6 +385,7 @@ export interface InstagramPost {
   publicadoEm: string;
   link?: string | null;
   legenda?: string | null;
+  capaUrl?: string | null;
   campanha?: (number | null) | Campaign;
   alcance?: number | null;
   visualizacoes?: number | null;
@@ -726,6 +727,7 @@ export interface InstagramPostsSelect<T extends boolean = true> {
   publicadoEm?: T;
   link?: T;
   legenda?: T;
+  capaUrl?: T;
   campanha?: T;
   alcance?: T;
   visualizacoes?: T;

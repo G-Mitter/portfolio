@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { insightMetrics, isRecent, matchEvent, matchMedia, parseInsights, summarize, toTipo } from '@/lib/instagramStats'
+import { formatoTipo, insightMetrics, isRecent, matchEvent, matchMedia, parseInsights, summarize, toTipo } from '@/lib/instagramStats'
 import { parsePosts } from '@/lib/marketing'
 
 const ICS = [
@@ -96,5 +96,11 @@ describe('prazos', () => {
     expect(isRecent('2026-11-01T12:00:00Z', now)).toBe(true)
     expect(isRecent('2026-10-30T11:00:00Z', now)).toBe(false)
     expect(isRecent(undefined, now)).toBe(false)
+  })
+})
+
+describe('formatoTipo', () => {
+  it('mapeia formatos do calendário', () => {
+    expect(formatoTipo('reels')).toBe('reels')
   })
 })

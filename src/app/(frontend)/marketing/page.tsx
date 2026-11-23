@@ -9,7 +9,8 @@ import config from '@/payload.config'
 import { CopyText, DownloadAll } from '@/components/MarketingActions'
 import { Card } from '@/components/ui/card'
 import { dayKey } from '@/lib/dashboard'
-import { TIPO_LABELS, matchMedia, summarize, type Row } from '@/lib/instagramStats'
+import { LineChart } from '@/components/LineChart'
+import { TIPO_LABELS, matchMedia, summarize, wasPosted, type Row } from '@/lib/instagramStats'
 import { deliveryFolder, isExpired, loadPosts, monthGrid, parseMonth, shiftMonth, type Post } from '@/lib/marketing'
 
 export const dynamic = 'force-dynamic'
@@ -40,6 +41,14 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   const campaignOf = (m: (typeof ig)[number]) => (typeof m.campanha === 'number' ? (campaignName.get(m.campanha) ?? '') : '') || 'Sem campanha'
   const budget = new Map(campaigns.docs.map((c) => [c.nome, c.orcamento ?? 0]))
   const metricsOf = (p: Post) => (p.rede === 'instagram' ? matchMedia(p, ig, posts) : undefined)
+  const thumbOf = (p: Post) => (metricsOf(p) as { capaUrl?: string | null } | undefined)?.capaUrl ?? undefined
+  const byDayReach = new Map<string, number>()
+  for (const m of igMonth) byDayReach.set(dayKey(new Date(m.publicadoEm)), (byDayReach.get(dayKey(new Date(m.publicadoEm))) ?? 0) + (m.alcance ?? 0))
+  const reachSeries = [...byDayReach].sort(([a], [b]) => a.localeCompare(b)).map(([day, value]) => ({ day, value }))
+  const sum = (k: (typeof COLS)[number][0]) => igMonth.reduce((t, m) => t + (m[k] ?? 0), 0)
+  const formats = summarize(igMonth, (m) => TIPO_LABELS[m.tipo])
+  const maxFormat = Math.max(1, ...formats.map(([, r]) => r.alcance / r.posts))
+  const top = [...igMonth].sort((a, b) => (b.alcance ?? 0) - (a.alcance ?? 0)).slice(0, 5)
   // Legendas (.md/.txt) aparecem como texto com botão de copiar, em vez de arquivo para baixar.
   const texts = new Map<number, string>()
   await Promise.all(
@@ -59,7 +68,9 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   const filesByFolder = new Map<string, typeof files.docs>()
   for (const f of files.docs) filesByFolder.set(f.pasta, [...(filesByFolder.get(f.pasta) ?? []), f])
   // Depois de 5 dias da data o post sai da tela (e a rotina diária apaga os arquivos).
-  const monthPosts = posts.filter((p) => p.day.startsWith(month) && !isExpired(p))
+  // Instagram que já passou do dia e não saiu no perfil não aparece na lista.
+  const today = dayKey(new Date())
+  const monthPosts = posts.filter((p) => p.day.startsWith(month) && !isExpired(p) && !(p.rede === 'instagram' && p.day < today && !wasPosted(p, ig, posts)))
   // LinkedIn posta o carrossel em PDF; Instagram, as imagens. Cada post mostra só o que vai postar.
   const forNetwork = (p: Post, mime?: string | null) => (p.rede === 'linkedin') === (mime === 'application/pdf')
   const downloads = (p: Post) => (filesByFolder.get(deliveryFolder(p)) ?? []).filter((f) => !texts.has(f.id) && forNetwork(p, f.mimeType))
@@ -69,7 +80,6 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
   for (const p of [...monthPosts].sort((a, b) => a.start.getTime() - b.start.getTime())) if (!firstOfFolder.has(deliveryFolder(p))) firstOfFolder.set(deliveryFolder(p), p)
   const byDay = new Map<string, Post[]>()
   for (const p of monthPosts) byDay.set(p.day, [...(byDay.get(p.day) ?? []), p])
-  const today = dayKey(new Date())
   const [y, m] = month.split('-').map(Number)
   const monthName = new Date(Date.UTC(y, m - 1, 15)).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric', timeZone: 'UTC' })
   const title = monthName[0].toUpperCase() + monthName.slice(1) // "Novembro de 2026"
@@ -131,6 +141,7 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
                 <span className={`mkt-chip mkt-${p.rede}`}>{p.rede} · {p.formato}</span>
                 <span className={`mkt-status mkt-${p.status}`}>{p.status}</span>
                 <span>{p.title}</span>
+                {thumbOf(p) && <img src={thumbOf(p)} alt="" className="mkt-thumb" />}
                 {metricsOf(p) && <small className="mkt-metrics">{metricLine(metricsOf(p)!)}</small>}
                 {p.arquivo && <small>Arquivo: {p.arquivo}</small>}
                 {p.legenda && <small>Legenda: {p.legenda}</small>}
@@ -164,14 +175,35 @@ export default async function MarketingPage({ searchParams }: { searchParams: Pr
           <p className="dash-help">Nenhum post do Instagram neste mês.</p>
         ) : (
           <>
+            <div className="dash-cards">
+              {([['Posts', igMonth.length], ['Alcance', sum('alcance')], ['Visualizações', sum('visualizacoes')], ['Interações', sum('interacoes')]] as const).map(([l, v]) => (
+                <Card key={l} className="dash-box"><b>{fmt(v)}</b><span>{l}</span></Card>
+              ))}
+            </div>
+            {reachSeries.length > 0 && <LineChart data={reachSeries} label="Alcance por dia de postagem" />}
+            <h3 className="dash-sub">Alcance médio por formato</h3>
+            {formats.map(([name, r]) => (
+              <div key={name} className="mkt-bar"><span>{name}</span><i style={{ width: `${(r.alcance / r.posts / maxFormat) * 100}%` }} /><b>{fmt(r.alcance / r.posts)}</b></div>
+            ))}
+            <h3 className="dash-sub">Os 5 que mais alcançaram</h3>
+            <div className="mkt-top">
+              {top.map((m) => (
+                <a key={m.id} href={m.link ?? '#'} target="_blank" rel="noreferrer">
+                  {m.capaUrl && <img src={m.capaUrl} alt="" />}
+                  <b>{fmt(m.alcance ?? 0)}</b>
+                  <small>{TIPO_LABELS[m.tipo]}</small>
+                </a>
+              ))}
+            </div>
             <h3 className="dash-sub">Por formato no mês (média por post)</h3>
             <StatsTable rows={summarize(igMonth, (m) => TIPO_LABELS[m.tipo])} first="Formato" average />
             <h3 className="dash-sub">Posts do mês</h3>
             <table className="dash-table">
-              <thead><tr><th>Data</th><th>Formato</th><th>Campanha</th>{COLS.map(([, l]) => <th key={l}>{l}</th>)}<th /></tr></thead>
+              <thead><tr><th /><th>Data</th><th>Formato</th><th>Campanha</th>{COLS.map(([, l]) => <th key={l}>{l}</th>)}<th /></tr></thead>
               <tbody>
                 {[...igMonth].sort((a, b) => b.alcance! - a.alcance!).map((m) => (
                   <tr key={m.id}>
+                    <td>{m.capaUrl && <img src={m.capaUrl} alt="" className="mkt-thumb-s" />}</td>
                     <td>{new Date(m.publicadoEm).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', timeZone: 'America/Sao_Paulo' })}</td>
                     <td>{TIPO_LABELS[m.tipo]}</td>
                     <td>{campaignOf(m)}</td>
