@@ -673,6 +673,7 @@ html { scroll-padding-top: 88px; }
   .demo-controls { flex-wrap: wrap; justify-content: center; }
   .demo-pause { margin-left: 0; }
 }
+.mkt-text-title{font-size:.8rem;font-weight:700;margin:6px 0 2px;text-transform:uppercase;letter-spacing:.04em}
 
 .mkt-thumb{width:56px;height:56px;object-fit:cover;border-radius:6px}
 .mkt-thumb-s{width:36px;height:36px;object-fit:cover;border-radius:4px;display:block}
