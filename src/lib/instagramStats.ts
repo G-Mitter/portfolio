@@ -86,7 +86,8 @@ export function isRecent(timestamp: string | undefined, now = new Date()): boole
 }
 
 /** O formato escrito no evento [Post] ("reels", "carrossel", "story", "foto"...) no mesmo nome do tipo. */
-const formatoTipo = (formato: string): string => (formato.startsWith('stor') ? 'story' : formato.startsWith('carross') ? 'carrossel' : formato)
+export const formatoTipo = (formato: string): string =>
+  formato.startsWith('stor') ? 'story' : formato.startsWith('carross') ? 'carrossel' : formato.startsWith('reel') ? 'reels' : formato
 
 /**
  * O evento [Post] do Instagram do mesmo dia (Brasília) e do mesmo formato: é dele que vem a campanha.
@@ -116,4 +117,9 @@ export function summarize<T extends Partial<Record<keyof Metrics, number | null>
     groups.set(k, row)
   }
   return [...groups].sort((a, b) => b[1].alcance - a[1].alcance)
+}
+
+/** O evento [Post] do Instagram foi mesmo publicado? Há um post do mesmo dia com o mesmo formato (ou o único do dia). */
+export function wasPosted<T extends { tipo: Tipo; publicadoEm: string }>(event: Post, media: T[], events: Post[]): boolean {
+  return media.some((m) => dayKey(new Date(m.publicadoEm)) === event.day && (formatoTipo(event.formato) === m.tipo || matchEvent(m, events) === event))
 }

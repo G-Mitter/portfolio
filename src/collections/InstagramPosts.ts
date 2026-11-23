@@ -1,3 +1,4 @@
+import { put } from '@vercel/blob'
 import type { CollectionConfig, PayloadHandler } from 'payload'
 
 import { loadPosts } from '@/lib/marketing'
@@ -29,6 +30,7 @@ export const InstagramPosts: CollectionConfig = {
     { name: 'publicadoEm', label: 'Publicado em', type: 'date', required: true, index: true, admin: { readOnly: true, date: { pickerAppearance: 'dayAndTime' } } },
     { name: 'link', label: 'Link', type: 'text', admin: { readOnly: true } },
     { name: 'legenda', label: 'Legenda', type: 'textarea', admin: { readOnly: true } },
+    { name: 'capaUrl', label: 'Capa (cópia no Blob)', type: 'text', admin: { readOnly: true } },
     { name: 'campanha', label: 'Campanha', type: 'relationship', relationTo: 'campaigns', index: true },
     number('alcance', 'Alcance (contas)'),
     number('visualizacoes', 'Visualizações'),
@@ -41,6 +43,16 @@ export const InstagramPosts: CollectionConfig = {
     { name: 'atualizadoEm', label: 'Números atualizados em', type: 'date', admin: { readOnly: true, position: 'sidebar', date: { pickerAppearance: 'dayAndTime' } } },
   ],
   endpoints: [{ path: '/sincronizar', method: 'get', handler: (req) => sync(req) }],
+}
+
+/** A imagem do Instagram expira em poucos dias: copia a capa para o Blob e devolve o endereço da cópia. */
+async function saveCover(m: IgMedia): Promise<string | undefined> {
+  const source = m.thumbnail_url ?? (m.media_type === 'VIDEO' ? undefined : m.media_url)
+  if (!source) return undefined
+  const res = await fetch(source, { cache: 'no-store' })
+  if (!res.ok) throw new Error(`capa: o Instagram respondeu ${res.status}`)
+  const blob = await put(`instagram/${m.id}.jpg`, await res.arrayBuffer(), { access: 'public', addRandomSuffix: false, allowOverwrite: true, contentType: res.headers.get('content-type') ?? 'image/jpeg' })
+  return blob.url
 }
 
 const json = (body: unknown, status = 200) => Response.json(body, { status })
@@ -82,6 +94,14 @@ async function sync(req: Parameters<PayloadHandler>[0]) {
       }
       const { docs } = await payload.find({ collection: 'instagram-posts', where: { igId: { equals: m.id } }, limit: 1, depth: 0 })
       const existing = docs[0]
+      let capaUrl = existing?.capaUrl ?? undefined
+      if (!capaUrl) {
+        try {
+          capaUrl = await saveCover(m)
+        } catch (error) {
+          erros.push(`${m.id}: ${(error as Error).message}`)
+        }
+      }
       const code = existing?.campanha ? undefined : matchEvent({ tipo, publicadoEm }, events)?.campanha
       const data = {
         igId: m.id,
@@ -89,6 +109,7 @@ async function sync(req: Parameters<PayloadHandler>[0]) {
         publicadoEm,
         link: m.permalink,
         legenda: m.caption,
+        ...(capaUrl ? { capaUrl } : {}),
         ...(code && byCode.has(code) ? { campanha: byCode.get(code) } : {}),
         ...(metrics ? { ...metrics, atualizadoEm: new Date().toISOString() } : {}),
       }
